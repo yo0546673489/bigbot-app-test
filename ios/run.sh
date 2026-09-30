@@ -32,7 +32,13 @@ curl -Ls "https://get.maestro.mobile.dev" | bash
 export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots video
 xcrun simctl io "$DEV" recordVideo --codec h264 video/run.mp4 & REC=$!
-maestro --device "$DEV" test flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml
+export MAESTRO_DRIVER_STARTUP_TIMEOUT=300000
+sleep 20
+for try in 1 2; do
+  maestro --device "$DEV" test flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml 2>&1 | tee maestro-out.txt
+  grep -q "driver not ready" maestro-out.txt || break
+  echo "maestro driver timeout, retry $try"; sleep 15
+done
 kill -INT $REC; sleep 3
 # shrink: half-size JPEG (the full PNGs made a 430 MB artifact)
 for f in shots/*.png; do sips -s format jpeg -s formatOptions 70 -Z 1000 "$f" --out "${f%.png}.jpg" >/dev/null && rm "$f"; done
