@@ -9,6 +9,8 @@ jobs:
     timeout-minutes: 80
     strategy:
       fail-fast: false
+      # one at a time: the demo account's login code is single-use + 60s resend cooldown
+      max-parallel: 1
       matrix:
         part:
           - { name: home, flows: flows/config-home.yaml }

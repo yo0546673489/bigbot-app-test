@@ -25,10 +25,12 @@ name: 06 dialogs close and take typing
 - waitForAnimationToEnd
 - tapOn: ".*נסיעות וסינון.*"
 - waitForAnimationToEnd
-- tapOn: "מחיר מינימלי"
+- tapOn: ".*מחיר מינימלי.*"
 - waitForAnimationToEnd
 - takeScreenshot: shots/06_04_minprice_open
-- tapOn: "סכום ב-₪"
+- tapOn:
+    text: "סכום ב-₪"
+    optional: true
 - inputText: "40"
 - takeScreenshot: shots/06_05_minprice_TYPED
 - tapOn: "ביטול"
