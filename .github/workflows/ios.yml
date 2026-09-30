@@ -3,38 +3,35 @@ on:
   push:
     branches: [main]
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
-  workflow_dispatch:
-    inputs:
-      locale:
-        description: 'he / en'
-        default: 'he'
 jobs:
   ios:
     runs-on: macos-15
+    timeout-minutes: 80
     strategy:
       fail-fast: false
       matrix:
-        build:
-          - { name: new, url: ios/app-url.txt, flows: flows/config.yaml }
-          - { name: old, url: ios/app-url-old.txt, flows: flows/config-home.yaml }
-    timeout-minutes: 45
+        part:
+          - { name: old-home, url: ios/app-url-old.txt, flows: flows/config-home.yaml }
+          - { name: new-home, url: ios/app-url.txt, flows: flows/config-home.yaml }
+          - { name: new-nav, url: ios/app-url.txt, flows: flows/config-nav.yaml }
+          - { name: new-settings, url: ios/app-url.txt, flows: flows/config-settings.yaml }
+          - { name: new-deep, url: ios/app-url.txt, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
       - name: iPhone simulator
+        timeout-minutes: 70
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
           DEMO_CODE: ${{ secrets.DEMO_CODE }}
-          SIM_LOCALE: ${{ github.event.inputs.locale || 'he' }}
-          APP_URL_FILE: ${{ matrix.build.url }}
-          FLOW_CONFIG: ${{ matrix.build.flows }}
+          SIM_LOCALE: he
+          APP_URL_FILE: ${{ matrix.part.url }}
+          FLOW_CONFIG: ${{ matrix.part.flows }}
         run: bash ios/run.sh
+      - name: collect screenshots
+        if: always()
+        run: bash ios/collect.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: shots-ios-${{ matrix.build.name }}
+          name: shots-ios-${{ matrix.part.name }}
           path: shots
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: video-ios-${{ matrix.build.name }}
-          path: video

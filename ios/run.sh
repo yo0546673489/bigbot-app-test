@@ -32,20 +32,12 @@ mrun() { # retry once when the XCTest driver is slow to start
     sleep 15
   done
 }
-xcrun simctl io "$DEV" recordVideo --codec h264 video/login.mp4 & REC=$!
 mrun flows/00_login.yaml
-kill -INT $REC; sleep 3
 if [ "$LOC" = "he" ]; then
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLanguages -array he-IL en-US
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLocale -string he_IL
   xcrun simctl shutdown "$DEV"; xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
   sleep 20
 fi
-xcrun simctl io "$DEV" recordVideo --codec h264 video/run.mp4 & REC=$!
 mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
-kill -INT $REC; sleep 3
-# Maestro writes takeScreenshot files (and its own failure shots) under ~/.maestro/tests
-find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
-ls shots | head -200
-for f in shots/*.png; do sips -s format jpeg -s formatOptions 70 -Z 1000 "$f" --out "${f%.png}.jpg" >/dev/null && rm "$f"; done
 exit 0

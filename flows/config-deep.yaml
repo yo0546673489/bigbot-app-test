@@ -1,0 +1,6 @@
+flows:
+  - "04_settings_deep.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 04 settings deep pages

@@ -1,0 +1,6 @@
+flows:
+  - "03_settings.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 03 settings

@@ -3,11 +3,18 @@ on:
   push:
     branches: [main]
     paths: ['android/**', 'flows/**', '.github/workflows/android.yml']
-  workflow_dispatch:
 jobs:
   android:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 80
+    strategy:
+      fail-fast: false
+      matrix:
+        part:
+          - { name: home, flows: flows/config-home.yaml }
+          - { name: nav, flows: flows/config-nav.yaml }
+          - { name: settings, flows: flows/config-settings.yaml }
+          - { name: deep, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
       - name: enable KVM
@@ -16,10 +23,12 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Android 14 emulator
+        timeout-minutes: 70
         uses: reactivecircus/android-emulator-runner@v2
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
           DEMO_CODE: ${{ secrets.DEMO_CODE }}
+          FLOW_CONFIG: ${{ matrix.part.flows }}
         with:
           api-level: 34
           target: google_apis
@@ -29,6 +38,14 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: bash android/run.sh
+      - name: collect screenshots
+        if: always()
+        run: |
+          mkdir -p shots
+          find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
+          ls shots | wc -l
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: shots-android, path: shots }
+        with:
+          name: shots-android-${{ matrix.part.name }}
+          path: shots
