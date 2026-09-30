@@ -56,27 +56,39 @@ name: 05 chat and search
     timeout: 2000
     optional: true
 - takeScreenshot: shots/05_06_theme
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -102,9 +114,13 @@ name: 05 chat and search
 - waitForAnimationToEnd
 - inputText: "תא"
 - takeScreenshot: shots/05_11_search_add_KEYBOARD
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android

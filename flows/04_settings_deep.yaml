@@ -36,18 +36,26 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_1_card
 - scroll
 - takeScreenshot: shots/04_1_card_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -84,18 +92,26 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_2_background
 - scroll
 - takeScreenshot: shots/04_2_background_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -132,18 +148,26 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_3_groups
 - scroll
 - takeScreenshot: shots/04_3_groups_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -182,9 +206,13 @@ name: 04 settings deep pages
     text: "(ביטול|לא|סגור)"
     optional: true
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -221,18 +249,26 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_5_billing
 - scroll
 - takeScreenshot: shots/04_5_billing_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -269,18 +305,26 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_6_support
 - scroll
 - takeScreenshot: shots/04_6_support_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
     commands:
       - back
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -319,9 +363,13 @@ name: 04 settings deep pages
     text: "(ביטול|לא|סגור)"
     optional: true
 - waitForAnimationToEnd
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android

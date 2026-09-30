@@ -111,9 +111,13 @@ name: 02 drawer and tabs
 - takeScreenshot: shots/02_06_profile
 - scroll
 - takeScreenshot: shots/02_06_profile_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android
@@ -139,9 +143,13 @@ name: 02 drawer and tabs
 - takeScreenshot: shots/02_07_about
 - scroll
 - takeScreenshot: shots/02_07_about_b
-- tapOn:
-    text: "(חזרה|סגור)"
-    optional: true
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
 - runFlow:
     when:
       platform: Android

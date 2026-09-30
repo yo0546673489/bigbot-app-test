@@ -3,10 +3,10 @@ import io
 L=[]
 def a(x): L.append(x)
 def head(name):
-    L.clear(); a(f'appId: com.bigbotdrivers.app\nname: {name}\n---\n- launchApp\n- waitForAnimationToEnd:\n    timeout: 10000
+    L.clear(); a(f'''appId: com.bigbotdrivers.app\nname: {name}\n---\n- launchApp\n- waitForAnimationToEnd:\n    timeout: 10000
 - tapOn:
     text: "אחר כך"
-    optional: true')
+    optional: true''')
 def save(p): io.open(p,'w',encoding='utf-8',newline='\n').write('\n'.join(L)+'\n')
 def shot(n): a(f'- takeScreenshot: shots/{n}')
 def wait(ms=2500): a(f'- extendedWaitUntil:\n    visible: "__w__"\n    timeout: {ms}\n    optional: true')
@@ -16,7 +16,19 @@ def tap(t,idx=None):
     a(s+'    optional: true\n- waitForAnimationToEnd')
 def scroll_to(t,d='DOWN'): a(f'- scrollUntilVisible:\n    element:\n      text: "{t}"\n    direction: {d}\n    optional: true')
 def back():
-    a('- tapOn:\n    text: "(חזרה|סגור)"\n    optional: true\n- runFlow:\n    when:\n      platform: Android\n    commands:\n      - back\n- waitForAnimationToEnd')
+    a('''- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "(חזרה|סגור)"
+          optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd''')
 def drawer(): tap("בית"); tap("תפריט")
 
 head('02 drawer and tabs')
