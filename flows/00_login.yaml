@@ -152,4 +152,7 @@ name: 00 login
 - tapOn:
     text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
     optional: true
+- tapOn:
+    text: "אחר כך"
+    optional: true
 - takeScreenshot: shots/00_07_after_login

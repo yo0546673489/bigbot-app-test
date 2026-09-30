@@ -4,6 +4,13 @@ name: 06 dialogs close and take typing
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- extendedWaitUntil:
+    visible: "בית"
+    timeout: 20000
+    optional: true
 # New-chat dialog: type a number, then ביטול must close it.
 - tapOn: "צ'אט"
 - waitForAnimationToEnd

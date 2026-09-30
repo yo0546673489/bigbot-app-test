@@ -5,6 +5,13 @@ name: 01 home and rides
 - waitForAnimationToEnd:
     timeout: 10000
 - tapOn:
+    text: "אחר כך"
+    optional: true
+- extendedWaitUntil:
+    visible: "בית"
+    timeout: 20000
+    optional: true
+- tapOn:
     text: "בית"
     optional: true
 - takeScreenshot: shots/01_01_home
