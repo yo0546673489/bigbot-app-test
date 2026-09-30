@@ -73,6 +73,26 @@ name: 00 login
           point: "33%,61%"
 - waitForAnimationToEnd
 - takeScreenshot: shots/00_04_code_screen
+# Retry once when the password did not get typed (still on the form).
+- runFlow:
+    when:
+      visible: "טוב לראות אותך שוב"
+      platform: iOS
+    commands:
+      - tapOn:
+          point: "50%,42%"
+      - eraseText: 30
+      - inputText: ${DEMO_PASSWORD}
+      - tapOn:
+          text: "טוב לראות אותך שוב"
+      - tapOn: "התחבר"
+      - waitForAnimationToEnd:
+          timeout: 15000
+      - tapOn:
+          text: "Not Now"
+          optional: true
+      - tapOn:
+          point: "33%,61%"
 # Android: the hidden code field takes typed digits.
 - runFlow:
     when:
