@@ -93,6 +93,27 @@ name: 00 login
           optional: true
       - tapOn:
           point: "33%,61%"
+# iPhone: paste the code from the clipboard (like a driver copying it from WhatsApp).
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          text: "Not Now"
+          optional: true
+      - tapOn:
+          text: ".*הדבק קוד.*"
+          optional: true
+      - tapOn:
+          text: "(Allow Paste|אפשר הדבקה|הדבק)"
+          optional: true
+      - waitForAnimationToEnd
+      - takeScreenshot: shots/00_05_code_pasted
+      - tapOn:
+          text: "אמת והמשך"
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 10000
 # Android: the hidden code field takes typed digits.
 - runFlow:
     when:
