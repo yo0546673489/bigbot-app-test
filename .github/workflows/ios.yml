@@ -27,6 +27,7 @@ jobs:
         working-directory: app/bigbot/mobile
         run: |
           set -x
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1); echo "xcode: $X"; [ -n "$X" ] && sudo xcode-select -s "$X"; xcodebuild -version
           git -C ../.. log -1 --format="%h %s"
           npm ci --no-audit --no-fund
           CI=1 npx expo prebuild -p ios --clean
