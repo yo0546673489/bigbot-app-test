@@ -21,10 +21,9 @@ name: 00 login
 - inputText: "0500000000"
 - tapOn:
     text: "טוב לראות אותך שוב"
+# the password FIELD (a label-relative tap hit the eye icon)
 - tapOn:
-    below:
-      text: "סיסמה"
-    index: 0
+    point: "50%,44%"
 - inputText: ${DEMO_PASSWORD}
 - tapOn:
     text: "טוב לראות אותך שוב"
@@ -85,9 +84,7 @@ name: 00 login
       - waitForAnimationToEnd
       - takeScreenshot: shots/00_06_back_to_login
       - tapOn:
-          below:
-            text: "סיסמה"
-          index: 0
+          point: "50%,44%"
       - eraseText: 40
       - inputText: ${DEMO_PASSWORD}
       - tapOn:
