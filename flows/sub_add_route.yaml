@@ -1,0 +1,28 @@
+appId: com.bigbotdrivers.app
+name: add route (sub)
+---
+- tapOn:
+    text: ".*הוסף$"
+    index: 0
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "לדוגמה: נתניה"
+    optional: true
+- inputText: ${ORIGIN}
+- tapOn:
+    text: "הוסף יעד.*"
+    optional: true
+- inputText: ${DEST}
+- takeScreenshot: shots/01_route_${ORIGIN}_typed
+- tapOn:
+    text: "הוסף מסלול"
+    optional: true
+- tapOn:
+    text: "הוסף"
+    index: 1
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "ביטול"
+    optional: true
