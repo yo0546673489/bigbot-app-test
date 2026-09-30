@@ -28,6 +28,11 @@ name: 00 login
 - tapOn:
     text: "טוב לראות אותך שוב"
 - takeScreenshot: shots/00_03_login_filled
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
 - tapOn: "התחבר"
 - waitForAnimationToEnd:
     timeout: 15000
@@ -89,6 +94,11 @@ name: 00 login
       - inputText: ${DEMO_PASSWORD}
       - tapOn:
           text: "טוב לראות אותך שוב"
+      - runFlow:
+          when:
+            platform: Android
+          commands:
+            - hideKeyboard
       - tapOn: "התחבר"
       - runFlow:
           when:
