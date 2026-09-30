@@ -1,7 +1,7 @@
 name: app test - Android
 on:
   push:
-    branches: [app-test]
+    branches: [main]
     paths: ['android/**', 'flows/**', '.github/workflows/android.yml']
   workflow_dispatch:
 jobs:

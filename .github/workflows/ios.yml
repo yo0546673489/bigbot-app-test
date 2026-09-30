@@ -1,7 +1,7 @@
 name: app test - iPhone
 on:
   push:
-    branches: [app-test]
+    branches: [main]
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
   workflow_dispatch:
     inputs:
