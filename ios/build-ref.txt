@@ -1,1 +1,1 @@
-claude/ios-release-check
+claude/ios-release-fixes

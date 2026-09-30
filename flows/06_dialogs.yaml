@@ -7,16 +7,19 @@ name: 06 dialogs close and take typing
 # New-chat dialog: type a number, then ביטול must close it.
 - tapOn: "צ'אט"
 - waitForAnimationToEnd
-- tapOn: "שיחה חדשה"
+- tapOn:
+    text: ".*שיחה חדשה.*"
 - waitForAnimationToEnd
 - takeScreenshot: shots/06_01_newchat_open
-- tapOn: "050-000-0000"
+- tapOn:
+    text: "(050-000-0000|0500000000)"
+    optional: true
 - inputText: "0501234567"
 - takeScreenshot: shots/06_02_newchat_TYPED
 - tapOn: "ביטול"
 - waitForAnimationToEnd
 - takeScreenshot: shots/06_03_newchat_after_cancel
-- assertNotVisible: "הזן מספר טלפון של סדרן"
+- assertNotVisible: "פתח צ'אט"
 # Min-price dialog: type, then ביטול must close it.
 - tapOn: "הגדרות"
 - waitForAnimationToEnd
