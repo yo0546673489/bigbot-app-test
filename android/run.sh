@@ -13,6 +13,10 @@ curl -Ls "https://get.maestro.mobile.dev" | bash
 export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots
 maestro test flows/ --config flows/config.yaml -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml
+# Maestro writes takeScreenshot files (and its own failure shots) under ~/.maestro/tests
+find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
+for f in $(find ~/.maestro/tests -name "*.png" ! -path "*takeScreenshot*" 2>/dev/null | grep -i -E "fail|screenshot-❌|error" ); do cp "$f" shots/FAIL_$(basename "$f"); done
+ls shots | head -200
 command -v mogrify >/dev/null || sudo apt-get install -y -qq imagemagick >/dev/null
 mogrify -format jpg -quality 70 -resize 1000x1000\> shots/*.png && rm -f shots/*.png
 adb logcat -d -b crash > shots/crash-log.txt 2>/dev/null

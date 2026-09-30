@@ -40,6 +40,10 @@ for try in 1 2; do
   echo "maestro driver timeout, retry $try"; sleep 15
 done
 kill -INT $REC; sleep 3
+# Maestro writes takeScreenshot files (and its own failure shots) under ~/.maestro/tests
+find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
+for f in $(find ~/.maestro/tests -name "*.png" ! -path "*takeScreenshot*" 2>/dev/null | grep -i -E "fail|screenshot-❌|error" ); do cp "$f" shots/FAIL_$(basename "$f"); done
+ls shots | head -200
 # shrink: half-size JPEG (the full PNGs made a 430 MB artifact)
 for f in shots/*.png; do sips -s format jpeg -s formatOptions 70 -Z 1000 "$f" --out "${f%.png}.jpg" >/dev/null && rm "$f"; done
 exit 0
