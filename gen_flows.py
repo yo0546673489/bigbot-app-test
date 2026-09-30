@@ -51,13 +51,15 @@ scroll_to(".*וואטסאפ.*",'UP'); tap(".*חיבור וואטסאפ.*|.*וו�
 save('flows/03_settings.yaml')
 
 head('04 settings deep pages')
-tap("הגדרות")
-deep=[("התראות ותצוגה","עיצוב כרטיסיות","card"),("התראות ותצוגה","רקע האפליקציה","background"),("נסיעות וסינון",".*קבוצות.*","groups"),("נסיעות וסינון",".*מחיר מינימלי.*","minprice"),("חשבון ותמיכה","המנוי שלי","billing"),("חשבון ותמיכה","צ'אט שירות לקוחות","support"),("חשבון ותמיכה","מחק חשבון","delete_dialog_only")]
+deep=[("התראות ותצוגה","עיצוב כרטיסיות","card"),("התראות ותצוגה","רקע האפליקציה","background"),("נסיעות וסינון",".*סינון קבוצות.*","groups"),("נסיעות וסינון",".*מחיר מינימלי.*","minprice"),("חשבון ותמיכה",".*המנוי שלי.*","billing"),("חשבון ותמיכה",".*צ'אט שירות לקוחות.*","support"),("חשבון ותמיכה",".*מחק חשבון.*","delete_dialog_only")]
 for i,(c,t,n) in enumerate(deep):
-    scroll_to(f".*{c}.*"); tap(f".*{c}.*"); scroll_to(t); tap(t); wait(); shot(f'04_{i+1}_{n}')
-    if n in ('delete_dialog_only','minprice'): tap("(ביטול|לא|סגור)")
-    else: a('- scroll'); shot(f'04_{i+1}_{n}_b'); back()
-    back(); scroll_to(".*נסיעות וסינון.*",'UP')
+    # fresh start for every page: no Back / scroll-up (on Android those left the app or opened the shade)
+    a('''- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000''')
+    tap("אחר כך"); tap("הגדרות"); scroll_to(f".*{c}.*"); tap(f".*{c}.*"); scroll_to(t); tap(t); wait(); shot(f'04_{i+1}_{n}')
+    if n not in ('delete_dialog_only','minprice'): a('- scroll'); shot(f'04_{i+1}_{n}_b')
 save('flows/04_settings_deep.yaml')
 
 head('05 chat and search')

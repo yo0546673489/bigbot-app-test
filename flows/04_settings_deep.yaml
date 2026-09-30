@@ -7,6 +7,14 @@ name: 04 settings deep pages
 - tapOn:
     text: "אחר כך"
     optional: true
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -36,37 +44,18 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_1_card
 - scroll
 - takeScreenshot: shots/04_1_card_b
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*התראות ותצוגה.*"
@@ -92,37 +81,18 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_2_background
 - scroll
 - takeScreenshot: shots/04_2_background_b
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -134,11 +104,11 @@ name: 04 settings deep pages
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: ".*קבוצות.*"
+      text: ".*סינון קבוצות.*"
     direction: DOWN
     optional: true
 - tapOn:
-    text: ".*קבוצות.*"
+    text: ".*סינון קבוצות.*"
     optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -148,37 +118,18 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_3_groups
 - scroll
 - takeScreenshot: shots/04_3_groups_b
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -202,28 +153,18 @@ name: 04 settings deep pages
     timeout: 2500
     optional: true
 - takeScreenshot: shots/04_4_minprice
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
 - tapOn:
-    text: "(ביטול|לא|סגור)"
+    text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- tapOn:
+    text: "הגדרות"
     optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*חשבון ותמיכה.*"
@@ -235,11 +176,11 @@ name: 04 settings deep pages
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: "המנוי שלי"
+      text: ".*המנוי שלי.*"
     direction: DOWN
     optional: true
 - tapOn:
-    text: "המנוי שלי"
+    text: ".*המנוי שלי.*"
     optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -249,37 +190,18 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_5_billing
 - scroll
 - takeScreenshot: shots/04_5_billing_b
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*חשבון ותמיכה.*"
@@ -291,11 +213,11 @@ name: 04 settings deep pages
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: "צ'אט שירות לקוחות"
+      text: ".*צ'אט שירות לקוחות.*"
     direction: DOWN
     optional: true
 - tapOn:
-    text: "צ'אט שירות לקוחות"
+    text: ".*צ'אט שירות לקוחות.*"
     optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -305,37 +227,18 @@ name: 04 settings deep pages
 - takeScreenshot: shots/04_6_support
 - scroll
 - takeScreenshot: shots/04_6_support_b
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
+- launchApp:
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "אחר כך"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*חשבון ותמיכה.*"
@@ -347,11 +250,11 @@ name: 04 settings deep pages
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: "מחק חשבון"
+      text: ".*מחק חשבון.*"
     direction: DOWN
     optional: true
 - tapOn:
-    text: "מחק חשבון"
+    text: ".*מחק חשבון.*"
     optional: true
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -359,25 +262,3 @@ name: 04 settings deep pages
     timeout: 2500
     optional: true
 - takeScreenshot: shots/04_7_delete_dialog_only
-- tapOn:
-    text: "(ביטול|לא|סגור)"
-    optional: true
-- waitForAnimationToEnd
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "(חזרה|סגור)"
-          optional: true
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - back
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: ".*נסיעות וסינון.*"
-    direction: UP
-    optional: true
