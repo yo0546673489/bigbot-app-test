@@ -35,11 +35,13 @@ name: 00 login
 - runFlow:
     when:
       platform: iOS
-      visible: "אמת והמשך"
     commands:
       - extendedWaitUntil:
           visible: "__wait_4s__"
           timeout: 4000
+          optional: true
+      - tapOn:
+          text: "Not Now"
           optional: true
       - tapOn:
           point: "33%,61%"
@@ -90,6 +92,23 @@ name: 00 login
       - tapOn:
           text: "טוב לראות אותך שוב"
       - tapOn: "התחבר"
+      - runFlow:
+          when:
+            platform: iOS
+          commands:
+            - extendedWaitUntil:
+                visible: "__wait_5s__"
+                timeout: 5000
+                optional: true
+            - tapOn:
+                text: "Not Now"
+                optional: true
+            - runFlow:
+                when:
+                  notVisible: ".*(בית|ראשי|פנוי).*"
+                commands:
+                  - tapOn:
+                      point: "33%,61%"
 - extendedWaitUntil:
     visible: ".*(בית|ראשי|פנוי).*"
     timeout: 45000
