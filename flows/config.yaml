@@ -1,9 +1,12 @@
 flows:
-  - "0*.yaml"
+  - "01_home_rides.yaml"
+  - "02_drawer_tabs.yaml"
+  - "03_settings.yaml"
+  - "04_settings_deep.yaml"
+  - "05_chat_search.yaml"
 executionOrder:
   continueOnFailure: true
   flowsOrder:
-    - 00 login
     - 01 home and rides
     - 02 drawer and tabs
     - 03 settings

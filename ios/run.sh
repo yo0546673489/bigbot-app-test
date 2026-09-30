@@ -1,5 +1,7 @@
 #!/bin/bash
-# Runs on the GitHub macOS runner: a real iPhone simulator, Hebrew locale, the BigBot simulator build.
+# Runs on the GitHub macOS runner: a real iPhone simulator + the BigBot simulator build.
+# Phase 1 logs in with the phone in English (the password is Latin; a Hebrew keyboard mistypes it).
+# Phase 2 switches the phone to Hebrew (like a real Israeli iPhone), reboots, and sweeps every screen.
 set -x
 [ -f "${APP_URL_FILE:-ios/app-url.txt}" ] || { echo "no iOS build yet"; exit 0; }
 LOC="${SIM_LOCALE:-he}"
@@ -17,33 +19,33 @@ for want in ('iPhone 16 Plus','iPhone 15 Plus','iPhone 16 Pro Max','iPhone 15 Pr
 else:
     c=[t for t in c if t[1]['name'].startswith('iPhone')]; c.sort(key=lambda t:t[0]); print(c[-1][1]['udid'])
 ")
-xcrun simctl list devices | grep "$DEV"
 xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
-if [ "$LOC" = "he" ]; then
-  xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLanguages -array he-IL en-US
-  xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLocale -string he_IL
-  # English keyboard first (the password is Latin), Hebrew second — the UI language stays Hebrew.
-  xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleKeyboards -array "en_US@sw=QWERTY;hw=Automatic" "he_IL@sw=Hebrew;hw=Automatic"
-  xcrun simctl spawn "$DEV" defaults write com.apple.Preferences KeyboardsCurrentAndNext -array "en_US@sw=QWERTY;hw=Automatic" "he_IL@sw=Hebrew;hw=Automatic"
-  xcrun simctl shutdown "$DEV"; xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
-fi
 xcrun simctl install "$DEV" "$APP"
 curl -Ls "https://get.maestro.mobile.dev" | bash
 export PATH="$PATH:$HOME/.maestro/bin"
-mkdir -p shots video
-xcrun simctl io "$DEV" recordVideo --codec h264 video/run.mp4 & REC=$!
 export MAESTRO_DRIVER_STARTUP_TIMEOUT=300000
-sleep 20
-for try in 1 2; do
-  maestro --device "$DEV" test flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml 2>&1 | tee maestro-out.txt
-  grep -q "driver not ready" maestro-out.txt || break
-  echo "maestro driver timeout, retry $try"; sleep 15
-done
+mkdir -p shots video
+mrun() { # retry once when the XCTest driver is slow to start
+  for try in 1 2; do
+    maestro --device "$DEV" test "$@" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" 2>&1 | tee maestro-out.txt
+    grep -q "driver not ready" maestro-out.txt || break
+    sleep 15
+  done
+}
+xcrun simctl io "$DEV" recordVideo --codec h264 video/login.mp4 & REC=$!
+mrun flows/00_login.yaml
+kill -INT $REC; sleep 3
+if [ "$LOC" = "he" ]; then
+  xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLanguages -array he-IL en-US
+  xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLocale -string he_IL
+  xcrun simctl shutdown "$DEV"; xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+  sleep 20
+fi
+xcrun simctl io "$DEV" recordVideo --codec h264 video/run.mp4 & REC=$!
+mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
 kill -INT $REC; sleep 3
 # Maestro writes takeScreenshot files (and its own failure shots) under ~/.maestro/tests
 find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
-for f in $(find ~/.maestro/tests -name "*.png" ! -path "*takeScreenshot*" 2>/dev/null | grep -i -E "fail|screenshot-❌|error" ); do cp "$f" shots/FAIL_$(basename "$f"); done
 ls shots | head -200
-# shrink: half-size JPEG (the full PNGs made a 430 MB artifact)
 for f in shots/*.png; do sips -s format jpeg -s formatOptions 70 -Z 1000 "$f" --out "${f%.png}.jpg" >/dev/null && rm "$f"; done
 exit 0

@@ -12,6 +12,7 @@ adb shell dumpsys package com.bigbotdrivers.app | grep -m2 -E "versionName|versi
 curl -Ls "https://get.maestro.mobile.dev" | bash
 export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots
+maestro test flows/00_login.yaml -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE"
 maestro test flows/ --config flows/config.yaml -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml
 # Maestro writes takeScreenshot files (and its own failure shots) under ~/.maestro/tests
 find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
