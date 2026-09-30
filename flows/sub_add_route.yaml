@@ -18,11 +18,18 @@ name: add route (sub)
 - tapOn:
     text: "הוסף מסלול"
     optional: true
+# the sheet's own "הוסף" button sits left of "ביטול" (RTL)
 - tapOn:
     text: "הוסף"
-    index: 1
+    leftOf:
+      text: "ביטול"
     optional: true
 - waitForAnimationToEnd
-- tapOn:
-    text: "ביטול"
-    optional: true
+- takeScreenshot: shots/01_route_${ORIGIN}_after_add
+- runFlow:
+    when:
+      visible: "הוסף מסלול"
+    commands:
+      - tapOn:
+          text: "ביטול"
+          optional: true

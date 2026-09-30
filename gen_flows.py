@@ -14,7 +14,7 @@ def tap(t,idx=None):
 def scroll_to(t,d='DOWN'): a(f'- scrollUntilVisible:\n    element:\n      text: "{t}"\n    direction: {d}\n    optional: true')
 def back():
     a('- tapOn:\n    text: "(חזרה|סגור)"\n    optional: true\n- runFlow:\n    when:\n      platform: Android\n    commands:\n      - back\n- waitForAnimationToEnd')
-def drawer(): tap("תפריט")
+def drawer(): tap("בית"); tap("תפריט")
 
 head('02 drawer and tabs')
 drawer(); shot('02_01_drawer')

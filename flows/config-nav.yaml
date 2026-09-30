@@ -1,8 +1,10 @@
 flows:
   - "02_drawer_tabs.yaml"
   - "05_chat_search.yaml"
+  - "06_dialogs.yaml"
 executionOrder:
   continueOnFailure: true
   flowsOrder:
+    - 06 dialogs close and take typing
     - 02 drawer and tabs
     - 05 chat and search

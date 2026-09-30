@@ -5,10 +5,18 @@ name: 02 drawer and tabs
 - waitForAnimationToEnd:
     timeout: 10000
 - tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
     text: "תפריט"
     optional: true
 - waitForAnimationToEnd
 - takeScreenshot: shots/02_01_drawer
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
@@ -25,6 +33,10 @@ name: 02 drawer and tabs
 - scroll
 - takeScreenshot: shots/02_02_chat_b
 - tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
     text: "תפריט"
     optional: true
 - waitForAnimationToEnd
@@ -39,6 +51,10 @@ name: 02 drawer and tabs
 - takeScreenshot: shots/02_03_search
 - scroll
 - takeScreenshot: shots/02_03_search_b
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
@@ -55,6 +71,10 @@ name: 02 drawer and tabs
 - scroll
 - takeScreenshot: shots/02_04_notifications_b
 - tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
     text: "תפריט"
     optional: true
 - waitForAnimationToEnd
@@ -69,6 +89,10 @@ name: 02 drawer and tabs
 - takeScreenshot: shots/02_05_settings
 - scroll
 - takeScreenshot: shots/02_05_settings_b
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
@@ -92,6 +116,10 @@ name: 02 drawer and tabs
       platform: Android
     commands:
       - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "בית"
+    optional: true
 - waitForAnimationToEnd
 - tapOn:
     text: "תפריט"

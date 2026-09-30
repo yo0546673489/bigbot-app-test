@@ -1,0 +1,34 @@
+appId: com.bigbotdrivers.app
+name: 06 dialogs close and take typing
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+# New-chat dialog: type a number, then ביטול must close it.
+- tapOn: "צ'אט"
+- waitForAnimationToEnd
+- tapOn: "שיחה חדשה"
+- waitForAnimationToEnd
+- takeScreenshot: shots/06_01_newchat_open
+- tapOn: "050-000-0000"
+- inputText: "0501234567"
+- takeScreenshot: shots/06_02_newchat_TYPED
+- tapOn: "ביטול"
+- waitForAnimationToEnd
+- takeScreenshot: shots/06_03_newchat_after_cancel
+- assertNotVisible: "הזן מספר טלפון של סדרן"
+# Min-price dialog: type, then ביטול must close it.
+- tapOn: "הגדרות"
+- waitForAnimationToEnd
+- tapOn: ".*נסיעות וסינון.*"
+- waitForAnimationToEnd
+- tapOn: "מחיר מינימלי"
+- waitForAnimationToEnd
+- takeScreenshot: shots/06_04_minprice_open
+- tapOn: "סכום ב-₪"
+- inputText: "40"
+- takeScreenshot: shots/06_05_minprice_TYPED
+- tapOn: "ביטול"
+- waitForAnimationToEnd
+- takeScreenshot: shots/06_06_minprice_after_cancel
+- assertNotVisible: "מחיר מינימלי לנסיעה"

@@ -4,7 +4,45 @@ on:
     branches: [main]
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
 jobs:
-  ios:
+  build:
+    # Builds the iPhone SIMULATOR app from the private app repo (read-only deploy key) — no signing.
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - id: ref
+        run: echo "ref=$(head -1 ios/build-ref.txt | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: yo0546673489/bigbot
+          ref: ${{ steps.ref.outputs.ref }}
+          ssh-key: ${{ secrets.APP_REPO_KEY }}
+          path: app
+          fetch-depth: 1
+          sparse-checkout: bigbot/mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: build for the simulator
+        working-directory: app/bigbot/mobile
+        run: |
+          set -x
+          git -C ../.. log -1 --format="%h %s"
+          npm ci --no-audit --no-fund
+          CI=1 npx expo prebuild -p ios --clean
+          cd ios
+          WS=$(ls -d *.xcworkspace | head -1); SCHEME=${WS%.xcworkspace}
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator             -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+          APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1); echo "$APP"
+          tar -czf "$GITHUB_WORKSPACE/sim-app.tar.gz" -C "$(dirname "$APP")" "$(basename "$APP")"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sim-app
+          path: sim-app.tar.gz
+          retention-days: 3
+  test:
+    needs: build
+    if: always()
     runs-on: macos-15
     timeout-minutes: 80
     strategy:
@@ -12,12 +50,16 @@ jobs:
       matrix:
         part:
           - { name: old-home, url: ios/app-url-old.txt, flows: flows/config-home.yaml }
-          - { name: new-home, url: ios/app-url.txt, flows: flows/config-home.yaml }
-          - { name: new-nav, url: ios/app-url.txt, flows: flows/config-nav.yaml }
-          - { name: new-settings, url: ios/app-url.txt, flows: flows/config-settings.yaml }
-          - { name: new-deep, url: ios/app-url.txt, flows: flows/config-deep.yaml }
+          - { name: new-home, url: built, flows: flows/config-home.yaml }
+          - { name: new-nav, url: built, flows: flows/config-nav.yaml }
+          - { name: new-settings, url: built, flows: flows/config-settings.yaml }
+          - { name: new-deep, url: built, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        if: matrix.part.url == 'built'
+        with:
+          name: sim-app
       - name: iPhone simulator
         timeout-minutes: 70
         env:

@@ -3,10 +3,9 @@
 # Phase 1 logs in with the phone in English (the password is Latin; a Hebrew keyboard mistypes it).
 # Phase 2 switches the phone to Hebrew (like a real Israeli iPhone), reboots, and sweeps every screen.
 set -x
-[ -f "${APP_URL_FILE:-ios/app-url.txt}" ] || { echo "no iOS build yet"; exit 0; }
 LOC="${SIM_LOCALE:-he}"
-APP_URL=$(cat "${APP_URL_FILE:-ios/app-url.txt}")
-curl -sL "$APP_URL" -o app.tar.gz
+if [ "$APP_URL_FILE" = "built" ]; then cp sim-app.tar.gz app.tar.gz   # built by the build job
+else APP_URL=$(cat "${APP_URL_FILE:-ios/app-url.txt}"); curl -sL "$APP_URL" -o app.tar.gz; fi
 mkdir app && tar -xzf app.tar.gz -C app
 APP=$(find app -maxdepth 3 -name "*.app" | head -1)
 DEV=$(xcrun simctl list devices available -j | python3 -c "
