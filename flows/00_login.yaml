@@ -19,21 +19,52 @@ name: 00 login
       text: "מספר טלפון"
     index: 0
 - inputText: "0500000000"
-- tapOn:
-    text: "טוב לראות אותך שוב"
-# the password FIELD (a label-relative tap hit the eye icon)
-- tapOn:
-    point: "50%,42%"
-- inputText: ${DEMO_PASSWORD}
-- tapOn:
-    text: "טוב לראות אותך שוב"
-- takeScreenshot: shots/00_03_login_filled
+# New passwordless login (Android 2.11.26x): phone -> "שלחו לי קוד" -> the code.
 - runFlow:
     when:
-      platform: Android
+      visible: "שלחו לי קוד"
     commands:
-      - hideKeyboard
-- tapOn: "התחבר"
+      - runFlow:
+          when:
+            platform: Android
+          commands:
+            - hideKeyboard
+      - takeScreenshot: shots/00_03_login_filled
+      - tapOn: "שלחו לי קוד"
+      - waitForAnimationToEnd:
+          timeout: 10000
+      - takeScreenshot: shots/00_04_code_screen
+      - tapOn:
+          point: "50%,36%"
+      - inputText: ${DEMO_CODE}
+      - takeScreenshot: shots/00_05_code_typed
+      - runFlow:
+          when:
+            platform: Android
+          commands:
+            - hideKeyboard
+      - tapOn:
+          text: "אמת והמשך"
+          optional: true
+# Password login (iPhone build and older Android)
+- runFlow:
+    when:
+      visible: "סיסמה"
+    commands:
+      - tapOn:
+          text: "טוב לראות אותך שוב"
+      - tapOn:
+          point: "50%,42%"
+      - inputText: ${DEMO_PASSWORD}
+      - tapOn:
+          text: "טוב לראות אותך שוב"
+      - takeScreenshot: shots/00_03_login_filled
+      - runFlow:
+          when:
+            platform: Android
+          commands:
+            - hideKeyboard
+      - tapOn: "התחבר"
 - waitForAnimationToEnd:
     timeout: 15000
 # iOS "Save Password?" system sheet — invisible to Maestro, tap "Not Now" by position.
