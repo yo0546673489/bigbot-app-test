@@ -1,0 +1,104 @@
+appId: com.bigbotdrivers.app
+name: 01 home and rides
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "בית"
+    optional: true
+- takeScreenshot: shots/01_01_home
+# Demo account: 3 sample rides arrive 4s / 12s / 25s after the connection.
+- extendedWaitUntil:
+    visible: ".*(בני ברק|ירושלים|פתח תקווה).*"
+    timeout: 40000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_20s__"
+    timeout: 20000
+    optional: true
+- takeScreenshot: shots/01_02_home_with_rides
+- tapOn:
+    text: ".*פנוי.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_03_availability_toggled
+- tapOn:
+    text: ".*פנוי.*"
+    optional: true
+- waitForAnimationToEnd
+# Add the routes from Yosef's screenshot (ים, בב) so the chip rows fill.
+- tapOn:
+    text: ".*הוסף"
+    index: 0
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_04_add_route_sheet
+- tapOn:
+    text: ".*אזור יציאה.*"
+    optional: true
+- inputText: "ים"
+- takeScreenshot: shots/01_05_add_route_KEYBOARD
+- tapOn:
+    text: ".*(הוסף|הוספה)$"
+    index: 1
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*הוסף"
+    index: 0
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*אזור יציאה.*"
+    optional: true
+- inputText: "בב"
+- tapOn:
+    text: ".*(הוסף|הוספה)$"
+    index: 1
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_06_CHIPS_must_start_right
+# Ride card buttons: tap the first reply button of the first ride.
+- tapOn:
+    text: "ת"
+    index: 0
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_07_after_tap_reply
+- extendedWaitUntil:
+    visible: "__wait_6s__"
+    timeout: 6000
+    optional: true
+- takeScreenshot: shots/01_08_after_reply_result
+- scroll
+- takeScreenshot: shots/01_09_rides_scrolled
+- scroll
+- takeScreenshot: shots/01_10_rides_scrolled2
+- scrollUntilVisible:
+    element:
+      text: ".*פנוי.*"
+    direction: UP
+    optional: true
+# Long-press a route chip → km dialog
+- longPressOn:
+    text: "ים"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_11_chip_longpress
+- tapOn:
+    text: "(ביטול|סגור)"
+    optional: true
+- tapOn:
+    text: ".*(מיקום כבוי|מיקום פעיל).*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_12_location_chip
+- tapOn:
+    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
+    optional: true
+- tapOn:
+    text: ".*(קריינות|שקט)$"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/01_13_tts_chip

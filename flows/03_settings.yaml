@@ -1,0 +1,256 @@
+appId: com.bigbotdrivers.app
+name: 03 settings
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_00_settings
+- scroll
+- takeScreenshot: shots/03_00_settings_b
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*נסיעות וסינון.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_1a_rides
+- scroll
+- takeScreenshot: shots/03_1b_rides
+- scroll
+- takeScreenshot: shots/03_1c_rides
+- scroll
+- takeScreenshot: shots/03_1d_rides
+- scroll
+- takeScreenshot: shots/03_1e_rides
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*תגובות וצ'אט.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*תגובות וצ'אט.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_2a_chat
+- scroll
+- takeScreenshot: shots/03_2b_chat
+- scroll
+- takeScreenshot: shots/03_2c_chat
+- scroll
+- takeScreenshot: shots/03_2d_chat
+- scroll
+- takeScreenshot: shots/03_2e_chat
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*אוטומציה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*אוטומציה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_3a_auto
+- scroll
+- takeScreenshot: shots/03_3b_auto
+- scroll
+- takeScreenshot: shots/03_3c_auto
+- scroll
+- takeScreenshot: shots/03_3d_auto
+- scroll
+- takeScreenshot: shots/03_3e_auto
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*התראות ותצוגה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*התראות ותצוגה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_4a_display
+- scroll
+- takeScreenshot: shots/03_4b_display
+- scroll
+- takeScreenshot: shots/03_4c_display
+- scroll
+- takeScreenshot: shots/03_4d_display
+- scroll
+- takeScreenshot: shots/03_4e_display
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*שיתוף נסיעות.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*שיתוף נסיעות.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_5a_share
+- scroll
+- takeScreenshot: shots/03_5b_share
+- scroll
+- takeScreenshot: shots/03_5c_share
+- scroll
+- takeScreenshot: shots/03_5d_share
+- scroll
+- takeScreenshot: shots/03_5e_share
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*מכשירים.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*מכשירים.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_6a_devices
+- scroll
+- takeScreenshot: shots/03_6b_devices
+- scroll
+- takeScreenshot: shots/03_6c_devices
+- scroll
+- takeScreenshot: shots/03_6d_devices
+- scroll
+- takeScreenshot: shots/03_6e_devices
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*חשבון ותמיכה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*חשבון ותמיכה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_7a_account
+- scroll
+- takeScreenshot: shots/03_7b_account
+- scroll
+- takeScreenshot: shots/03_7c_account
+- scroll
+- takeScreenshot: shots/03_7d_account
+- scroll
+- takeScreenshot: shots/03_7e_account
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: UP
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: ".*וואטסאפ.*"
+    direction: UP
+    optional: true
+- tapOn:
+    text: ".*חיבור וואטסאפ.*|.*וואטסאפ מחובר.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/03_8_whatsapp
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd

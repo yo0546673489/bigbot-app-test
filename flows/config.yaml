@@ -1,0 +1,11 @@
+flows:
+  - "0*.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 00 login
+    - 01 home and rides
+    - 02 drawer and tabs
+    - 03 settings
+    - 04 settings deep pages
+    - 05 chat and search

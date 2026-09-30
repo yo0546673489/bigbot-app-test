@@ -1,0 +1,139 @@
+appId: com.bigbotdrivers.app
+name: 05 chat and search
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "צ'אט"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/05_01_chat_list
+- tapOn:
+    text: "שיחה חדשה"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "050-000-0000"
+    optional: true
+- waitForAnimationToEnd
+- inputText: "0501234567"
+- takeScreenshot: shots/05_02_new_chat_KEYBOARD
+- tapOn:
+    text: "פתח צ'אט"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/05_03_conversation
+- tapOn:
+    text: ".*הקלד.*|.*הודעה.*"
+    optional: true
+- waitForAnimationToEnd
+- inputText: "בדיקה"
+- takeScreenshot: shots/05_04_composer_KEYBOARD
+- eraseText: 10
+- tapOn:
+    text: "עוד"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/05_05_more_menu
+- tapOn:
+    text: "ערכת נושא לצ'אט"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2000
+    optional: true
+- takeScreenshot: shots/05_06_theme
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "חיפוש"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/05_10_search
+- tapOn:
+    text: "הוסף מסלול חדש"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*אזור יציאה.*"
+    optional: true
+- waitForAnimationToEnd
+- inputText: "תא"
+- takeScreenshot: shots/05_11_search_add_KEYBOARD
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- scroll
+- takeScreenshot: shots/05_12_search_scrolled
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*חשבון ותמיכה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*חשבון ותמיכה.*"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "החלף תפקיד"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "החלף תפקיד"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/05_20_role_chooser

@@ -1,0 +1,139 @@
+appId: com.bigbotdrivers.app
+name: 02 drawer and tabs
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/02_01_drawer
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "צ'אט"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_02_chat
+- scroll
+- takeScreenshot: shots/02_02_chat_b
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "חיפוש"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_03_search
+- scroll
+- takeScreenshot: shots/02_03_search_b
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "התראות"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_04_notifications
+- scroll
+- takeScreenshot: shots/02_04_notifications_b
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_05_settings
+- scroll
+- takeScreenshot: shots/02_05_settings_b
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הפרופיל שלי"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_06_profile
+- scroll
+- takeScreenshot: shots/02_06_profile_b
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "אודות BigBot"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__w__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/02_07_about
+- scroll
+- takeScreenshot: shots/02_07_about_b
+- tapOn:
+    text: "(חזרה|סגור)"
+    optional: true
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- waitForAnimationToEnd
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/02_20_tab_home
+- tapOn:
+    text: "צ'אט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/02_21_tab_chat
+- tapOn:
+    text: "חיפוש"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/02_22_tab_search
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/02_23_tab_settings

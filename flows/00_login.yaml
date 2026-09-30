@@ -1,0 +1,110 @@
+appId: com.bigbotdrivers.app
+name: 00 login
+---
+- launchApp:
+    clearState: true
+    permissions:
+      all: allow
+- extendedWaitUntil:
+    visible: ".*(התחברות|הרשמה|מי אתה|ברוכים).*"
+    timeout: 60000
+- takeScreenshot: shots/00_01_first_screen
+- tapOn:
+    text: "התחברות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/00_02_login_form
+- tapOn:
+    below:
+      text: "מספר טלפון"
+    index: 0
+- inputText: "0500000000"
+- tapOn:
+    text: "טוב לראות אותך שוב"
+- tapOn:
+    below:
+      text: "סיסמה"
+    index: 0
+- inputText: ${DEMO_PASSWORD}
+- tapOn:
+    text: "טוב לראות אותך שוב"
+- takeScreenshot: shots/00_03_login_filled
+- tapOn: "התחבר"
+- waitForAnimationToEnd:
+    timeout: 15000
+# iOS "Save Password?" system sheet — invisible to Maestro, tap "Not Now" by position.
+- runFlow:
+    when:
+      platform: iOS
+      visible: "אמת והמשך"
+    commands:
+      - extendedWaitUntil:
+          visible: "__wait_4s__"
+          timeout: 4000
+          optional: true
+      - tapOn:
+          point: "33%,61%"
+- waitForAnimationToEnd
+- takeScreenshot: shots/00_04_code_screen
+# Android: the hidden code field takes typed digits.
+- runFlow:
+    when:
+      platform: Android
+      visible: "אמת והמשך"
+    commands:
+      - tapOn:
+          above:
+            text: "הדבק קוד מוואטסאפ"
+          optional: true
+      - inputText: ${DEMO_CODE}
+      - takeScreenshot: shots/00_05_code_typed
+      - tapOn: "אמת והמשך"
+      - waitForAnimationToEnd:
+          timeout: 10000
+# Still on the code screen (iOS always): the server watcher trusts this device,
+# go back and log in with the password again — it goes straight in.
+- runFlow:
+    when:
+      visible: "אמת והמשך"
+    commands:
+      - extendedWaitUntil:
+          visible: "__wait_12s__"
+          timeout: 12000
+          optional: true
+      - runFlow:
+          when:
+            platform: Android
+          commands:
+            - back
+      - runFlow:
+          when:
+            platform: iOS
+          commands:
+            - tapOn:
+                point: "91%,9%"
+      - waitForAnimationToEnd
+      - takeScreenshot: shots/00_06_back_to_login
+      - tapOn:
+          below:
+            text: "סיסמה"
+          index: 0
+      - eraseText: 40
+      - inputText: ${DEMO_PASSWORD}
+      - tapOn:
+          text: "טוב לראות אותך שוב"
+      - tapOn: "התחבר"
+- extendedWaitUntil:
+    visible: ".*(בית|ראשי|פנוי).*"
+    timeout: 45000
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
+    optional: true
+- tapOn:
+    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
+    optional: true
+- tapOn:
+    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
+    optional: true
+- takeScreenshot: shots/00_07_after_login
