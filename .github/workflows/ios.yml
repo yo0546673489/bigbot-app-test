@@ -5,7 +5,9 @@ on:
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
   workflow_dispatch:
     inputs:
-      locale: { description: 'he / en', default: 'he' }
+      locale:
+        description: 'he / en'
+        default: 'he'
 jobs:
   ios:
     runs-on: macos-15
@@ -28,7 +30,11 @@ jobs:
         run: bash ios/run.sh
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: shots-ios-${{ matrix.build.name }}, path: shots }
+        with:
+          name: shots-ios-${{ matrix.build.name }}
+          path: shots
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: video-ios-${{ matrix.build.name }}, path: video }
+        with:
+          name: video-ios-${{ matrix.build.name }}
+          path: video
