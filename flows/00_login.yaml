@@ -57,22 +57,6 @@ name: 00 login
       - tapOn: "התחבר"
 - waitForAnimationToEnd:
     timeout: 15000
-# iOS "Save Password?" system sheet — invisible to Maestro, tap "Not Now" by position.
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - extendedWaitUntil:
-          visible: "__wait_4s__"
-          timeout: 4000
-          optional: true
-      - tapOn:
-          text: "Not Now"
-          optional: true
-      - tapOn:
-          point: "33%,61%"
-- waitForAnimationToEnd
-- takeScreenshot: shots/00_04_code_screen
 # Retry once when the password did not get typed (still on the form).
 - runFlow:
     when:
@@ -88,11 +72,23 @@ name: 00 login
       - tapOn: "התחבר"
       - waitForAnimationToEnd:
           timeout: 15000
+# iOS "Save Password?" system sheet — invisible to Maestro, tap "Not Now" by position.
+- runFlow:
+    when:
+      platform: iOS
+      notVisible: "טוב לראות אותך שוב"
+    commands:
+      - extendedWaitUntil:
+          visible: "__wait_4s__"
+          timeout: 4000
+          optional: true
       - tapOn:
           text: "Not Now"
           optional: true
       - tapOn:
           point: "33%,61%"
+- waitForAnimationToEnd
+- takeScreenshot: shots/00_04_code_screen
 # iPhone: paste the code from the clipboard (like a driver copying it from WhatsApp).
 - runFlow:
     when:

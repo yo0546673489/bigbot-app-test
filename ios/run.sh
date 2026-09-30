@@ -27,7 +27,7 @@ mkdir -p shots video
 mrun() { # retry once when the XCTest driver is slow to start
   for try in 1 2; do
     maestro --device "$DEV" test "$@" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" 2>&1 | tee maestro-out.txt
-    grep -q "driver not ready" maestro-out.txt || break
+    grep -q -E "driver not ready|became unreachable" maestro-out.txt || break
     sleep 15
   done
 }
@@ -38,7 +38,7 @@ if [ "$LOC" = "he" ]; then
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLanguages -array he-IL en-US
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLocale -string he_IL
   xcrun simctl shutdown "$DEV"; xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
-  sleep 20
+  sleep 45
 fi
 mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
 exit 0
