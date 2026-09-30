@@ -24,11 +24,6 @@ name: 00 login
     when:
       visible: "שלחו לי קוד"
     commands:
-      - runFlow:
-          when:
-            platform: Android
-          commands:
-            - hideKeyboard
       - takeScreenshot: shots/00_03_login_filled
       - tapOn: "שלחו לי קוד"
       - waitForAnimationToEnd:
@@ -38,11 +33,6 @@ name: 00 login
           point: "50%,36%"
       - inputText: ${DEMO_CODE}
       - takeScreenshot: shots/00_05_code_typed
-      - runFlow:
-          when:
-            platform: Android
-          commands:
-            - hideKeyboard
       - tapOn:
           text: "אמת והמשך"
           optional: true
