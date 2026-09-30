@@ -5,6 +5,9 @@ name: 02 drawer and tabs
 - waitForAnimationToEnd:
     timeout: 10000
 - tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
     text: "בית"
     optional: true
 - waitForAnimationToEnd

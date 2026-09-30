@@ -5,6 +5,9 @@ name: 04 settings deep pages
 - waitForAnimationToEnd:
     timeout: 10000
 - tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
     text: "הגדרות"
     optional: true
 - waitForAnimationToEnd

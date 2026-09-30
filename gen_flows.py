@@ -3,7 +3,10 @@ import io
 L=[]
 def a(x): L.append(x)
 def head(name):
-    L.clear(); a(f'appId: com.bigbotdrivers.app\nname: {name}\n---\n- launchApp\n- waitForAnimationToEnd:\n    timeout: 10000')
+    L.clear(); a(f'appId: com.bigbotdrivers.app\nname: {name}\n---\n- launchApp\n- waitForAnimationToEnd:\n    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true')
 def save(p): io.open(p,'w',encoding='utf-8',newline='\n').write('\n'.join(L)+'\n')
 def shot(n): a(f'- takeScreenshot: shots/{n}')
 def wait(ms=2500): a(f'- extendedWaitUntil:\n    visible: "__w__"\n    timeout: {ms}\n    optional: true')

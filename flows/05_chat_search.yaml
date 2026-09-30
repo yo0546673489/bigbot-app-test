@@ -5,6 +5,9 @@ name: 05 chat and search
 - waitForAnimationToEnd:
     timeout: 10000
 - tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
     text: "צ'אט"
     optional: true
 - waitForAnimationToEnd
