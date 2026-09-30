@@ -54,9 +54,7 @@ name: 00 login
       visible: "אמת והמשך"
     commands:
       - tapOn:
-          above:
-            text: "הדבק קוד מוואטסאפ"
-          optional: true
+          point: "50%,36%"
       - inputText: ${DEMO_CODE}
       - takeScreenshot: shots/00_05_code_typed
       - tapOn: "אמת והמשך"
