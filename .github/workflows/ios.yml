@@ -52,7 +52,7 @@ jobs:
         part:
           # - { name: old-home, url: ios/app-url-old.txt, flows: flows/config-home.yaml }
           # - { name: new-home, url: built, flows: flows/config-home.yaml }
-          - { name: new-nav, url: built, flows: flows/config-nav.yaml }
+          - { name: new-dialogs2, url: built, flows: flows/config-dialogs.yaml }
           - { name: new-dialogs, url: built, flows: flows/config-dialogs.yaml }
           # - { name: new-settings, url: built, flows: flows/config-settings.yaml }
           # - { name: new-deep, url: built, flows: flows/config-deep.yaml }
