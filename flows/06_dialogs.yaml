@@ -48,6 +48,11 @@ name: 06 dialogs close and take typing
 - takeScreenshot: shots/06_06_minprice_after_cancel
 - assertNotVisible: "מחיר מינימלי לנסיעה"
 # Delete account (Apple requires it): the confirm dialog must open, ביטול must close it.
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: "הגדרות"
+    timeout: 30000
 - tapOn:
     text: "הגדרות"
 - waitForAnimationToEnd
