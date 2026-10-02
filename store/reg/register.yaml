@@ -47,7 +47,7 @@ appId: com.bigbotdrivers.app
     timeout: 40000
 - runFlow: settle.yaml
 - takeScreenshot: shots/05_name_empty
-- tapOn: "שם פרטי \+ משפחה"
+- tapOn: '.*שם פרטי.*'
 - inputText: "Driver Test"
 - hideKeyboard
 - tapOn: "המשך"
