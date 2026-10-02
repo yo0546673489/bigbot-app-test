@@ -91,12 +91,15 @@ appId: com.bigbotdrivers.app
     timeout: 15000
 - runFlow: settle.yaml
 - takeScreenshot: shots/08_vehicle_details_empty
-- tapOn: "לדוגמה: טסלה"
+- tapOn:
+    point: "50%,29%"
 - inputText: "Toyota"
 - hideKeyboard
-- tapOn: "לדוגמה: 2026"
+- tapOn:
+    point: "50%,39%"
 - inputText: "2020"
 - hideKeyboard
+- takeScreenshot: shots/x08b_details_typed
 - tapOn: "המשך"
 - extendedWaitUntil:
     visible: "נהג או נהגת?"
