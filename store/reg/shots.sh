@@ -24,5 +24,5 @@ rc=$?
 adb exec-out screencap -p > shots/zz_final.png
 adb shell wm size > shots/size.txt
 echo "rc=$rc" > shots/rc.txt
-mkdir -p shots/dbg; find dbg ~/.maestro/tests -type f ( -name "*.png" -o -name "*.json" -o -name "*.log" ) 2>/dev/null | head -80 | while read f; do cp "$f" "shots/dbg/$(echo $f | tr / _ | tail -c 90)"; done; find . -maxdepth 4 -name "0*_*.png" -o -maxdepth 4 -name "x*_*.png" | head -40 > shots/found.txt; find store -name "*.png" -exec cp {} shots/ ; 2>/dev/null
+mkdir -p shots/dbg; find dbg "$HOME/.maestro/tests" -type f -name "*.png" 2>/dev/null | head -80 | while read f; do cp "$f" "shots/dbg/$(basename "$f")"; done; ls -R . | head -100 > shots/tree.txt
 exit 0
