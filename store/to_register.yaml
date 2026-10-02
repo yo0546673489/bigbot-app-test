@@ -1,0 +1,15 @@
+appId: com.bigbotdrivers.app
+---
+- launchApp:
+    clearState: true
+    permissions:
+      all: allow
+- extendedWaitUntil:
+    visible: ".*(התחברות|הרשמה|ברוכים).*"
+    timeout: 60000
+- waitForAnimationToEnd
+- takeScreenshot: shots/welcome
+- tapOn: "הרשמה"
+- waitForAnimationToEnd:
+    timeout: 10000
+- hideKeyboard
