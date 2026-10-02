@@ -1,0 +1,117 @@
+appId: com.bigbotdrivers.app
+---
+- launchApp:
+    clearState: true
+    permissions:
+      all: allow
+- extendedWaitUntil:
+    visible: ".*(התחברות|הרשמה|ברוכים).*"
+    timeout: 60000
+- runFlow: settle.yaml
+- takeScreenshot: shots/01_welcome
+- tapOn: "הרשמה"
+- extendedWaitUntil:
+    visible: "שלחו לי קוד"
+    timeout: 20000
+- runFlow: settle.yaml
+- takeScreenshot: shots/02_phone_empty
+- tapOn: "0501234567"
+- inputText: "0500000077"
+- hideKeyboard
+- runFlow: settle.yaml
+- takeScreenshot: shots/03_phone_typed
+- tapOn: "שלחו לי קוד"
+- extendedWaitUntil:
+    visible: "אמת והמשך"
+    timeout: 30000
+- runFlow: settle.yaml
+- takeScreenshot: shots/04_code_screen
+# give the server watcher time to pin the code to 246810
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 5000
+    optional: true
+- tapOn:
+    point: "50%,36%"
+- inputText: "246810"
+- runFlow:
+    when:
+      visible: "אמת והמשך"
+    commands:
+      - hideKeyboard
+      - tapOn:
+          text: "אמת והמשך"
+          optional: true
+- extendedWaitUntil:
+    visible: "איך קוראים לך?"
+    timeout: 40000
+- runFlow: settle.yaml
+- takeScreenshot: shots/05_name_empty
+- tapOn: "שם פרטי \+ משפחה"
+- inputText: "Driver Test"
+- hideKeyboard
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "מתי נולדת?"
+    timeout: 15000
+- runFlow: settle.yaml
+- takeScreenshot: shots/x06_dob_empty
+- tapOn: "17/04/2000"
+- inputText: "01011990"
+- hideKeyboard
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "איזה סוג רכב יש לך?"
+    timeout: 15000
+- runFlow: settle.yaml
+- takeScreenshot: shots/07_vehicle
+- tapOn: "4 מקומות"
+- runFlow: settle.yaml
+- takeScreenshot: shots/x07b_vehicle_selected
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "איזה רכב יש לך בפועל?"
+    timeout: 15000
+- runFlow: settle.yaml
+- takeScreenshot: shots/08_vehicle_details_empty
+- tapOn: "לדוגמה: טסלה"
+- inputText: "Toyota"
+- hideKeyboard
+- tapOn: "לדוגמה: 2026"
+- inputText: "2020"
+- hideKeyboard
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "נהג או נהגת?"
+    timeout: 15000
+- runFlow: settle.yaml
+- takeScreenshot: shots/09_gender
+- tapOn: "נהג"
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "סיים והיכנס"
+    timeout: 15000
+- runFlow: settle.yaml
+- takeScreenshot: shots/x10_phone_step
+- tapOn: "סיים והיכנס"
+- extendedWaitUntil:
+    visible: "דלג"
+    timeout: 30000
+    optional: true
+- runFlow: settle.yaml
+- takeScreenshot: shots/x11_after_finish
+- tapOn:
+    text: "דלג"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 15000
+    optional: true
+- takeScreenshot: shots/x12_landed
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "ההרשמה הושלמה!"
+    timeout: 60000
+- runFlow: settle.yaml
+- takeScreenshot: shots/12_pending

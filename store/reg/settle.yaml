@@ -1,0 +1,8 @@
+appId: com.bigbotdrivers.app
+---
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: "__settle__"
+    timeout: 3500
+    optional: true
