@@ -15,7 +15,8 @@ appId: com.bigbotdrivers.app
     timeout: 20000
 - runFlow: settle.yaml
 - takeScreenshot: shots/02_phone_empty
-- tapOn: "0501234567"
+- tapOn:
+    point: "50%,31%"
 - inputText: "0500000077"
 - hideKeyboard
 - runFlow: settle.yaml
@@ -47,18 +48,22 @@ appId: com.bigbotdrivers.app
     timeout: 40000
 - runFlow: settle.yaml
 - takeScreenshot: shots/05_name_empty
-- tapOn: '.*שם פרטי.*'
+- tapOn:
+    point: "50%,33%"
 - inputText: "Driver Test"
 - hideKeyboard
+- takeScreenshot: shots/x05b_name_typed
 - tapOn: "המשך"
 - extendedWaitUntil:
     visible: "מתי נולדת?"
     timeout: 15000
 - runFlow: settle.yaml
 - takeScreenshot: shots/x06_dob_empty
-- tapOn: "17/04/2000"
+- tapOn:
+    point: "50%,33%"
 - inputText: "01011990"
 - hideKeyboard
+- takeScreenshot: shots/x06b_dob_typed
 - tapOn: "המשך"
 - extendedWaitUntil:
     visible: "איזה סוג רכב יש לך?"
