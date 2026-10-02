@@ -19,8 +19,14 @@ adb shell am broadcast -a com.android.systemui.demo -e command notifications -e 
 curl -Ls "https://get.maestro.mobile.dev" | bash
 export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots
+maestro test store/welcome.yaml
+sleep 3
+adb exec-out screencap -p > shots/welcome.png
 maestro test store/to_register.yaml
-sleep 2
+sleep 3
 adb exec-out screencap -p > shots/register.png
+adb shell input tap 540 700
+sleep 2
+adb exec-out screencap -p > shots/register-focus.png
 adb shell wm size > shots/size.txt
 exit 0
