@@ -35,11 +35,11 @@ appId: com.bigbotdrivers.app
 - tapOn:
     point: "50%,36%"
 - inputText: "246810"
+- takeScreenshot: shots/x04b_code_typed
 - runFlow:
     when:
       visible: "אמת והמשך"
     commands:
-      - hideKeyboard
       - tapOn:
           text: "אמת והמשך"
           optional: true
