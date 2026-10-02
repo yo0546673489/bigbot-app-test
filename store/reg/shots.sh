@@ -21,6 +21,7 @@ export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots
 maestro test --debug-output dbg store/reg/register.yaml
 rc=$?
+adb logcat -d -t 3000 > shots/logcat.txt
 adb exec-out screencap -p > shots/zz_final.png
 adb shell wm size > shots/size.txt
 echo "rc=$rc" > shots/rc.txt

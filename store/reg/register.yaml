@@ -6,6 +6,18 @@ appId: com.bigbotdrivers.app
       all: allow
 - extendedWaitUntil:
     visible: ".*(התחברות|הרשמה|ברוכים).*"
+    timeout: 45000
+    optional: true
+- runFlow:
+    when:
+      notVisible: ".*(התחברות|הרשמה|ברוכים).*"
+    commands:
+      - launchApp:
+          clearState: true
+          permissions:
+            all: allow
+- extendedWaitUntil:
+    visible: ".*(התחברות|הרשמה|ברוכים).*"
     timeout: 60000
 - runFlow: settle.yaml
 - takeScreenshot: shots/01_welcome
