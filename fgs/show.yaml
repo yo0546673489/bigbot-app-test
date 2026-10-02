@@ -1,0 +1,28 @@
+appId: com.bigbotdrivers.app
+name: fgs video - go available
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_3s__"
+    timeout: 3000
+    optional: true
+# the availability SWITCH (left side of the status card) -> driver goes 'available'
+- tapOn:
+    point: "12%,17%"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*(בני ברק|ירושלים|פתח תקווה).*"
+    timeout: 45000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_4s__"
+    timeout: 4000
+    optional: true
