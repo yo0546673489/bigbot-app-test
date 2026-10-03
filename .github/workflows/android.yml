@@ -4,7 +4,45 @@ on:
     branches: [main]
     paths: ['android/**', 'flows/**', '.github/workflows/android.yml']
 jobs:
+  build:
+    # Builds the APK from the private app repo (read-only deploy key) when android/build-ref.txt names a branch.
+    # Empty file = test the BigBot.apk link as before. -PfastMinify=true = the same R8 shrinking as the Play release.
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - id: ref
+        run: echo "ref=$(head -1 android/build-ref.txt 2>/dev/null | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.ref.outputs.ref != ''
+        with:
+          repository: yo0546673489/bigbot
+          ref: ${{ steps.ref.outputs.ref }}
+          ssh-key: ${{ secrets.APP_REPO_KEY }}
+          path: app
+          fetch-depth: 1
+          sparse-checkout: bigbot/android
+      - uses: actions/setup-java@v4
+        if: steps.ref.outputs.ref != ''
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: build the APK
+        if: steps.ref.outputs.ref != ''
+        working-directory: app/bigbot/android
+        run: |
+          git -C ../.. log -1 --format="%h %s"
+          chmod +x gradlew
+          ./gradlew :app:assembleFast -PfastMinify=true -q
+          cp app/build/outputs/apk/fast/app-fast.apk "$GITHUB_WORKSPACE/built.apk"
+      - uses: actions/upload-artifact@v4
+        if: steps.ref.outputs.ref != ''
+        with:
+          name: built-apk
+          path: built.apk
+          retention-days: 3
   android:
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 80
     strategy:
@@ -13,12 +51,16 @@ jobs:
       max-parallel: 1
       matrix:
         part:
-          # - { name: home, flows: flows/config-home.yaml }
-          # - { name: nav, flows: flows/config-nav.yaml }
-          # - { name: settings, flows: flows/config-settings.yaml }
+          - { name: home, flows: flows/config-home.yaml }
+          - { name: nav, flows: flows/config-nav.yaml }
+          - { name: settings, flows: flows/config-settings.yaml }
           - { name: deep, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: built-apk
       - name: enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

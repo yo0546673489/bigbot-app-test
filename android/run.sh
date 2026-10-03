@@ -2,7 +2,7 @@
 # Runs inside android-emulator-runner (a real Android 14 emulator), Hebrew locale, the BigBot.apk from the link.
 set -x
 APK_URL=$(cat android/apk-url.txt)
-curl -sL "$APK_URL" -o app.apk; ls -la app.apk
+if [ -f built.apk ]; then cp built.apk app.apk; echo "testing the APK built from android/build-ref.txt"; else curl -sL "$APK_URL" -o app.apk; fi; ls -la app.apk
 adb root; sleep 3
 adb shell "setprop persist.sys.locale he-IL; setprop ctl.restart zygote"
 sleep 5; adb wait-for-device
