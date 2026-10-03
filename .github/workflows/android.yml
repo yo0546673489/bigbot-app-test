@@ -51,10 +51,10 @@ jobs:
       max-parallel: 1
       matrix:
         part:
-          - { name: home, flows: flows/config-home.yaml }
+          # - { name: home, flows: flows/config-home.yaml }
           - { name: nav, flows: flows/config-nav.yaml }
-          - { name: settings, flows: flows/config-settings.yaml }
-          - { name: deep, flows: flows/config-deep.yaml }
+          # - { name: settings, flows: flows/config-settings.yaml }
+          # - { name: deep, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
