@@ -9,6 +9,15 @@ name: 00 login
     visible: ".*(התחברות|הרשמה|מי אתה|ברוכים).*"
     timeout: 60000
 - takeScreenshot: shots/00_01_first_screen
+# First launch plays the welcome intro video (WELCOME-INTRO) over the welcome
+# screen — skip it, then wait for the real buttons.
+- tapOn:
+    text: "דלג"
+    optional: true
+- extendedWaitUntil:
+    visible: "התחברות"
+    timeout: 20000
+- takeScreenshot: shots/00_01b_welcome
 - tapOn:
     text: "התחברות"
     optional: true
