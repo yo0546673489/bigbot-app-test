@@ -1,0 +1,357 @@
+appId: com.bigbotdrivers.app
+name: 09 solo dispatcher (fake data)
+---
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview"
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: shots/09_00_preview_list
+# ── intro
+- openLink: "bigbot://solo/preview?open=intro"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_01a_intro
+- scroll
+- takeScreenshot: shots/09_01b_intro_scrolled
+# ── login
+- openLink: "bigbot://solo/preview?open=login"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_02a_login
+- scroll
+- takeScreenshot: shots/09_02b_login_scrolled
+- tapOn:
+    text: ".*שלח.*קוד.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_02c_login_send
+# ── access
+- openLink: "bigbot://solo/preview?open=access"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_03a_access
+- scroll
+- takeScreenshot: shots/09_03b_access_scrolled
+# ── access-revoked
+- openLink: "bigbot://solo/preview?open=access-revoked"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_04a_access-revoked
+- scroll
+- takeScreenshot: shots/09_04b_access-revoked_scrolled
+# ── whatsapp
+- openLink: "bigbot://solo/preview?open=whatsapp"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_05a_whatsapp
+- scroll
+- takeScreenshot: shots/09_05b_whatsapp_scrolled
+- tapOn:
+    text: "קבל קוד חיבור"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_05c_wa_code
+- tapOn:
+    text: "חבר בלחיצה"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_05d_wa_link
+# ── welcome
+- openLink: "bigbot://solo/preview?open=welcome"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_06a_welcome
+- scroll
+- takeScreenshot: shots/09_06b_welcome_scrolled
+- tapOn:
+    text: "הסבר מפורט יותר"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_06c_welcome_more
+# ── home
+- openLink: "bigbot://solo/preview?open=home"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_07a_home
+- scroll
+- takeScreenshot: shots/09_07b_home_scrolled
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_07c_drawer
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+# ── home
+- openLink: "bigbot://solo/preview?open=home"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_08a_home
+- scroll
+- takeScreenshot: shots/09_08b_home_scrolled
+- tapOn:
+    text: ".*נסיעה חדשה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_08c_home_newride
+# ── publish
+- openLink: "bigbot://solo/preview?open=publish"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_09a_publish
+- scroll
+- takeScreenshot: shots/09_09b_publish_scrolled
+- tapOn:
+    text: "נא לרשום את פרטי הנסיעה בטקסט חופשי"
+    optional: true
+- inputText: "בב לים 120"
+- hideKeyboard
+- takeScreenshot: shots/09_09c_publish_typed
+- tapOn:
+    text: ".*טלפון הלקוח.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_09d_publish_phone_sheet
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- tapOn:
+    text: "פרסום בקטגוריה"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_09e_publish_category
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+# ── ride
+- openLink: "bigbot://solo/preview?open=ride"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_10a_ride
+- scroll
+- takeScreenshot: shots/09_10b_ride_scrolled
+- tapOn:
+    text: ".*ביטול.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_10c_ride_cancel_sheet
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+# ── groups
+- openLink: "bigbot://solo/preview?open=groups"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_11a_groups
+- scroll
+- takeScreenshot: shots/09_11b_groups_scrolled
+- tapOn:
+    text: "ניהול קטגוריות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_11c_categories
+# ── groups-select
+- openLink: "bigbot://solo/preview?open=groups-select"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_12a_groups-select
+- scroll
+- takeScreenshot: shots/09_12b_groups-select_scrolled
+# ── who-got
+- openLink: "bigbot://solo/preview?open=who-got"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_13a_who-got
+- scroll
+- takeScreenshot: shots/09_13b_who-got_scrolled
+# ── settings
+- openLink: "bigbot://solo/preview?open=settings"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_14a_settings
+- scroll
+- takeScreenshot: shots/09_14b_settings_scrolled
+- tapOn:
+    text: "מפרסם מהמספר"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_14c_publish_number
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- tapOn:
+    text: "יציאה מהחשבון"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_14d_logout_sheet
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- tapOn:
+    text: "ניקוי צ'אטים בארכיון"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_14e_cleanup
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+# ── history
+- openLink: "bigbot://solo/preview?open=history"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_15a_history
+- scroll
+- takeScreenshot: shots/09_15b_history_scrolled
+# ── reply
+- openLink: "bigbot://solo/preview?open=reply"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_16a_reply
+- scroll
+- takeScreenshot: shots/09_16b_reply_scrolled
+# ── /solo/replies
+- openLink: "bigbot://solo/replies"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_17a_replies
+- scroll
+- takeScreenshot: shots/09_17b_replies_scrolled
+# ── /solo/rides
+- openLink: "bigbot://solo/rides"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_18a_active_rides
+- scroll
+- takeScreenshot: shots/09_18b_active_rides_scrolled
+# ── /solo/chats
+- openLink: "bigbot://solo/chats"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_19a_chats
+- scroll
+- takeScreenshot: shots/09_19b_chats_scrolled
+# ── /solo/categories
+- openLink: "bigbot://solo/categories"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_20a_categories
+- scroll
+- takeScreenshot: shots/09_20b_categories_scrolled
+# ── /solo/wa-numbers
+- openLink: "bigbot://solo/wa-numbers"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_21a_wa_numbers
+- scroll
+- takeScreenshot: shots/09_21b_wa_numbers_scrolled
+# ── /solo/home
+- openLink: "bigbot://solo/home"
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/09_22a_home_again
+- scroll
+- takeScreenshot: shots/09_22b_home_again_scrolled
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_22c_drawer
+- tapOn:
+    text: "צ'אטים"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/09_22d_drawer_chats

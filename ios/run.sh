@@ -33,7 +33,7 @@ mrun() { # retry once when the XCTest driver is slow to start
 }
 # the login code on the simulator clipboard: the app's "הדבק קוד מוואטסאפ" button pastes it
 printf '%s' "$DEMO_CODE" | xcrun simctl pbcopy "$DEV"
-mrun flows/00_login.yaml
+if [ "${DO_LOGIN:-1}" = "1" ]; then mrun flows/00_login.yaml; fi
 if [ "$LOC" = "he" ]; then
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLanguages -array he-IL en-US
   xcrun simctl spawn "$DEV" defaults write "Apple Global Domain" AppleLocale -string he_IL

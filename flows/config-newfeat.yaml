@@ -1,0 +1,6 @@
+flows:
+  - "07_newfeat.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 07 new features

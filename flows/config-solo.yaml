@@ -1,0 +1,6 @@
+flows:
+  - "09_solo.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 09 solo dispatcher (fake data)

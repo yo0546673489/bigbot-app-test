@@ -1,14 +1,32 @@
 name: app test - iPhone
 on:
   workflow_dispatch:
+    inputs:
+      reuse_run_id:
+        description: 'Skip the build and test the sim apps of this earlier run id (empty = build now)'
+        required: false
+        default: ''
+      parts:
+        description: 'Comma list of parts to run (empty = all)'
+        required: false
+        default: ''
   push:
     branches: [main]
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
 jobs:
   build:
     # Builds the iPhone SIMULATOR app from the private app repo (read-only deploy key) — no signing.
+    # variant main    = the normal app (driver part against the real server, demo account).
+    # variant solofake = same code with EXPO_PUBLIC_SOLO_FAKE=1: the solo-dispatcher module answers
+    #                    from its in-memory fake (api/soloFake.ts) so every solo screen can be tapped
+    #                    without a real solo account. Test-only, never shipped.
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.reuse_run_id == '' }}
     runs-on: macos-15
-    timeout-minutes: 60
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [main, solofake]
     steps:
       - uses: actions/checkout@v4
       - id: ref
@@ -26,6 +44,8 @@ jobs:
           node-version: 22
       - name: build for the simulator
         working-directory: app/bigbot/mobile
+        env:
+          EXPO_PUBLIC_SOLO_FAKE: ${{ matrix.variant == 'solofake' && '1' || '' }}
         run: |
           set -x
           X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1); echo "xcode: $X"; [ -n "$X" ] && sudo xcode-select -s "$X"; xcodebuild -version
@@ -34,48 +54,64 @@ jobs:
           CI=1 npx expo prebuild -p ios --clean
           cd ios
           WS=$(ls -d *.xcworkspace | head -1); SCHEME=${WS%.xcworkspace}
-          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator             -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet 2>&1 | tail -200
           APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1); echo "$APP"
+          [ -n "$APP" ] || exit 1
           tar -czf "$GITHUB_WORKSPACE/sim-app.tar.gz" -C "$(dirname "$APP")" "$(basename "$APP")"
       - uses: actions/upload-artifact@v4
         with:
-          name: sim-app
+          name: sim-app-${{ matrix.variant }}
           path: sim-app.tar.gz
-          retention-days: 3
+          retention-days: 5
   test:
     needs: build
-    if: always()
+    if: ${{ always() }}
     runs-on: macos-15
     timeout-minutes: 80
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         part:
-          - { name: home, url: built, flows: flows/config-home.yaml }
-          - { name: nav, url: built, flows: flows/config-nav.yaml }
-          - { name: settings, url: built, flows: flows/config-settings.yaml }
-          - { name: deep, url: built, flows: flows/config-deep.yaml }
-          - { name: dialogs, url: built, flows: flows/config-dialogs.yaml }
+          - { name: home, app: main, flows: flows/config-home.yaml, login: '1' }
+          - { name: nav, app: main, flows: flows/config-nav.yaml, login: '1' }
+          - { name: settings, app: main, flows: flows/config-settings.yaml, login: '1' }
+          - { name: deep, app: main, flows: flows/config-deep.yaml, login: '1' }
+          - { name: newfeat, app: main, flows: flows/config-newfeat.yaml, login: '1' }
+          - { name: solo, app: solofake, flows: flows/config-solo.yaml, login: '0' }
     steps:
       - uses: actions/checkout@v4
+      - id: want
+        run: |
+          P="${{ inputs.parts }}"
+          if [ -z "$P" ] || echo ",$P," | grep -q ",${{ matrix.part.name }},"; then echo "run=1" >> "$GITHUB_OUTPUT"; else echo "run=0" >> "$GITHUB_OUTPUT"; fi
       - uses: actions/download-artifact@v4
-        if: matrix.part.url == 'built'
+        if: steps.want.outputs.run == '1' && (github.event_name != 'workflow_dispatch' || inputs.reuse_run_id == '')
         with:
-          name: sim-app
+          name: sim-app-${{ matrix.part.app }}
+      - uses: actions/download-artifact@v4
+        if: steps.want.outputs.run == '1' && github.event_name == 'workflow_dispatch' && inputs.reuse_run_id != ''
+        with:
+          name: sim-app-${{ matrix.part.app }}
+          run-id: ${{ inputs.reuse_run_id }}
+          github-token: ${{ github.token }}
       - name: iPhone simulator
+        if: steps.want.outputs.run == '1'
         timeout-minutes: 70
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
           DEMO_CODE: ${{ secrets.DEMO_CODE }}
           SIM_LOCALE: he
-          APP_URL_FILE: ${{ matrix.part.url }}
+          APP_URL_FILE: built
           FLOW_CONFIG: ${{ matrix.part.flows }}
+          DO_LOGIN: ${{ matrix.part.login }}
         run: bash ios/run.sh
       - name: collect screenshots
-        if: always()
+        if: always() && steps.want.outputs.run == '1'
         run: bash ios/collect.sh
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.want.outputs.run == '1'
         with:
           name: shots-ios-${{ matrix.part.name }}
           path: shots

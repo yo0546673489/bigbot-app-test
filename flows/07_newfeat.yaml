@@ -1,0 +1,384 @@
+appId: com.bigbotdrivers.app
+name: 07 new features
+---
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_01a_settings_main
+- scrollUntilVisible:
+    element:
+      text: ".*תגובות וצ'אט.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*תגובות וצ'אט.*"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "לשוניות למעלה.*"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/07_01b_chat_page_tabs_row
+- tapOn:
+    text: "לשוניות למעלה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_01c_tabs_toggled
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "צ'אט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_01d_chat_list_header
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "חיבור טלגרם"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/07_02a_tg_card
+- tapOn:
+    text: "חבר טלגרם"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_02b_tg_phone_step
+- tapOn:
+    text: "חיבור טלגרם"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_02c_tg_page_alt
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_03a_drawer
+- tapOn:
+    text: "הפרופיל שלי"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_03b_profile
+- tapOn:
+    text: "שם מלא"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_03c_name_dialog
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "טלפון"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_03d_phone_note
+- tapOn:
+    text: "תאריך לידה"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_03e_dob_dialog
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "החלפת משתמש"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/07_04a_drawer_bottom
+- tapOn:
+    text: "חיובי תחנות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_04b_station_pay
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "מכשירים"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "מכשירים"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_05a_devices
+- tapOn:
+    text: ".*קישור מכשיר.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_05b_link_device
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*התראות ותצוגה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*התראות ותצוגה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_06a_display
+- scrollUntilVisible:
+    element:
+      text: "עוד הגדרות"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/07_06b_more_settings
+- scrollUntilVisible:
+    element:
+      text: "עיצוב כרטיסיות"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "עיצוב כרטיסיות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "איפוס רוחב הכרטיסיות"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/07_06c_card_reset_rows
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "חשבון ותמיכה"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "חשבון ותמיכה"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_07a_account
+- tapOn:
+    text: "החלף תפקיד"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_07b_role_sheet
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "התראות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_08a_notifications
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "חיפוש"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_08b_search
+- tapOn:
+    text: "הוסף מסלול חדש"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_08c_search_add_dialog
+- inputText: "בב_ים"
+- takeScreenshot: shots/07_08d_search_add_typed
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*(מיקום כבוי|מיקום פעיל).*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_09a_location_chip
+- tapOn:
+    text: "(Allow While Using App|Allow Once|Allow|אישור|מותר).*"
+    optional: true
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "__wait_6s__"
+    timeout: 6000
+    optional: true
+- takeScreenshot: shots/07_09b_location_on
+- tapOn:
+    text: ".*(מיקום כבוי|מיקום פעיל).*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_09c_location_off
+- longPressOn:
+    text: "ת"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_09d_longpress_time_sheet
+- tapOn:
+    text: "(ביטול|סגור|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*וואטסאפ.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_10a_wa_page
+- scrollUntilVisible:
+    element:
+      text: "שני וואטסאפים"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "שני וואטסאפים"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_10b_wa2
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "חשבון ותמיכה"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: "חשבון ותמיכה"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*צ'אט שירות לקוחות.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*צ'אט שירות לקוחות.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07_11a_support
