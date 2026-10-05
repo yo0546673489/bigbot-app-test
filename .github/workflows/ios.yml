@@ -1,5 +1,6 @@
 name: app test - iPhone
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ['ios/**', 'flows/**', '.github/workflows/ios.yml']
@@ -50,12 +51,11 @@ jobs:
       fail-fast: false
       matrix:
         part:
-          # - { name: old-home, url: ios/app-url-old.txt, flows: flows/config-home.yaml }
-          # - { name: new-home, url: built, flows: flows/config-home.yaml }
-          - { name: new-dialogs2, url: built, flows: flows/config-dialogs.yaml }
-          - { name: new-dialogs, url: built, flows: flows/config-dialogs.yaml }
-          # - { name: new-settings, url: built, flows: flows/config-settings.yaml }
-          # - { name: new-deep, url: built, flows: flows/config-deep.yaml }
+          - { name: home, url: built, flows: flows/config-home.yaml }
+          - { name: nav, url: built, flows: flows/config-nav.yaml }
+          - { name: settings, url: built, flows: flows/config-settings.yaml }
+          - { name: deep, url: built, flows: flows/config-deep.yaml }
+          - { name: dialogs, url: built, flows: flows/config-dialogs.yaml }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
