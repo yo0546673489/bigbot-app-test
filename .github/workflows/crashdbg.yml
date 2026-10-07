@@ -1,0 +1,44 @@
+name: iPhone launch crash debug
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Run id that holds the sim-app-main artifact'
+        required: true
+jobs:
+  launch:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sim-app-main
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: launch and capture
+        run: |
+          set -x
+          mkdir app && tar -xzf sim-app.tar.gz -C app
+          APP=$(find app -maxdepth 3 -name "*.app" | head -1)
+          DEV=$(xcrun simctl list devices available -j | python3 -c "
+          import json,sys
+          d=json.load(sys.stdin)['devices']
+          c=[(r,x) for r,v in d.items() if 'iOS' in r for x in v if x['name']=='iPhone 16 Plus']
+          c.sort(key=lambda t:t[0]); print(c[-1][1]['udid'])")
+          xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+          xcrun simctl install "$DEV" "$APP"
+          mkdir -p out
+          ( timeout 60 xcrun simctl launch --console-pty "$DEV" com.bigbotdrivers.app > out/console.txt 2>&1 ) || true
+          sleep 5
+          xcrun simctl spawn "$DEV" launchctl list | grep -i bigbot > out/running.txt || echo "NOT RUNNING" > out/running.txt
+          xcrun simctl io "$DEV" screenshot out/screen.png || true
+          xcrun simctl spawn "$DEV" log show --last 3m --style compact --predicate 'process == "BigBot" OR eventMessage CONTAINS[c] "bigbot"' > out/oslog.txt 2>&1 || true
+          ls -la ~/Library/Logs/DiagnosticReports/ > out/reports-list.txt 2>&1 || true
+          for f in $(ls -t ~/Library/Logs/DiagnosticReports/*BigBot* 2>/dev/null | head -3); do cp "$f" out/; done
+          tail -150 out/console.txt; cat out/running.txt; ls out
+          for f in out/*.ips; do [ -f "$f" ] && head -c 6000 "$f"; done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: crashdbg
+          path: out
