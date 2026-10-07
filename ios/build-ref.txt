@@ -1,1 +1,1 @@
-claude/ios-parity-full
+claude/ios-release-1.0.1
