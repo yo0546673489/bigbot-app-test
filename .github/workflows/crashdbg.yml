@@ -28,14 +28,15 @@ jobs:
           xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
           xcrun simctl install "$DEV" "$APP"
           mkdir -p out
-          ( timeout 60 xcrun simctl launch --console-pty "$DEV" com.bigbotdrivers.app > out/console.txt 2>&1 ) || true
-          sleep 5
+          xcrun simctl launch --stdout="$PWD/out/stdout.txt" --stderr="$PWD/out/stderr.txt" "$DEV" com.bigbotdrivers.app > out/console.txt 2>&1 || true
+          sleep 25
+          cp out/stderr.txt out/stderr-copy.txt 2>/dev/null || true
           xcrun simctl spawn "$DEV" launchctl list | grep -i bigbot > out/running.txt || echo "NOT RUNNING" > out/running.txt
           xcrun simctl io "$DEV" screenshot out/screen.png || true
           xcrun simctl spawn "$DEV" log show --last 3m --style compact --predicate 'process == "BigBot" OR eventMessage CONTAINS[c] "bigbot"' > out/oslog.txt 2>&1 || true
           ls -la ~/Library/Logs/DiagnosticReports/ > out/reports-list.txt 2>&1 || true
           for f in $(ls -t ~/Library/Logs/DiagnosticReports/*BigBot* 2>/dev/null | head -3); do cp "$f" out/; done
-          tail -150 out/console.txt; cat out/running.txt; ls out
+          tail -50 out/console.txt; tail -150 out/stderr.txt; tail -80 out/stdout.txt; cat out/running.txt; ls out
           for f in out/*.ips; do [ -f "$f" ] && head -c 6000 "$f"; done
       - uses: actions/upload-artifact@v4
         if: always()
