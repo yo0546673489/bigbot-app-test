@@ -184,6 +184,19 @@ name: 00 login
                 commands:
                   - tapOn:
                       point: "33%,61%"
+# BOT-CONTACT-EXPIRY: the one-time "ביגבוט בוואטסאפ" screen of a first login. Photograph it, then "המשך".
+- extendedWaitUntil:
+    visible: ".*(בית|ראשי|פנוי|ביגבוט בוואטסאפ).*"
+    timeout: 45000
+    optional: true
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - takeScreenshot: shots/00_06_bot_contact
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
 - extendedWaitUntil:
     visible: ".*(בית|ראשי|פנוי).*"
     timeout: 45000
