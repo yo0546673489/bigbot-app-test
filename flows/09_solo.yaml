@@ -8,11 +8,17 @@ name: 09 solo dispatcher (fake data)
     text: "דלג"
     optional: true
 - openLink: "bigbot://solo/preview"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - takeScreenshot: shots/09_00_preview_list
 # ── intro
 - openLink: "bigbot://solo/preview?open=intro"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -24,6 +30,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_01b_intro_scrolled
 # ── login
 - openLink: "bigbot://solo/preview?open=login"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -40,6 +49,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_02c_login_send
 # ── access
 - openLink: "bigbot://solo/preview?open=access"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -51,6 +63,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_03b_access_scrolled
 # ── access-revoked
 - openLink: "bigbot://solo/preview?open=access-revoked"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -62,6 +77,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_04b_access-revoked_scrolled
 # ── whatsapp
 - openLink: "bigbot://solo/preview?open=whatsapp"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -83,6 +101,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_05d_wa_link
 # ── welcome
 - openLink: "bigbot://solo/preview?open=welcome"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -99,6 +120,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_06c_welcome_more
 # ── home
 - openLink: "bigbot://solo/preview?open=home"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -118,6 +142,9 @@ name: 09 solo dispatcher (fake data)
     optional: true
 # ── home
 - openLink: "bigbot://solo/preview?open=home"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -134,6 +161,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_08c_home_newride
 # ── publish
 - openLink: "bigbot://solo/preview?open=publish"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -167,6 +197,9 @@ name: 09 solo dispatcher (fake data)
     optional: true
 # ── ride
 - openLink: "bigbot://solo/preview?open=ride"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -186,6 +219,9 @@ name: 09 solo dispatcher (fake data)
     optional: true
 # ── groups
 - openLink: "bigbot://solo/preview?open=groups"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -202,6 +238,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_11c_categories
 # ── groups-select
 - openLink: "bigbot://solo/preview?open=groups-select"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -213,6 +252,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_12b_groups-select_scrolled
 # ── who-got
 - openLink: "bigbot://solo/preview?open=who-got"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -224,6 +266,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_13b_who-got_scrolled
 # ── settings
 - openLink: "bigbot://solo/preview?open=settings"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -259,6 +304,9 @@ name: 09 solo dispatcher (fake data)
     optional: true
 # ── history
 - openLink: "bigbot://solo/preview?open=history"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -270,6 +318,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_15b_history_scrolled
 # ── reply
 - openLink: "bigbot://solo/preview?open=reply"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -281,6 +332,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_16b_reply_scrolled
 # ── /solo/replies
 - openLink: "bigbot://solo/replies"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -292,6 +346,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_17b_replies_scrolled
 # ── /solo/rides
 - openLink: "bigbot://solo/rides"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -303,6 +360,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_18b_active_rides_scrolled
 # ── /solo/chats
 - openLink: "bigbot://solo/chats"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -314,6 +374,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_19b_chats_scrolled
 # ── /solo/categories
 - openLink: "bigbot://solo/categories"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -325,6 +388,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_20b_categories_scrolled
 # ── /solo/wa-numbers
 - openLink: "bigbot://solo/wa-numbers"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
@@ -336,6 +402,9 @@ name: 09 solo dispatcher (fake data)
 - takeScreenshot: shots/09_21b_wa_numbers_scrolled
 # ── /solo/home
 - openLink: "bigbot://solo/home"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
