@@ -1,0 +1,68 @@
+appId: com.bigbotdrivers.app
+name: 12 cleanup pick number - solo dispatcher (fake data, two numbers)
+---
+# CLEANUP-PICK-NUMBER (13/10/2026): an account with two linked WhatsApp numbers is asked which
+# number to clean before the confirmation, and the confirmation names the chosen number.
+# The fake backend (preview scenario settings-two-wa) answers `prepare` with the two numbers.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview?open=settings-two-wa"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "הגדרות סדרן"
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      notVisible: "הגדרות סדרן"
+    commands:
+      - openLink: "bigbot://solo/preview?open=settings-two-wa"
+      - tapOn:
+          text: "(פתיחה|Open)"
+          optional: true
+      - extendedWaitUntil:
+          visible: "הגדרות סדרן"
+          timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 8000
+- swipe:
+    start: 50%, 56%
+    end: 50%, 45%
+    duration: 1500
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_00_row
+- tapOn:
+    text: "ניקוי צ'אטים בארכיון.*"
+- extendedWaitUntil:
+    visible: ".*באיזה מספר לנקות.*"
+    timeout: 10000
+- takeScreenshot: shots/12_01_choose
+- tapOn:
+    text: ".*052-123-4567.*"
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_02_choose_picked
+- tapOn:
+    text: "המשך"
+- extendedWaitUntil:
+    visible: "כן, למחוק היסטוריה"
+    timeout: 10000
+- takeScreenshot: shots/12_03_confirm_named
+- assertVisible: ".*המספר שנבחר: 052-123-4567.*"
+- tapOn:
+    text: "כן, למחוק היסטוריה"
+    waitToSettleTimeoutMs: 200
+- extendedWaitUntil:
+    visible: ".*הניקוי הושלם בהצלחה.*"
+    timeout: 25000
+    optional: true
+- takeScreenshot: shots/12_04_done
+- tapOn:
+    text: "סגירה"
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_05_after

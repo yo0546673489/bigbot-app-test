@@ -75,6 +75,7 @@ jobs:
       matrix:
         part:
           - { name: cleanup, app: solofake, flows: flows/config-cleanup.yaml, login: '0' }
+          - { name: cleanuppick, app: solofake, flows: flows/config-cleanup-pick.yaml, login: '0' }
           - { name: drivercleanup, app: main, flows: flows/config-driver-cleanup.yaml, login: '1' }
     steps:
       - uses: actions/checkout@v4

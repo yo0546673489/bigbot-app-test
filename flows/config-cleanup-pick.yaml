@@ -1,0 +1,6 @@
+flows:
+  - "12_cleanup_pick_number.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 12 cleanup pick number - solo dispatcher (fake data, two numbers)
