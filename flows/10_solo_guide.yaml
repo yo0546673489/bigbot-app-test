@@ -1,0 +1,102 @@
+appId: com.bigbotdrivers.app
+name: 10 solo guide (fake data)
+---
+# FEAT-APP-TOUR rounds 4+5 — the "?" of the solo header, the solo dispatcher's guide, and the long
+# explanation with examples. The guide is open in the test-only solo build (EXPO_PUBLIC_SOLO_FAKE=1).
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview?open=home"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/10_00_home_help_button
+# ── the "?" opens the solo dispatcher's guide
+- tapOn:
+    text: "הסבר"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot: shots/10_01_guide_open
+- scroll
+- takeScreenshot: shots/10_01b_guide_open_scrolled
+# ── a starter question → the short answer
+- tapOn:
+    text: "איך מפרסמים נסיעה\\?"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/10_02_short_answer
+- scrollUntilVisible:
+    element:
+      text: "הסבר מפורט ודוגמאות"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/10_02b_short_answer_chip
+# ── the long explanation with examples
+- tapOn:
+    text: "הסבר מפורט ודוגמאות"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/10_03_long
+- scrollUntilVisible:
+    element:
+      text: "דוגמאות:"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/10_03b_long_examples
+- scroll
+- takeScreenshot: shots/10_03c_long_end
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/10_04_closed
+# ── an inner page: the "?" next to the back button's title
+- openLink: "bigbot://solo/preview?open=settings"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/10_05_settings_help_button
+- tapOn:
+    text: "הסבר"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot: shots/10_06_guide_from_settings
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
+# ── the publish page (a header with a trailing control, if any)
+- openLink: "bigbot://solo/preview?open=publish"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/10_07_publish_help_button

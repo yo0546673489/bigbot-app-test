@@ -1,6 +1,8 @@
 flows:
   - "09_solo.yaml"
+  - "10_solo_guide.yaml"
 executionOrder:
   continueOnFailure: true
   flowsOrder:
     - 09 solo dispatcher (fake data)
+    - 10 solo guide (fake data)
