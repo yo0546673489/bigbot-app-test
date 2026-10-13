@@ -45,6 +45,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -81,6 +90,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -117,6 +135,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -153,6 +180,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -189,6 +225,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -225,6 +270,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
@@ -261,6 +315,15 @@ name: 03 settings
     commands:
       - back
 - waitForAnimationToEnd
+# back on the settings tab when the last category did not exist for this account
+- runFlow:
+    when:
+      notVisible: ".*נסיעות וסינון.*"
+    commands:
+      - tapOn:
+          text: "הגדרות"
+          optional: true
+      - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
