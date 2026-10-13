@@ -14,12 +14,30 @@ name: 10 cleanup status - solo dispatcher (fake data)
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
+# Right after a cold start the link can be handled late (the welcome screen is still up), so wait
+# for the settings screen itself, and send the link once more when it did not come.
+- extendedWaitUntil:
+    visible: "הגדרות סדרן"
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      notVisible: "הגדרות סדרן"
+    commands:
+      - openLink: "bigbot://solo/preview?open=settings"
+      - tapOn:
+          text: "(פתיחה|Open)"
+          optional: true
+      - extendedWaitUntil:
+          visible: "הגדרות סדרן"
+          timeout: 30000
 - waitForAnimationToEnd:
     timeout: 8000
 - extendedWaitUntil:
     visible: "__wait_2s__"
     timeout: 2500
     optional: true
+- takeScreenshot: shots/10_00_settings_top
 # On iOS the row is in the hierarchy even while it is below the fold, so scrollUntilVisible
 # returns at once and the tap lands on the bottom bar. A plain scroll (as 09_solo does) first.
 - scroll
