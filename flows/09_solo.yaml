@@ -138,6 +138,10 @@ name: 09 solo dispatcher (fake data)
 - waitForAnimationToEnd
 - takeScreenshot: shots/09_07c_drawer
 - tapOn:
+    text: "ראשי"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
 # ── home
@@ -187,6 +191,11 @@ name: 09 solo dispatcher (fake data)
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     text: "פרסום בקטגוריה"
     optional: true
@@ -302,6 +311,11 @@ name: 09 solo dispatcher (fake data)
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
 # ── history
 - openLink: "bigbot://solo/preview?open=history"
 - tapOn:
