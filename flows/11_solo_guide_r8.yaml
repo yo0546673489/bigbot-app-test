@@ -80,8 +80,15 @@ name: 11 solo guide round 8 (fake data)
     text: "סגירה"
     optional: true
 - waitForAnimationToEnd
-# ── "כניסה והתחלה", from a fresh chat of the settings page
-- openLink: "bigbot://solo/preview?open=settings"
+# ── "כניסה והתחלה": the subject chips show only before the first question, and the conversation
+# is kept while the app runs, so this part starts from a relaunch (a clean chat).
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview?open=home"
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
@@ -96,11 +103,6 @@ name: 11 solo guide round 8 (fake data)
     optional: true
 - waitForAnimationToEnd:
     timeout: 5000
-- scrollUntilVisible:
-    element:
-      text: "כניסה והתחלה"
-    direction: UP
-    optional: true
 - takeScreenshot: shots/11_05_guide_again
 - tapOn:
     text: "כניסה והתחלה"
@@ -108,11 +110,6 @@ name: 11 solo guide round 8 (fake data)
 - extendedWaitUntil:
     visible: "__wait_1s__"
     timeout: 1500
-    optional: true
-- scrollUntilVisible:
-    element:
-      text: "כניסה כסדרן עצמאי"
-    direction: DOWN
     optional: true
 - takeScreenshot: shots/11_06_start_list
 - tapOn:
@@ -123,5 +120,19 @@ name: 11 solo guide round 8 (fake data)
     timeout: 1500
     optional: true
 - takeScreenshot: shots/11_07_login_short
-- scroll
+- scrollUntilVisible:
+    element:
+      text: "הסבר מפורט ודוגמאות"
+    direction: DOWN
+    optional: true
 - takeScreenshot: shots/11_07b_login_short_end
+- tapOn:
+    text: "הסבר מפורט ודוגמאות"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/11_08_login_long
+- scroll
+- takeScreenshot: shots/11_08b_login_long_end
