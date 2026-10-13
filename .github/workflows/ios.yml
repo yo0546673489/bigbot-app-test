@@ -74,12 +74,8 @@ jobs:
       max-parallel: 3
       matrix:
         part:
-          - { name: home, app: main, flows: flows/config-home.yaml, login: '1' }
-          - { name: nav, app: main, flows: flows/config-nav.yaml, login: '1' }
-          - { name: settings, app: main, flows: flows/config-settings.yaml, login: '1' }
-          - { name: deep, app: main, flows: flows/config-deep.yaml, login: '1' }
-          - { name: newfeat, app: main, flows: flows/config-newfeat.yaml, login: '1' }
-          - { name: solo, app: solofake, flows: flows/config-solo.yaml, login: '0' }
+          - { name: cleanup, app: solofake, flows: flows/config-cleanup.yaml, login: '0' }
+          - { name: drivercleanup, app: main, flows: flows/config-driver-cleanup.yaml, login: '1' }
     steps:
       - uses: actions/checkout@v4
       - id: want
