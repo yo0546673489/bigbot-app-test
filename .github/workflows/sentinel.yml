@@ -9,6 +9,8 @@ name: "בדיקת השרת של ביגבוט (שומר חיצוני)"
 # The guard on the server watches this check in return: 3 hours without a visit = an alert there.
 #
 # Nothing about the server is written in this file or in the logs. Do not add third-party actions.
+# Commits that touch this file must be made by the repository owner's GitHub account and must not
+# carry a skip-ci marker, otherwise the timer may never start.
 
 on:
   schedule:
