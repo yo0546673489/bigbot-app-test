@@ -40,7 +40,12 @@ name: 10 cleanup status - solo dispatcher (fake data)
 - takeScreenshot: shots/10_00_settings_top
 # On iOS the row is in the hierarchy even while it is below the fold, so scrollUntilVisible
 # returns at once and the tap lands on the bottom bar. A plain scroll (as 09_solo does) first.
-- scroll
+# A short slow drag (no fling): the row ends up BELOW the centred dialog and above the bottom bar,
+# so the shot of the running dialog also shows the row's "מתנקה עכשיו" line behind it.
+- swipe:
+    start: 50%, 56%
+    end: 50%, 45%
+    duration: 1500
 - waitForAnimationToEnd
 - takeScreenshot: shots/10_01_row_before
 - tapOn:
@@ -55,8 +60,12 @@ name: 10 cleanup status - solo dispatcher (fake data)
 - tapOn:
     text: "כן, למחוק היסטוריה"
     waitToSettleTimeoutMs: 200
+- takeScreenshot: shots/10_03a_dialog_running_first
+- takeScreenshot: shots/10_03b_dialog_running_first
+# close by position (the dialog's "סגירה"; anywhere outside it closes too) - no hierarchy lookup,
+# it has to happen within the 8 s the row still says "מתנקה עכשיו"
 - tapOn:
-    text: "סגירה"
+    point: 50%, 61%
     waitToSettleTimeoutMs: 200
 - takeScreenshot: shots/10_04_row_running
 - extendedWaitUntil:
