@@ -26,7 +26,7 @@ name: 10 cleanup status - solo dispatcher (fake data)
 - waitForAnimationToEnd
 - takeScreenshot: shots/10_01_row_before
 - tapOn:
-    text: "ניקוי צ'אטים בארכיון"
+    text: "ניקוי צ'אטים בארכיון.*"
 - extendedWaitUntil:
     visible: "כן, למחוק היסטוריה"
     timeout: 8000
@@ -49,7 +49,7 @@ name: 10 cleanup status - solo dispatcher (fake data)
 - takeScreenshot: shots/10_05_row_done
 # a second run, this time the dialog stays open until the run ends
 - tapOn:
-    text: "ניקוי צ'אטים בארכיון"
+    text: "ניקוי צ'אטים בארכיון.*"
 - extendedWaitUntil:
     visible: "כן, למחוק היסטוריה"
     timeout: 8000

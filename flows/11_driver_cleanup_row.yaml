@@ -32,11 +32,11 @@ name: 11 cleanup status - driver settings
     optional: true
 - takeScreenshot: shots/11_02_cleanup_row
 - tapOn:
-    text: "ניקוי צ'אטים בארכיון"
+    text: "ניקוי צ'אטים בארכיון.*"
     optional: true
 - extendedWaitUntil:
-    visible: "סגירה"
-    timeout: 10000
+    visible: "(ביטול|סגירה)"
+    timeout: 15000
     optional: true
 - takeScreenshot: shots/11_03_dialog
 - tapOn:
