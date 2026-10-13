@@ -1,4 +1,4 @@
-name: sentinel
+name: "בדיקת השרת של ביגבוט (שומר חיצוני)"
 
 # Outside watchdog for the production server (SEC-GUARD, 13/10/2026).
 #
@@ -38,6 +38,7 @@ jobs:
           DRILL: ${{ inputs.drill }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
         run: |
           set -u
           [ -n "${URL:-}" ] || { echo "the secret SENTINEL_URL is not set"; exit 1; }
@@ -87,13 +88,15 @@ jobs:
             "מה לעשות:" \
             "1. לבדוק אם האפליקציה עובדת. אם לא, השרת נפל: להיכנס לאזור האישי של חברת האחסון." \
             "2. אם האפליקציה עובדת ורק השומר לא רץ, לבדוק מיד. שומר שנעצר לבד הוא סימן אזהרה.")
+          body="$body"$'
+'"@$OWNER"
 
           if [ -z "$open" ]; then
-            gh issue create --title "$title" --label sentinel --body "$body"
+            gh issue create --title "$title" --label sentinel --assignee "$OWNER" --body "$body"
           else
             last=$(gh issue view "$open" --json updatedAt --jq .updatedAt)
             if [ $(( $(date +%s) - $(date -d "$last" +%s) )) -ge 3300 ]; then
-              gh issue comment "$open" --body "עדיין אין תשובה. $why ($stamp)"
+              gh issue comment "$open" --body "עדיין אין תשובה. $why ($stamp) @$OWNER"
             fi
           fi
           exit 1
