@@ -20,11 +20,10 @@ name: 10 cleanup status - solo dispatcher (fake data)
     visible: "__wait_2s__"
     timeout: 2500
     optional: true
-- scrollUntilVisible:
-    element:
-      text: "ניקוי צ'אטים בארכיון"
-    direction: DOWN
-    optional: true
+# On iOS the row is in the hierarchy even while it is below the fold, so scrollUntilVisible
+# returns at once and the tap lands on the bottom bar. A plain scroll (as 09_solo does) first.
+- scroll
+- waitForAnimationToEnd
 - takeScreenshot: shots/10_01_row_before
 - tapOn:
     text: "ניקוי צ'אטים בארכיון"
