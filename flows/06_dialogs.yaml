@@ -4,6 +4,13 @@ name: 06 dialogs close and take typing
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
 - tapOn:
     text: "אחר כך"
     optional: true
@@ -50,6 +57,13 @@ name: 06 dialogs close and take typing
 # Delete account (Apple requires it): the confirm dialog must open, ביטול must close it.
 - launchApp:
     stopApp: true
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
 - extendedWaitUntil:
     visible: "הגדרות"
     timeout: 30000

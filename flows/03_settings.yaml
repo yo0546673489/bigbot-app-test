@@ -4,6 +4,13 @@ name: 03 settings
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
 - tapOn:
     text: "אחר כך"
     optional: true
