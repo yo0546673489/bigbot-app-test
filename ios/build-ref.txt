@@ -1,1 +1,1 @@
-claude/cleanup-status-ios
+claude/ios-cleanup-pick-number
