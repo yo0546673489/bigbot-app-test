@@ -1,0 +1,127 @@
+appId: com.bigbotdrivers.app
+name: 11 solo guide round 8 (fake data)
+---
+# FEAT-APP-TOUR round 8 — the solo dispatcher's guide covers every screen: the two new subject
+# lists ("משהו לא עובד", "כניסה והתחלה"), a short answer and its long explanation with examples.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview?open=home"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- tapOn:
+    text: "הסבר"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot: shots/11_00_guide_open
+- scrollUntilVisible:
+    element:
+      text: "משהו לא עובד"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_01_subject_lists
+# ── "משהו לא עובד": the list, a short answer, the long explanation
+- tapOn:
+    text: "משהו לא עובד"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/11_02_fix_list
+- scrollUntilVisible:
+    element:
+      text: "הנסיעה לא יוצאת"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_02b_fix_list_scrolled
+- tapOn:
+    text: "הנסיעה לא יוצאת"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/11_03_fix_short
+- scrollUntilVisible:
+    element:
+      text: "הסבר מפורט ודוגמאות"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_03b_fix_short_end
+- tapOn:
+    text: "הסבר מפורט ודוגמאות"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/11_04_fix_long
+- scrollUntilVisible:
+    element:
+      text: "דוגמאות:"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_04b_fix_long_examples
+- scroll
+- takeScreenshot: shots/11_04c_fix_long_end
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
+# ── "כניסה והתחלה", from a fresh chat of the settings page
+- openLink: "bigbot://solo/preview?open=settings"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- tapOn:
+    text: "הסבר"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      text: "כניסה והתחלה"
+    direction: UP
+    optional: true
+- takeScreenshot: shots/11_05_guide_again
+- tapOn:
+    text: "כניסה והתחלה"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: "כניסה כסדרן עצמאי"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_06_start_list
+- tapOn:
+    text: "כניסה כסדרן עצמאי"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_1s__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/11_07_login_short
+- scroll
+- takeScreenshot: shots/11_07b_login_short_end
