@@ -1,0 +1,99 @@
+name: sentinel
+
+# Outside watchdog for the production server (SEC-GUARD, 13/10/2026).
+#
+# The security guard on the server writes "I am alive" every minute. This check reads it from far
+# away, through a secret address kept in the repository secret SENTINEL_URL, about every 15 minutes.
+# If the server or the guard goes dark, it opens an issue here (GitHub e-mails the owner) and the
+# run fails (a second e-mail). When things are back, it closes the issue by itself.
+# The guard on the server watches this check in return: 3 hours without a visit = an alert there.
+#
+# Nothing about the server is written in this file or in the logs. Do not add third-party actions.
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+    inputs:
+      drill:
+        description: 'Drill: pretend the server is dark. Opens a test alert; the next normal run closes it.'
+        type: boolean
+        default: false
+
+permissions:
+  issues: write
+
+concurrency:
+  group: sentinel
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: read the heartbeat
+        env:
+          URL: ${{ secrets.SENTINEL_URL }}
+          DRILL: ${{ inputs.drill }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -u
+          [ -n "${URL:-}" ] || { echo "the secret SENTINEL_URL is not set"; exit 1; }
+          tries=4; pause=60
+          if [ "${DRILL:-false}" = "true" ]; then URL="${URL}-drill"; tries=1; fi
+
+          why=""
+          for n in $(seq 1 "$tries"); do
+            out=$(curl -s --max-time 20 -A "BigBotSentinel/1.0" -w '\n%{http_code}' "$URL" || true)
+            code=$(printf '%s' "$out" | tail -n 1)
+            line=$(printf '%s' "$out" | head -n 1)
+            if [ "$code" = "200" ] && printf '%s' "$line" | grep -Eq '^[0-9]{9,11} [0-9]{1,11}$'; then
+              now=$(date +%s); fast=${line%% *}; integ=${line##* }
+              a=$(( now - fast )); b=$(( now - integ ))
+              if [ "$a" -le 600 ] && [ "$b" -le 2700 ]; then
+                why=""; echo "ok: the guard ran ${a}s ago, its integrity check ${b}s ago"; break
+              fi
+              why="השרת עונה, אבל שומר האבטחה לא רץ. הבדיקה המהירה האחרונה שלו הייתה לפני $(( a / 60 )) דקות, ובדיקת השלמות לפני $(( b / 60 )) דקות."
+            else
+              why="השרת לא עונה מבחוץ (קוד תשובה ${code:-000})."
+            fi
+            echo "try $n of $tries: not ok"
+            if [ "$n" -lt "$tries" ]; then sleep "$pause"; fi
+          done
+
+          gh label create sentinel --color B60205 --description "outside watchdog alerts" >/dev/null 2>&1 || true
+          open=$(gh issue list --label sentinel --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          stamp=$(TZ=Asia/Jerusalem date '+%d/%m/%Y %H:%M')
+
+          if [ -z "$why" ]; then
+            if [ -n "$open" ]; then
+              gh issue close "$open" --comment "✅ הבדיקה תקינה. השרת ושומר האבטחה עונים. ($stamp)"
+            fi
+            exit 0
+          fi
+
+          if [ "${DRILL:-false}" = "true" ]; then
+            title="🧪 תרגיל של השומר החיצוני, אין תקלה אמיתית"
+            why="זה תרגיל. כך תיראה התראה אמיתית אם השרת או שומר האבטחה יפסיקו לענות."
+          else
+            title="🚨 השומר החיצוני: אין תשובה מהשרת"
+          fi
+          body=$(printf '%s\n\n%s\n%s\n\n%s\n%s\n%s\n' \
+            "$why" \
+            "מי בדק: השומר החיצוני. בדיקה שרצה מחוץ לשרת בערך כל רבע שעה." \
+            "מתי: $stamp (שעון ישראל)" \
+            "מה לעשות:" \
+            "1. לבדוק אם האפליקציה עובדת. אם לא, השרת נפל: להיכנס לאזור האישי של חברת האחסון." \
+            "2. אם האפליקציה עובדת ורק השומר לא רץ, לבדוק מיד. שומר שנעצר לבד הוא סימן אזהרה.")
+
+          if [ -z "$open" ]; then
+            gh issue create --title "$title" --label sentinel --body "$body"
+          else
+            last=$(gh issue view "$open" --json updatedAt --jq .updatedAt)
+            if [ $(( $(date +%s) - $(date -d "$last" +%s) )) -ge 3300 ]; then
+              gh issue comment "$open" --body "עדיין אין תשובה. $why ($stamp)"
+            fi
+          fi
+          exit 1
