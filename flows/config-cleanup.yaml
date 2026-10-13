@@ -1,0 +1,6 @@
+flows:
+  - "10_cleanup_status.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 10 cleanup status - solo dispatcher (fake data)

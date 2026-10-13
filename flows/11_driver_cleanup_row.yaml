@@ -1,0 +1,48 @@
+appId: com.bigbotdrivers.app
+name: 11 cleanup status - driver settings
+---
+# CLEANUP-STATUS (13/10/2026): the driver's "התראות ותצוגה" page with the cleanup row (it now
+# asks the server whether a cleanup is running). The demo account has no linked WhatsApp, so
+# tapping the row can only show the server's "connect WhatsApp first" answer - nothing starts.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/11_00_settings
+- scrollUntilVisible:
+    element:
+      text: ".*התראות ותצוגה.*"
+    direction: DOWN
+    optional: true
+- tapOn:
+    text: ".*התראות ותצוגה.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/11_01_display_top
+- scrollUntilVisible:
+    element:
+      text: "ניקוי צ'אטים בארכיון"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/11_02_cleanup_row
+- tapOn:
+    text: "ניקוי צ'אטים בארכיון"
+    optional: true
+- extendedWaitUntil:
+    visible: "סגירה"
+    timeout: 10000
+    optional: true
+- takeScreenshot: shots/11_03_dialog
+- tapOn:
+    text: "(ביטול|סגירה)"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/11_04_after_close
+- scroll
+- takeScreenshot: shots/11_05_still_alive

@@ -1,0 +1,76 @@
+appId: com.bigbotdrivers.app
+name: 10 cleanup status - solo dispatcher (fake data)
+---
+# CLEANUP-STATUS (13/10/2026): the "ניקוי צ'אטים בארכיון" row says "מתנקה עכשיו" while a run is
+# alive (also after the dialog was closed) and how it ended afterwards. The fake backend keeps a
+# run "running" for 6 seconds, so no waitForAnimationToEnd while the spinner is on screen.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://solo/preview?open=settings"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2500
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: "ניקוי צ'אטים בארכיון"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/10_01_row_before
+- tapOn:
+    text: "ניקוי צ'אטים בארכיון"
+- extendedWaitUntil:
+    visible: "כן, למחוק היסטוריה"
+    timeout: 8000
+    optional: true
+- takeScreenshot: shots/10_02_confirm
+- tapOn:
+    text: "כן, למחוק היסטוריה"
+- extendedWaitUntil:
+    visible: ".*הניקוי ממשיך לבד.*"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/10_03_dialog_running
+- tapOn:
+    text: "סגירה"
+- takeScreenshot: shots/10_04_row_running
+- extendedWaitUntil:
+    visible: ".*הניקוי הסתיים.*"
+    timeout: 25000
+    optional: true
+- takeScreenshot: shots/10_05_row_done
+# a second run, this time the dialog stays open until the run ends
+- tapOn:
+    text: "ניקוי צ'אטים בארכיון"
+- extendedWaitUntil:
+    visible: "כן, למחוק היסטוריה"
+    timeout: 8000
+    optional: true
+- tapOn:
+    text: "כן, למחוק היסטוריה"
+- extendedWaitUntil:
+    visible: ".*הניקוי הושלם בהצלחה.*"
+    timeout: 25000
+    optional: true
+- takeScreenshot: shots/10_06_dialog_done
+- tapOn:
+    text: "סגירה"
+- waitForAnimationToEnd
+- takeScreenshot: shots/10_07_row_done_again
+# the app is still alive after all of it
+- openLink: "bigbot://solo/preview"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: shots/10_08_still_alive
