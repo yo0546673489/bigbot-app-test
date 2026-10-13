@@ -50,15 +50,14 @@ name: 10 cleanup status - solo dispatcher (fake data)
     timeout: 8000
     optional: true
 - takeScreenshot: shots/10_02_confirm
+# First run: close the dialog at once and shoot the ROW while the run is still alive (the fake run
+# lasts 6 s and the row hears about its end on the 8 s poll), so no settling waits here.
 - tapOn:
     text: "כן, למחוק היסטוריה"
-- extendedWaitUntil:
-    visible: ".*הניקוי ממשיך לבד.*"
-    timeout: 3000
-    optional: true
-- takeScreenshot: shots/10_03_dialog_running
+    waitToSettleTimeoutMs: 200
 - tapOn:
     text: "סגירה"
+    waitToSettleTimeoutMs: 200
 - takeScreenshot: shots/10_04_row_running
 - extendedWaitUntil:
     visible: ".*הניקוי הסתיים.*"
@@ -74,6 +73,12 @@ name: 10 cleanup status - solo dispatcher (fake data)
     optional: true
 - tapOn:
     text: "כן, למחוק היסטוריה"
+    waitToSettleTimeoutMs: 200
+- extendedWaitUntil:
+    visible: ".*הניקוי ממשיך לבד.*"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/10_03_dialog_running
 - extendedWaitUntil:
     visible: ".*הניקוי הושלם בהצלחה.*"
     timeout: 25000
