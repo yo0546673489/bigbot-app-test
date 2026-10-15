@@ -18,7 +18,7 @@ on:
 jobs:
   shots:
     runs-on: macos-15
-    timeout-minutes: 120
+    timeout-minutes: 330
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -40,7 +40,7 @@ jobs:
           github-token: ${{ github.token }}
       - name: capture
         if: steps.want.outputs.run == '1'
-        timeout-minutes: 110
+        timeout-minutes: 320
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
           DEMO_CODE: ${{ secrets.DEMO_CODE }}
