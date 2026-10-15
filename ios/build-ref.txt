@@ -1,1 +1,1 @@
-claude/ios-tour-round7
+claude/ios-first-run-tour
