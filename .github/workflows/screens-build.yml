@@ -1,0 +1,47 @@
+name: screens library - iPhone demo build
+# SCREENS-LIB: builds the iPhone SIMULATOR app of a branch with EXPO_PUBLIC_SCREENS_DEMO=1 (Telegram, in-app groups
+# and feature-flag screens answered by in-memory fake data; test-only, never shipped) for screens-lib.yml part "demo".
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'App repo branch to build'
+        required: true
+        default: 'claude/ios-screens-demo'
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: yo0546673489/bigbot
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.APP_REPO_KEY }}
+          path: app
+          fetch-depth: 1
+          sparse-checkout: bigbot/mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: build for the simulator
+        working-directory: app/bigbot/mobile
+        env:
+          EXPO_PUBLIC_SCREENS_DEMO: '1'
+        run: |
+          set -x
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1); [ -n "$X" ] && sudo xcode-select -s "$X"
+          git -C ../.. log -1 --format="%h %s"
+          npm ci --no-audit --no-fund
+          CI=1 npx expo prebuild -p ios --clean
+          cd ios
+          WS=$(ls -d *.xcworkspace | head -1); SCHEME=${WS%.xcworkspace}
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet 2>&1 | tail -200
+          APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1); [ -n "$APP" ] || exit 1
+          tar -czf "$GITHUB_WORKSPACE/sim-app.tar.gz" -C "$(dirname "$APP")" "$(basename "$APP")"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sim-app-demo
+          path: sim-app.tar.gz
+          retention-days: 7

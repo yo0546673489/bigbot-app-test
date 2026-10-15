@@ -7,8 +7,12 @@ on:
       build_run_id:
         description: 'Run id of an "app test - iPhone" run whose sim-app-main / sim-app-solofake artifacts to use'
         required: true
+      demo_run_id:
+        description: 'Run id of a "screens library - iPhone demo build" run (sim-app-demo), for part demo'
+        required: false
+        default: ''
       parts:
-        description: 'main,solo (empty = both)'
+        description: 'main,solo,demo (empty = all)'
         required: false
         default: ''
       only:
@@ -26,6 +30,7 @@ jobs:
         part:
           - { name: main, app: main }
           - { name: solo, app: solofake }
+          - { name: demo, app: demo }
     steps:
       - uses: actions/checkout@v4
       - id: want
@@ -36,7 +41,7 @@ jobs:
         if: steps.want.outputs.run == '1'
         with:
           name: sim-app-${{ matrix.part.app }}
-          run-id: ${{ inputs.build_run_id }}
+          run-id: ${{ matrix.part.app == 'demo' && inputs.demo_run_id || inputs.build_run_id }}
           github-token: ${{ github.token }}
       - name: capture
         if: steps.want.outputs.run == '1'
