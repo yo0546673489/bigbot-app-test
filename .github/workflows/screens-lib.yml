@@ -1,0 +1,55 @@
+name: screens library - iPhone (support how-to)
+# SCREENS-LIB: screenshots + view hierarchy (bounds/texts) of every iPhone screen for the automatic
+# customer support. Reuses the simulator apps built by an earlier "app test - iPhone" run (input build_run_id).
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: 'Run id of an "app test - iPhone" run whose sim-app-main / sim-app-solofake artifacts to use'
+        required: true
+      parts:
+        description: 'main,solo (empty = both)'
+        required: false
+        default: ''
+      only:
+        description: 'Comma list of screen keys (empty = all)'
+        required: false
+        default: ''
+jobs:
+  shots:
+    runs-on: macos-15
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        part:
+          - { name: main, app: main }
+          - { name: solo, app: solofake }
+    steps:
+      - uses: actions/checkout@v4
+      - id: want
+        run: |
+          P="${{ inputs.parts }}"
+          if [ -z "$P" ] || echo ",$P," | grep -q ",${{ matrix.part.name }},"; then echo "run=1" >> "$GITHUB_OUTPUT"; else echo "run=0" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/download-artifact@v4
+        if: steps.want.outputs.run == '1'
+        with:
+          name: sim-app-${{ matrix.part.app }}
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ github.token }}
+      - name: capture
+        if: steps.want.outputs.run == '1'
+        timeout-minutes: 110
+        env:
+          DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+          DEMO_CODE: ${{ secrets.DEMO_CODE }}
+          PART: ${{ matrix.part.name }}
+          ONLY: ${{ inputs.only }}
+        run: bash lib/run.sh
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.want.outputs.run == '1'
+        with:
+          name: lib-ios-${{ matrix.part.name }}
+          path: out
+          retention-days: 14

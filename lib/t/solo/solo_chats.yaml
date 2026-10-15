@@ -1,0 +1,36 @@
+appId: com.bigbotdrivers.app
+name: lib solo solo_chats
+---
+- launchApp:
+    stopApp: true
+    permissions:
+      all: allow
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "דלג"
+    optional: true
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- openLink: "bigbot://solo/preview?open=home"
+- tapOn:
+    text: "(פתיחה|Open|פתח)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- openLink: "bigbot://solo/chats"
+- tapOn:
+    text: "(פתיחה|Open|פתח)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "__settle__"
+    timeout: 2500
+    optional: true
