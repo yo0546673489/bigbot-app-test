@@ -1,0 +1,41 @@
+appId: com.bigbotdrivers.app
+name: lib demo delete_account
+---
+- launchApp:
+    stopApp: true
+    permissions:
+      all: allow
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "דלג"
+    optional: true
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- openLink: "bigbot://settings?cat=account"
+- tapOn:
+    text: "(פתיחה|Open|פתח)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- scrollUntilVisible:
+    element:
+      text: "מחק חשבון"
+    direction: DOWN
+    timeout: 6000
+    optional: true
+- tapOn:
+    text: "מחק חשבון"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 6000
+- extendedWaitUntil:
+    visible: "__settle__"
+    timeout: 2500
+    optional: true

@@ -1,0 +1,41 @@
+appId: com.bigbotdrivers.app
+name: lib demo app_background
+---
+- launchApp:
+    stopApp: true
+    permissions:
+      all: allow
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    text: "דלג"
+    optional: true
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- openLink: "bigbot://settings?cat=display"
+- tapOn:
+    text: "(פתיחה|Open|פתח)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- scrollUntilVisible:
+    element:
+      text: "שנה"
+    direction: DOWN
+    timeout: 6000
+    optional: true
+- tapOn:
+    text: "שנה"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 6000
+- extendedWaitUntil:
+    visible: "__settle__"
+    timeout: 2500
+    optional: true

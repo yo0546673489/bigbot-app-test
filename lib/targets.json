@@ -1,98 +1,1536 @@
 {
  "_note": "SCREENS-LIB (support how-to library). Each target = one screen of the iPhone app. steps: link = open bigbot://<path> (expo-router), tap = tap the visible text (regex, scrolls down to find it), point = tap x%,y%, back = the in-app back arrow, scroll = scroll down once. expect = regex that must be on screen for the capture to count. Generated into lib/t/<part>/<key>.yaml by lib/gen.js.",
  "main": [
-  {"key":"home","steps":[{"link":"home"}],"expect":"פנוי|ראשי"},
-  {"key":"drawer","steps":[{"link":"home"},{"tap":"תפריט"}],"expect":"הפרופיל שלי"},
-  {"key":"chat","steps":[{"link":"chat"}],"expect":"צ.אט"},
-  {"key":"search","steps":[{"link":"search"}],"expect":"חיפוש|מסלול"},
-  {"key":"search_add_route","steps":[{"link":"search"},{"tap":".*הוסף מסלול.*"}],"expect":"הוסף מסלול"},
-  {"key":"notifications","steps":[{"link":"notifications"}],"expect":"התראות"},
-  {"key":"profile","steps":[{"link":"profile"}],"expect":"הפרופיל שלי"},
-  {"key":"profile_name","steps":[{"link":"profile"},{"tap":"שם מלא"}],"expect":"שם מלא"},
-  {"key":"profile_dob","steps":[{"link":"profile"},{"tap":"תאריך לידה"}],"expect":"תאריך לידה"},
-  {"key":"profile_vehicle","steps":[{"link":"profile"},{"tap":"סוג רכב"}],"expect":"סוג רכב"},
-  {"key":"profile_model","steps":[{"link":"profile"},{"tap":"דגם.*"}],"expect":"דגם"},
-  {"key":"profile_year","steps":[{"link":"profile"},{"tap":"שנ.*"}],"expect":"שנ"},
-  {"key":"about","steps":[{"link":"about"}],"expect":"BigBot|גרסה"},
-  {"key":"settings","steps":[{"link":"settings"}],"expect":"הגדרות"},
-  {"key":"settings_wa","steps":[{"link":"settings?cat=wa"}],"expect":"וואטסאפ"},
-  {"key":"wa_disconnect","steps":[{"link":"settings"},{"tap":"נתק"}],"expect":"לנתק"},
-  {"key":"settings_tg","steps":[{"link":"settings?cat=tg"}],"expect":"טלגרם"},
-  {"key":"settings_wa2","steps":[{"link":"settings?cat=wa2"}],"expect":"וואטסאפ"},
-  {"key":"settings_rides","steps":[{"link":"settings?cat=rides"}],"expect":"נסיעות וסינון"},
-  {"key":"vehicle_types","steps":[{"link":"settings?cat=rides"},{"tap":"סוג רכב"}],"expect":"סוג רכב"},
-  {"key":"min_price","steps":[{"link":"settings?cat=rides"},{"tap":".*מחיר מינימלי.*"}],"expect":"מחיר מינימלי"},
-  {"key":"max_sched","steps":[{"link":"settings?cat=rides"},{"tap":".*מקסימום זמן המתנה.*"}],"expect":"מתוזמנות"},
-  {"key":"groups_filter","steps":[{"link":"groups-filter"}],"expect":"סינון קבוצות"},
-  {"key":"settings_chat","steps":[{"link":"settings?cat=chat"}],"expect":"תגובות"},
-  {"key":"quick_reply","steps":[{"link":"settings?cat=chat"},{"tap":".*הוסף משפט.*"}],"expect":"משפט"},
-  {"key":"button_color","steps":[{"link":"settings?cat=chat"},{"tap":".*צבע.*"}],"expect":"צבע"},
-  {"key":"settings_automation","steps":[{"link":"settings?cat=automation"}],"expect":"אוטומציה"},
-  {"key":"default_eta","steps":[{"link":"settings?cat=automation"},{"tap":".*זמן ברירת מחדל.*"}],"expect":"ברירת מחדל"},
-  {"key":"auto_sched_window","steps":[{"link":"settings?cat=automation"},{"tap":".*טווח לנסיעות מתוזמנות.*"}],"expect":"טווח"},
-  {"key":"settings_display","steps":[{"link":"settings?cat=display"}],"expect":"התראות ותצוגה"},
-  {"key":"app_background","steps":[{"link":"settings?cat=display"},{"tap":"שנה"}],"expect":"רקע"},
-  {"key":"cleanup_schedule","steps":[{"link":"settings?cat=display"},{"tap":".*ניקוי אוטומטי.*"}],"expect":"ניקוי"},
-  {"key":"card_customization","steps":[{"link":"card-customization"}],"expect":"עיצוב כרטיסיות"},
-  {"key":"settings_share","steps":[{"link":"settings?cat=share"}],"expect":"שיתוף"},
-  {"key":"settings_devices","steps":[{"link":"settings?cat=devices"}],"expect":"מכשירים"},
-  {"key":"device_pairing","steps":[{"link":"settings?cat=devices"},{"tap":".*הוסף מכשיר.*"}],"expect":"מכשיר"},
-  {"key":"device_join","steps":[{"link":"settings?cat=devices"},{"tap":".*הצטרף.*"}],"expect":"הצטרף"},
-  {"key":"settings_account","steps":[{"link":"settings?cat=account"}],"expect":"חשבון ותמיכה"},
-  {"key":"delete_account","steps":[{"link":"settings?cat=account"},{"tap":".*מחק.*חשבון.*"}],"expect":"מחיקת חשבון|למחוק"},
-  {"key":"support","steps":[{"link":"support"}],"expect":"שירות לקוחות"},
-  {"key":"billing","steps":[{"link":"billing"}],"expect":"מנוי|פרימיום"},
-  {"key":"clear_history","steps":[{"link":"home"},{"tap":"נקה"}],"expect":"מחיקת היסטוריית"},
-  {"key":"add_route","steps":[{"link":"home"},{"tap":"(\\+|הוסף)"}],"expect":"הוסף מסלול|מסלול"},
-  {"key":"chat_new","steps":[{"link":"chat"},{"tap":".*שיחה חדשה.*"}],"expect":"שיחה חדשה"},
-  {"key":"chat_new_list","steps":[{"link":"chat"},{"tap":".*רשימה.*"}],"expect":"רשימה"},
-  {"key":"chat_archive","steps":[{"link":"chat"},{"tap":".*בארכיון.*"}],"expect":"ארכיון"},
-  {"key":"app_groups_list","steps":[{"link":"app-groups"}],"expect":"קבוצות"},
-  {"key":"tg","steps":[{"link":"tg"}],"expect":"טלגרם"},
-  {"key":"station_pay","steps":[{"link":"station-pay"}],"expect":"חיובי תחנות"},
-  {"key":"income","steps":[{"link":"income"}],"expect":"הכנסות"},
-  {"key":"verify","steps":[{"link":"verify"}],"expect":"אימות"},
-  {"key":"pending_approval","steps":[{"link":"pending"}],"expect":"ההרשמה הושלמה"},
-  {"key":"bot_contact","steps":[{"link":"bot-contact"}],"expect":"ביגבוט בוואטסאפ"},
-  {"key":"welcome_trial","steps":[{"link":"welcome"}],"expect":"פרימיום|ניסיון"},
-  {"key":"blocked","steps":[{"link":"blocked"}],"expect":"נחסמת"},
-  {"key":"subscription_locked","steps":[{"link":"subscription?locked=1"}],"expect":"פרימיום|מנוי"}
+  {
+   "key": "home",
+   "steps": [
+    {
+     "link": "home"
+    }
+   ],
+   "expect": "פנוי|ראשי"
+  },
+  {
+   "key": "drawer",
+   "steps": [
+    {
+     "link": "home"
+    },
+    {
+     "tap": "תפריט"
+    }
+   ],
+   "expect": "הפרופיל שלי"
+  },
+  {
+   "key": "chat",
+   "steps": [
+    {
+     "link": "chat"
+    }
+   ],
+   "expect": "צ.אט"
+  },
+  {
+   "key": "search",
+   "steps": [
+    {
+     "link": "search"
+    }
+   ],
+   "expect": "חיפוש|מסלול"
+  },
+  {
+   "key": "search_add_route",
+   "steps": [
+    {
+     "link": "search"
+    },
+    {
+     "tap": ".*הוסף מסלול.*"
+    }
+   ],
+   "expect": "הוסף מסלול"
+  },
+  {
+   "key": "notifications",
+   "steps": [
+    {
+     "link": "notifications"
+    }
+   ],
+   "expect": "התראות"
+  },
+  {
+   "key": "profile",
+   "steps": [
+    {
+     "link": "profile"
+    }
+   ],
+   "expect": "הפרופיל שלי"
+  },
+  {
+   "key": "profile_name",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "שם מלא"
+    }
+   ],
+   "expect": "שם מלא"
+  },
+  {
+   "key": "profile_dob",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "תאריך לידה"
+    }
+   ],
+   "expect": "תאריך לידה"
+  },
+  {
+   "key": "profile_vehicle",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "סוג רכב"
+    }
+   ],
+   "expect": "סוג רכב"
+  },
+  {
+   "key": "profile_model",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "דגם.*"
+    }
+   ],
+   "expect": "דגם"
+  },
+  {
+   "key": "profile_year",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "שנ.*"
+    }
+   ],
+   "expect": "שנ"
+  },
+  {
+   "key": "about",
+   "steps": [
+    {
+     "link": "about"
+    }
+   ],
+   "expect": "BigBot|גרסה"
+  },
+  {
+   "key": "settings",
+   "steps": [
+    {
+     "link": "settings"
+    }
+   ],
+   "expect": "הגדרות"
+  },
+  {
+   "key": "settings_wa",
+   "steps": [
+    {
+     "link": "settings?cat=wa"
+    }
+   ],
+   "expect": "וואטסאפ"
+  },
+  {
+   "key": "wa_disconnect",
+   "steps": [
+    {
+     "link": "settings"
+    },
+    {
+     "tap": "נתק"
+    }
+   ],
+   "expect": "לנתק"
+  },
+  {
+   "key": "settings_tg",
+   "steps": [
+    {
+     "link": "settings?cat=tg"
+    }
+   ],
+   "expect": "טלגרם"
+  },
+  {
+   "key": "settings_wa2",
+   "steps": [
+    {
+     "link": "settings?cat=wa2"
+    }
+   ],
+   "expect": "וואטסאפ"
+  },
+  {
+   "key": "settings_rides",
+   "steps": [
+    {
+     "link": "settings?cat=rides"
+    }
+   ],
+   "expect": "נסיעות וסינון"
+  },
+  {
+   "key": "vehicle_types",
+   "steps": [
+    {
+     "link": "settings?cat=rides"
+    },
+    {
+     "tap": "סוג רכב"
+    }
+   ],
+   "expect": "סוג רכב"
+  },
+  {
+   "key": "min_price",
+   "steps": [
+    {
+     "link": "settings?cat=rides"
+    },
+    {
+     "tap": ".*מחיר מינימלי.*"
+    }
+   ],
+   "expect": "מחיר מינימלי"
+  },
+  {
+   "key": "max_sched",
+   "steps": [
+    {
+     "link": "settings?cat=rides"
+    },
+    {
+     "tap": ".*מקסימום זמן המתנה.*"
+    }
+   ],
+   "expect": "מתוזמנות"
+  },
+  {
+   "key": "groups_filter",
+   "steps": [
+    {
+     "link": "groups-filter"
+    }
+   ],
+   "expect": "סינון קבוצות"
+  },
+  {
+   "key": "settings_chat",
+   "steps": [
+    {
+     "link": "settings?cat=chat"
+    }
+   ],
+   "expect": "תגובות"
+  },
+  {
+   "key": "quick_reply",
+   "steps": [
+    {
+     "link": "settings?cat=chat"
+    },
+    {
+     "tap": ".*הוסף משפט.*"
+    }
+   ],
+   "expect": "משפט"
+  },
+  {
+   "key": "button_color",
+   "steps": [
+    {
+     "link": "settings?cat=chat"
+    },
+    {
+     "tap": ".*צבע.*"
+    }
+   ],
+   "expect": "צבע"
+  },
+  {
+   "key": "settings_automation",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    }
+   ],
+   "expect": "אוטומציה"
+  },
+  {
+   "key": "default_eta",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    },
+    {
+     "tap": ".*זמן ברירת מחדל.*"
+    }
+   ],
+   "expect": "ברירת מחדל"
+  },
+  {
+   "key": "auto_sched_window",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    },
+    {
+     "tap": ".*טווח לנסיעות מתוזמנות.*"
+    }
+   ],
+   "expect": "טווח"
+  },
+  {
+   "key": "settings_display",
+   "steps": [
+    {
+     "link": "settings?cat=display"
+    }
+   ],
+   "expect": "התראות ותצוגה"
+  },
+  {
+   "key": "app_background",
+   "steps": [
+    {
+     "link": "settings?cat=display"
+    },
+    {
+     "tap": "שנה"
+    }
+   ],
+   "expect": "רקע"
+  },
+  {
+   "key": "cleanup_schedule",
+   "steps": [
+    {
+     "link": "settings?cat=display"
+    },
+    {
+     "tap": ".*ניקוי אוטומטי.*"
+    }
+   ],
+   "expect": "ניקוי"
+  },
+  {
+   "key": "card_customization",
+   "steps": [
+    {
+     "link": "card-customization"
+    }
+   ],
+   "expect": "עיצוב כרטיסיות"
+  },
+  {
+   "key": "settings_share",
+   "steps": [
+    {
+     "link": "settings?cat=share"
+    }
+   ],
+   "expect": "שיתוף"
+  },
+  {
+   "key": "settings_devices",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    }
+   ],
+   "expect": "מכשירים"
+  },
+  {
+   "key": "device_pairing",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    },
+    {
+     "tap": ".*הוסף מכשיר.*"
+    }
+   ],
+   "expect": "מכשיר"
+  },
+  {
+   "key": "device_join",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    },
+    {
+     "tap": ".*הצטרף.*"
+    }
+   ],
+   "expect": "הצטרף"
+  },
+  {
+   "key": "settings_account",
+   "steps": [
+    {
+     "link": "settings?cat=account"
+    }
+   ],
+   "expect": "חשבון ותמיכה"
+  },
+  {
+   "key": "delete_account",
+   "steps": [
+    {
+     "link": "settings?cat=account"
+    },
+    {
+     "tap": ".*מחק.*חשבון.*"
+    }
+   ],
+   "expect": "מחיקת חשבון|למחוק"
+  },
+  {
+   "key": "support",
+   "steps": [
+    {
+     "link": "support"
+    }
+   ],
+   "expect": "שירות לקוחות"
+  },
+  {
+   "key": "billing",
+   "steps": [
+    {
+     "link": "billing"
+    }
+   ],
+   "expect": "מנוי|פרימיום"
+  },
+  {
+   "key": "clear_history",
+   "steps": [
+    {
+     "link": "home"
+    },
+    {
+     "tap": "נקה"
+    }
+   ],
+   "expect": "מחיקת היסטוריית"
+  },
+  {
+   "key": "add_route",
+   "steps": [
+    {
+     "link": "home"
+    },
+    {
+     "tap": "(\\+|הוסף)"
+    }
+   ],
+   "expect": "הוסף מסלול|מסלול"
+  },
+  {
+   "key": "chat_new",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*שיחה חדשה.*"
+    }
+   ],
+   "expect": "שיחה חדשה"
+  },
+  {
+   "key": "chat_new_list",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*רשימה.*"
+    }
+   ],
+   "expect": "רשימה"
+  },
+  {
+   "key": "chat_archive",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*בארכיון.*"
+    }
+   ],
+   "expect": "ארכיון"
+  },
+  {
+   "key": "app_groups_list",
+   "steps": [
+    {
+     "link": "app-groups"
+    }
+   ],
+   "expect": "קבוצות"
+  },
+  {
+   "key": "tg",
+   "steps": [
+    {
+     "link": "tg"
+    }
+   ],
+   "expect": "טלגרם"
+  },
+  {
+   "key": "station_pay",
+   "steps": [
+    {
+     "link": "station-pay"
+    }
+   ],
+   "expect": "חיובי תחנות"
+  },
+  {
+   "key": "income",
+   "steps": [
+    {
+     "link": "income"
+    }
+   ],
+   "expect": "הכנסות"
+  },
+  {
+   "key": "verify",
+   "steps": [
+    {
+     "link": "verify"
+    }
+   ],
+   "expect": "אימות"
+  },
+  {
+   "key": "pending_approval",
+   "steps": [
+    {
+     "link": "pending"
+    }
+   ],
+   "expect": "ההרשמה הושלמה"
+  },
+  {
+   "key": "bot_contact",
+   "steps": [
+    {
+     "link": "bot-contact"
+    }
+   ],
+   "expect": "ביגבוט בוואטסאפ"
+  },
+  {
+   "key": "welcome_trial",
+   "steps": [
+    {
+     "link": "welcome"
+    }
+   ],
+   "expect": "פרימיום|ניסיון"
+  },
+  {
+   "key": "blocked",
+   "steps": [
+    {
+     "link": "blocked"
+    }
+   ],
+   "expect": "נחסמת"
+  },
+  {
+   "key": "subscription_locked",
+   "steps": [
+    {
+     "link": "subscription?locked=1"
+    }
+   ],
+   "expect": "פרימיום|מנוי"
+  }
  ],
  "solo": [
-  {"key":"solo_intro","steps":[{"link":"solo/preview?open=intro"}],"expect":"סדרן"},
-  {"key":"solo_login","steps":[{"link":"solo/preview?open=login"}],"expect":"כניסה|טלפון"},
-  {"key":"solo_access","steps":[{"link":"solo/preview?open=access"}],"expect":"הרשאה|אישור"},
-  {"key":"solo_whatsapp","steps":[{"link":"solo/preview?open=whatsapp"}],"expect":"וואטסאפ"},
-  {"key":"solo_setup","steps":[{"link":"solo/preview?open=welcome"}],"expect":"ברוכים הבאים"},
-  {"key":"solo_home","steps":[{"link":"solo/preview?open=home"}],"expect":"סדרן"},
-  {"key":"solo_drawer","steps":[{"link":"solo/preview?open=home"},{"tap":"תפריט"}],"expect":"פרסום נסיעה|נסיעות פעילות"},
-  {"key":"solo_publish","steps":[{"link":"solo/preview?open=publish"}],"expect":"נסיעה"},
-  {"key":"solo_publish_client_phone","steps":[{"link":"solo/preview?open=publish"},{"tap":".*טלפון הלקוח.*"}],"expect":"טלפון הלקוח"},
-  {"key":"solo_publish_footer_phone","steps":[{"link":"solo/preview?open=publish"},{"tap":".*המספר.*"}],"expect":"המספר"},
-  {"key":"solo_ride","steps":[{"link":"solo/preview?open=ride"}],"expect":"נסיעה"},
-  {"key":"solo_ride_cancel","steps":[{"link":"solo/preview?open=ride"},{"tap":".*בטל.*"}],"expect":"לבטל"},
-  {"key":"solo_ride_groups","steps":[{"link":"solo/preview?open=ride"},{"tap":".*קבוצות.*"}],"expect":"קבוצות"},
-  {"key":"solo_groups","steps":[{"link":"solo/preview?open=groups"}],"expect":"קבוצות"},
-  {"key":"solo_gap_dialog","steps":[{"link":"solo/preview?open=groups"},{"tap":".*מרווח.*"}],"expect":"מרווח"},
-  {"key":"solo_delay_dialog","steps":[{"link":"solo/preview?open=groups"},{"tap":".*שנ.*"}],"expect":"זמן"},
-  {"key":"solo_whogot","steps":[{"link":"solo/preview?open=who-got"}],"expect":"מי קיבל"},
-  {"key":"solo_settings","steps":[{"link":"solo/preview?open=settings"}],"expect":"הגדרות"},
-  {"key":"solo_ack_text","steps":[{"link":"solo/preview?open=settings"},{"tap":".*טקסט אישור.*"}],"expect":"טקסט אישור"},
-  {"key":"solo_auto_msg","steps":[{"link":"solo/preview?open=settings"},{"tap":".*הודעה לאחר סגירה.*"}],"expect":"הודעה לאחר סגירה"},
-  {"key":"solo_footer","steps":[{"link":"solo/preview?open=settings"},{"tap":".*סיום קבוע.*"}],"expect":"סיום קבוע"},
-  {"key":"solo_publish_number","steps":[{"link":"solo/preview?open=settings"},{"tap":".*מפרסם מהמספר.*"}],"expect":"מאיזה מספר"},
-  {"key":"solo_other_number","steps":[{"link":"solo/preview?open=settings"},{"tap":".*מספר אחר.*"}],"expect":"מספר אחר"},
-  {"key":"solo_reset","steps":[{"link":"solo/preview?open=settings"},{"tap":".*מחיקת קבוצות.*"}],"expect":"מחיקת קבוצות"},
-  {"key":"solo_logout","steps":[{"link":"solo/preview?open=settings"},{"tap":".*יציאה מהחשבון.*"}],"expect":"יציאה"},
-  {"key":"solo_history","steps":[{"link":"solo/preview?open=history"}],"expect":"היסטוריי"},
-  {"key":"solo_story","steps":[{"link":"solo/preview?open=history"},{"point":"50%,30%"}],"expect":"לפי הסדר|נסיעה"},
-  {"key":"solo_chats","steps":[{"link":"solo/preview?open=home"},{"link":"solo/chats"}],"expect":"צ.אט"},
-  {"key":"solo_chat","steps":[{"link":"solo/preview?open=home"},{"link":"solo/chats"},{"point":"50%,25%"}],"expect":"."},
-  {"key":"solo_active","steps":[{"link":"solo/preview?open=home"},{"link":"solo/rides"}],"expect":"נסיעות פעילות"},
-  {"key":"solo_replies","steps":[{"link":"solo/preview?open=home"},{"link":"solo/replies"}],"expect":"הגיבו"},
-  {"key":"solo_categories","steps":[{"link":"solo/preview?open=home"},{"link":"solo/categories"}],"expect":"קטגוריות"},
-  {"key":"solo_category_name","steps":[{"link":"solo/preview?open=home"},{"link":"solo/categories"},{"tap":".*קטגוריה חדשה.*"}],"expect":"קטגוריה"},
-  {"key":"solo_wa_numbers","steps":[{"link":"solo/preview?open=home"},{"link":"solo/wa-numbers"}],"expect":"וואטסאפ"},
-  {"key":"solo_cleanup","steps":[{"link":"solo/preview?open=home"},{"tap":"תפריט"},{"tap":".*ניקוי צ.אטים.*"}],"expect":"ניקוי"}
+  {
+   "key": "solo_intro",
+   "steps": [
+    {
+     "link": "solo/preview?open=intro"
+    }
+   ],
+   "expect": "סדרן"
+  },
+  {
+   "key": "solo_login",
+   "steps": [
+    {
+     "link": "solo/preview?open=login"
+    }
+   ],
+   "expect": "כניסה|טלפון"
+  },
+  {
+   "key": "solo_access",
+   "steps": [
+    {
+     "link": "solo/preview?open=access"
+    }
+   ],
+   "expect": "הרשאה|אישור"
+  },
+  {
+   "key": "solo_whatsapp",
+   "steps": [
+    {
+     "link": "solo/preview?open=whatsapp"
+    }
+   ],
+   "expect": "וואטסאפ"
+  },
+  {
+   "key": "solo_setup",
+   "steps": [
+    {
+     "link": "solo/preview?open=welcome"
+    }
+   ],
+   "expect": "ברוכים הבאים"
+  },
+  {
+   "key": "solo_home",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    }
+   ],
+   "expect": "סדרן"
+  },
+  {
+   "key": "solo_drawer",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "tap": "תפריט"
+    }
+   ],
+   "expect": "פרסום נסיעה|נסיעות פעילות"
+  },
+  {
+   "key": "solo_publish",
+   "steps": [
+    {
+     "link": "solo/preview?open=publish"
+    }
+   ],
+   "expect": "נסיעה"
+  },
+  {
+   "key": "solo_publish_client_phone",
+   "steps": [
+    {
+     "link": "solo/preview?open=publish"
+    },
+    {
+     "tap": ".*טלפון הלקוח.*"
+    }
+   ],
+   "expect": "טלפון הלקוח"
+  },
+  {
+   "key": "solo_publish_footer_phone",
+   "steps": [
+    {
+     "link": "solo/preview?open=publish"
+    },
+    {
+     "tap": ".*המספר.*"
+    }
+   ],
+   "expect": "המספר"
+  },
+  {
+   "key": "solo_ride",
+   "steps": [
+    {
+     "link": "solo/preview?open=ride"
+    }
+   ],
+   "expect": "נסיעה"
+  },
+  {
+   "key": "solo_ride_cancel",
+   "steps": [
+    {
+     "link": "solo/preview?open=ride"
+    },
+    {
+     "tap": ".*בטל.*"
+    }
+   ],
+   "expect": "לבטל"
+  },
+  {
+   "key": "solo_ride_groups",
+   "steps": [
+    {
+     "link": "solo/preview?open=ride"
+    },
+    {
+     "tap": ".*קבוצות.*"
+    }
+   ],
+   "expect": "קבוצות"
+  },
+  {
+   "key": "solo_groups",
+   "steps": [
+    {
+     "link": "solo/preview?open=groups"
+    }
+   ],
+   "expect": "קבוצות"
+  },
+  {
+   "key": "solo_gap_dialog",
+   "steps": [
+    {
+     "link": "solo/preview?open=groups"
+    },
+    {
+     "tap": ".*מרווח.*"
+    }
+   ],
+   "expect": "מרווח"
+  },
+  {
+   "key": "solo_delay_dialog",
+   "steps": [
+    {
+     "link": "solo/preview?open=groups"
+    },
+    {
+     "tap": ".*שנ.*"
+    }
+   ],
+   "expect": "זמן"
+  },
+  {
+   "key": "solo_whogot",
+   "steps": [
+    {
+     "link": "solo/preview?open=who-got"
+    }
+   ],
+   "expect": "מי קיבל"
+  },
+  {
+   "key": "solo_settings",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    }
+   ],
+   "expect": "הגדרות"
+  },
+  {
+   "key": "solo_ack_text",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*טקסט אישור.*"
+    }
+   ],
+   "expect": "טקסט אישור"
+  },
+  {
+   "key": "solo_auto_msg",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*הודעה לאחר סגירה.*"
+    }
+   ],
+   "expect": "הודעה לאחר סגירה"
+  },
+  {
+   "key": "solo_footer",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*סיום קבוע.*"
+    }
+   ],
+   "expect": "סיום קבוע"
+  },
+  {
+   "key": "solo_publish_number",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*מפרסם מהמספר.*"
+    }
+   ],
+   "expect": "מאיזה מספר"
+  },
+  {
+   "key": "solo_other_number",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*מספר אחר.*"
+    }
+   ],
+   "expect": "מספר אחר"
+  },
+  {
+   "key": "solo_reset",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*מחיקת קבוצות.*"
+    }
+   ],
+   "expect": "מחיקת קבוצות"
+  },
+  {
+   "key": "solo_logout",
+   "steps": [
+    {
+     "link": "solo/preview?open=settings"
+    },
+    {
+     "tap": ".*יציאה מהחשבון.*"
+    }
+   ],
+   "expect": "יציאה"
+  },
+  {
+   "key": "solo_history",
+   "steps": [
+    {
+     "link": "solo/preview?open=history"
+    }
+   ],
+   "expect": "היסטוריי"
+  },
+  {
+   "key": "solo_story",
+   "steps": [
+    {
+     "link": "solo/preview?open=history"
+    },
+    {
+     "point": "50%,30%"
+    }
+   ],
+   "expect": "לפי הסדר|נסיעה"
+  },
+  {
+   "key": "solo_chats",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/chats"
+    }
+   ],
+   "expect": "צ.אט"
+  },
+  {
+   "key": "solo_chat",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/chats"
+    },
+    {
+     "point": "50%,25%"
+    }
+   ],
+   "expect": "."
+  },
+  {
+   "key": "solo_active",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/rides"
+    }
+   ],
+   "expect": "נסיעות פעילות"
+  },
+  {
+   "key": "solo_replies",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/replies"
+    }
+   ],
+   "expect": "הגיבו"
+  },
+  {
+   "key": "solo_categories",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/categories"
+    }
+   ],
+   "expect": "קטגוריות"
+  },
+  {
+   "key": "solo_category_name",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/categories"
+    },
+    {
+     "tap": ".*קטגוריה חדשה.*"
+    }
+   ],
+   "expect": "קטגוריה"
+  },
+  {
+   "key": "solo_wa_numbers",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/wa-numbers"
+    }
+   ],
+   "expect": "וואטסאפ"
+  },
+  {
+   "key": "solo_cleanup",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "tap": "תפריט"
+    },
+    {
+     "tap": ".*ניקוי צ.אטים.*"
+    }
+   ],
+   "expect": "ניקוי"
+  }
+ ],
+ "demo": [
+  {
+   "key": "tg",
+   "steps": [
+    {
+     "link": "tg"
+    }
+   ],
+   "expect": "הדגמה"
+  },
+  {
+   "key": "tg_login",
+   "steps": [
+    {
+     "link": "tg?demoAuth=phone"
+    }
+   ],
+   "expect": "טלפון|טלגרם"
+  },
+  {
+   "key": "tg_chat",
+   "steps": [
+    {
+     "link": "tg/look/-1000000003001"
+    }
+   ],
+   "expect": "נהגי השרון"
+  },
+  {
+   "key": "tg_wa_chat",
+   "steps": [
+    {
+     "link": "tg/-1000000003001"
+    }
+   ],
+   "expect": "נהגי השרון"
+  },
+  {
+   "key": "tg_info",
+   "steps": [
+    {
+     "link": "tg/info/-1000000003001"
+    }
+   ],
+   "expect": "נהגי השרון"
+  },
+  {
+   "key": "tg_webapp_sheet",
+   "steps": [
+    {
+     "link": "tg/look/2001"
+    },
+    {
+     "tap": ".*(אפליקציה|פתח|Open).*"
+    }
+   ],
+   "expect": "."
+  },
+  {
+   "key": "chat_tab_tg",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "טלגרם"
+    }
+   ],
+   "expect": "הדגמה"
+  },
+  {
+   "key": "chat_tg_archive",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "טלגרם"
+    },
+    {
+     "tap": ".*בארכיון.*"
+    }
+   ],
+   "expect": "ארכיון"
+  },
+  {
+   "key": "chat_tab_groups",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "קבוצות"
+    }
+   ],
+   "expect": "הדגמה"
+  },
+  {
+   "key": "wa_groups",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*הקבוצות שלי.*"
+    }
+   ],
+   "expect": "הדגמה"
+  },
+  {
+   "key": "wa_group_chat",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "קבוצות"
+    },
+    {
+     "tap": ".*הדגמה.*"
+    }
+   ],
+   "expect": "."
+  },
+  {
+   "key": "app_groups_list",
+   "steps": [
+    {
+     "link": "app-groups"
+    }
+   ],
+   "expect": "נהגי השרון"
+  },
+  {
+   "key": "app_groups_join_sheet",
+   "steps": [
+    {
+     "link": "app-groups?join=demo"
+    }
+   ],
+   "expect": "חיפה"
+  },
+  {
+   "key": "app_groups_chat",
+   "steps": [
+    {
+     "link": "app-groups/chat?id=demo-g1"
+    }
+   ],
+   "expect": "נהגי השרון"
+  },
+  {
+   "key": "app_groups_info",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    }
+   ],
+   "expect": "פרטי הקבוצה"
+  },
+  {
+   "key": "app_groups_info_member_changes",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "הצגת השינויים בפרטי החברים"
+    }
+   ],
+   "expect": "שינויים"
+  },
+  {
+   "key": "app_groups_info_notifications",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "התראות"
+    }
+   ],
+   "expect": "התראות"
+  },
+  {
+   "key": "app_groups_info_media_visibility",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "הצגת מדיה"
+    }
+   ],
+   "expect": "להציג מדיה"
+  },
+  {
+   "key": "app_groups_info_disappearing",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "הודעות נעלמות"
+    }
+   ],
+   "expect": "נעלמות"
+  },
+  {
+   "key": "app_groups_info_privacy",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "הגדרה מתקדמת של פרטיות.*"
+    }
+   ],
+   "expect": "פרטיות"
+  },
+  {
+   "key": "app_groups_info_lists",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "הוספה לרשימות"
+    }
+   ],
+   "expect": "רשימ"
+  },
+  {
+   "key": "app_groups_info_report",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "דיווח על הקבוצה"
+    }
+   ],
+   "expect": "דיווח"
+  },
+  {
+   "key": "app_groups_leave_alert",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "יציאה מהקבוצה"
+    }
+   ],
+   "expect": "לצאת"
+  },
+  {
+   "key": "app_groups_clear_chat_alert",
+   "steps": [
+    {
+     "link": "app-groups/info?id=demo-g1"
+    },
+    {
+     "tap": "ניקוי הצ'אט"
+    }
+   ],
+   "expect": "לנקות"
+  },
+  {
+   "key": "app_groups_new",
+   "steps": [
+    {
+     "link": "app-groups/new"
+    }
+   ],
+   "expect": "קבוצה חדשה"
+  },
+  {
+   "key": "app_groups_add",
+   "steps": [
+    {
+     "link": "app-groups/add?id=demo-g1"
+    }
+   ],
+   "expect": "צירוף"
+  },
+  {
+   "key": "app_groups_link",
+   "steps": [
+    {
+     "link": "app-groups/link?id=demo-g1"
+    }
+   ],
+   "expect": "קישור"
+  },
+  {
+   "key": "app_groups_link_qr",
+   "steps": [
+    {
+     "link": "app-groups/link?id=demo-g1"
+    },
+    {
+     "tap": "קוד QR"
+    }
+   ],
+   "expect": "QR"
+  },
+  {
+   "key": "app_groups_link_reset_alert",
+   "steps": [
+    {
+     "link": "app-groups/link?id=demo-g1"
+    },
+    {
+     "tap": ".*איפוס.*"
+    }
+   ],
+   "expect": "לאפס"
+  },
+  {
+   "key": "app_groups_perm",
+   "steps": [
+    {
+     "link": "app-groups/permissions?id=demo-g1"
+    }
+   ],
+   "expect": "הרשאות"
+  },
+  {
+   "key": "app_groups_media",
+   "steps": [
+    {
+     "link": "app-groups/media?id=demo-g1"
+    }
+   ],
+   "expect": "מדיה"
+  },
+  {
+   "key": "settings_automation",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    }
+   ],
+   "expect": "זמן ברירת מחדל|אוטומטי"
+  },
+  {
+   "key": "default_eta",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    },
+    {
+     "tap": ".*זמן ברירת מחדל.*"
+    }
+   ],
+   "expect": "דקות"
+  },
+  {
+   "key": "auto_sched_window",
+   "steps": [
+    {
+     "link": "settings?cat=automation"
+    },
+    {
+     "tap": ".*טווח לנסיעות מתוזמנות.*"
+    }
+   ],
+   "expect": "טווח"
+  },
+  {
+   "key": "settings_devices",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    }
+   ],
+   "expect": "מכשיר"
+  },
+  {
+   "key": "device_pairing",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    },
+    {
+     "tap": ".*הוסף מכשיר.*"
+    }
+   ],
+   "expect": "קוד|מכשיר נוסף"
+  },
+  {
+   "key": "device_join",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    },
+    {
+     "tap": ".*הצטרף.*"
+    }
+   ],
+   "expect": "ראשי"
+  },
+  {
+   "key": "device_revoke",
+   "steps": [
+    {
+     "link": "settings?cat=devices"
+    },
+    {
+     "tap": ".*הסר.*"
+    }
+   ],
+   "expect": "להסיר"
+  },
+  {
+   "key": "settings_share",
+   "steps": [
+    {
+     "link": "settings?cat=share"
+    }
+   ],
+   "expect": "העתק|חבר"
+  },
+  {
+   "key": "settings_wa2",
+   "steps": [
+    {
+     "link": "settings?cat=wa2"
+    }
+   ],
+   "expect": "וואטסאפ"
+  },
+  {
+   "key": "wa_unlink_second",
+   "steps": [
+    {
+     "link": "settings?cat=wa2"
+    },
+    {
+     "tap": ".*הסר.*"
+    }
+   ],
+   "expect": "להסיר"
+  },
+  {
+   "key": "settings_tg",
+   "steps": [
+    {
+     "link": "settings?cat=tg"
+    }
+   ],
+   "expect": "טלגרם"
+  },
+  {
+   "key": "tg_disconnect",
+   "steps": [
+    {
+     "link": "settings?cat=tg"
+    },
+    {
+     "tap": ".*נתק.*"
+    }
+   ],
+   "expect": "לנתק"
+  },
+  {
+   "key": "station_pay",
+   "steps": [
+    {
+     "link": "station-pay"
+    }
+   ],
+   "expect": "חיובי תחנות"
+  },
+  {
+   "key": "station_pay_station",
+   "steps": [
+    {
+     "link": "station-pay"
+    },
+    {
+     "tap": ".*הדגמה.*"
+    }
+   ],
+   "expect": "."
+  },
+  {
+   "key": "station_pay_add",
+   "steps": [
+    {
+     "link": "station-pay"
+    },
+    {
+     "tap": ".*הוספת חיוב.*"
+    }
+   ],
+   "expect": "הוספת חיוב"
+  },
+  {
+   "key": "support",
+   "steps": [
+    {
+     "link": "support"
+    }
+   ],
+   "expect": "שירות לקוחות"
+  },
+  {
+   "key": "chat_archive",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*בארכיון.*"
+    }
+   ],
+   "expect": "ארכיון"
+  },
+  {
+   "key": "chat_new_list",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": ".*רשימה.*"
+    }
+   ],
+   "expect": "רשימה חדשה"
+  },
+  {
+   "key": "delete_account",
+   "steps": [
+    {
+     "link": "settings?cat=account"
+    },
+    {
+     "tap": "מחק חשבון"
+    }
+   ],
+   "expect": "למחוק|מחיקת"
+  },
+  {
+   "key": "app_background",
+   "steps": [
+    {
+     "link": "settings?cat=display"
+    },
+    {
+     "tap": "שנה"
+    }
+   ],
+   "expect": "רקע"
+  }
  ]
 }
