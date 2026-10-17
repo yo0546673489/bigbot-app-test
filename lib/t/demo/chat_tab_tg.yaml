@@ -26,12 +26,12 @@ name: lib demo chat_tab_tg
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "טלגרם"
+      text: ".*טלגרם.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "טלגרם"
+    text: ".*טלגרם.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

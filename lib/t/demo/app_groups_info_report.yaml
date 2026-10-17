@@ -26,12 +26,12 @@ name: lib demo app_groups_info_report
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "דיווח על הקבוצה"
+      text: ".*דיווח על הקבוצה.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "דיווח על הקבוצה"
+    text: ".*דיווח על הקבוצה.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

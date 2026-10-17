@@ -26,12 +26,12 @@ name: lib main profile_vehicle
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "סוג רכב"
+      text: ".*סוג רכב.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "סוג רכב"
+    text: ".*סוג רכב.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

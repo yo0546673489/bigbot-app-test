@@ -26,12 +26,12 @@ name: lib main clear_history
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "נקה"
+      text: ".*נקה.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "נקה"
+    text: ".*נקה.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

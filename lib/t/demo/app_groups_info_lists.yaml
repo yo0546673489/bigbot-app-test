@@ -26,12 +26,12 @@ name: lib demo app_groups_info_lists
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "הוספה לרשימות"
+      text: ".*הוספה לרשימות.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "הוספה לרשימות"
+    text: ".*הוספה לרשימות.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

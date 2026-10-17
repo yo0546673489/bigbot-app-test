@@ -26,12 +26,12 @@ name: lib main profile_name
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "שם מלא"
+      text: ".*שם מלא.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "שם מלא"
+    text: ".*שם מלא.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

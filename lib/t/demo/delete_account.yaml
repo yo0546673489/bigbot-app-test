@@ -26,12 +26,12 @@ name: lib demo delete_account
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "מחק חשבון"
+      text: ".*מחק חשבון.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "מחק חשבון"
+    text: ".*מחק חשבון.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

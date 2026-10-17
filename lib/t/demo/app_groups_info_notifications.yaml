@@ -26,12 +26,12 @@ name: lib demo app_groups_info_notifications
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "התראות"
+      text: ".*התראות.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "התראות"
+    text: ".*התראות.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

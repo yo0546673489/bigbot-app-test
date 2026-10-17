@@ -1531,6 +1531,54 @@
     }
    ],
    "expect": "רקע"
+  },
+  {
+   "key": "profile_name",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "שם מלא"
+    }
+   ],
+   "expect": "שם מלא"
+  },
+  {
+   "key": "profile_dob",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "תאריך לידה"
+    }
+   ],
+   "expect": "תאריך לידה"
+  },
+  {
+   "key": "profile_vehicle",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "סוג רכב"
+    }
+   ],
+   "expect": "סוג רכב"
+  },
+  {
+   "key": "vehicle_types",
+   "steps": [
+    {
+     "link": "settings?cat=rides"
+    },
+    {
+     "tap": "סוג רכב"
+    }
+   ],
+   "expect": "סוג רכב"
   }
  ]
 }

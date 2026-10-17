@@ -26,12 +26,12 @@ name: lib main profile_dob
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "תאריך לידה"
+      text: ".*תאריך לידה.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "תאריך לידה"
+    text: ".*תאריך לידה.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

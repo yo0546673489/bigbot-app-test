@@ -26,12 +26,12 @@ name: lib demo app_groups_info_disappearing
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "הודעות נעלמות"
+      text: ".*הודעות נעלמות.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "הודעות נעלמות"
+    text: ".*הודעות נעלמות.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

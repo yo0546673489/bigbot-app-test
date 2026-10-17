@@ -49,5 +49,9 @@
  "chat_archive": "ארכיון",
  "chat_new_list": "רשימה חדשה",
  "delete_account": "למחוק|מחיקת",
- "app_background": "רקע"
+ "app_background": "רקע",
+ "profile_name": "שם מלא",
+ "profile_dob": "תאריך לידה",
+ "profile_vehicle": "סוג רכב",
+ "vehicle_types": "סוג רכב"
 }

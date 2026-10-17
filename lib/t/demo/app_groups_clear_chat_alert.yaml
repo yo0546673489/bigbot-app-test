@@ -26,12 +26,12 @@ name: lib demo app_groups_clear_chat_alert
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "ניקוי הצ'אט"
+      text: ".*ניקוי הצ'אט.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "ניקוי הצ'אט"
+    text: ".*ניקוי הצ'אט.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

@@ -26,12 +26,12 @@ name: lib main app_background
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "שנה"
+      text: ".*שנה.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "שנה"
+    text: ".*שנה.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

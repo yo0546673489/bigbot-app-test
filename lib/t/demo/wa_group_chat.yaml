@@ -26,12 +26,12 @@ name: lib demo wa_group_chat
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "קבוצות"
+      text: ".*קבוצות.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "קבוצות"
+    text: ".*קבוצות.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000

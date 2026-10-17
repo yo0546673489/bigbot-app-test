@@ -26,12 +26,12 @@ name: lib solo solo_cleanup
     timeout: 8000
 - scrollUntilVisible:
     element:
-      text: "תפריט"
+      text: ".*תפריט.*"
     direction: DOWN
     timeout: 6000
     optional: true
 - tapOn:
-    text: "תפריט"
+    text: ".*תפריט.*"
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000
