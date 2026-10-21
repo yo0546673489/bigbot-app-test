@@ -1,1 +1,1 @@
-claude/ios-first-run-tour
+claude/ios-onboarding-light

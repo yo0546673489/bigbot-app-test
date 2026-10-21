@@ -1,0 +1,6 @@
+flows:
+  - "12_onboard.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 12 onboard light

@@ -1,0 +1,185 @@
+appId: com.bigbotdrivers.app
+name: 12 onboard light
+---
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- takeScreenshot: shots/12_00_home
+- extendedWaitUntil:
+    visible: "רוצה סיור באפליקציה?"
+    timeout: 70000
+    optional: true
+- takeScreenshot: shots/12_01_offer
+- tapOn:
+    text: "סיור אוטומטי"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_02_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_03_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_04_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_05_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_06_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_07_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_08_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_09_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_10_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_11_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_12_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_13_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_14_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_15_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_16_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_17_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_18_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_19_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_20_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_21_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_22_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_23_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_24_auto
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/12_25_auto
+- extendedWaitUntil:
+    visible: "סיימתי"
+    timeout: 40000
+    optional: true
+- takeScreenshot: shots/12_30_last_step
+- tapOn:
+    text: "סיימתי"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/12_31_settings_first_visit
+- tapOn:
+    text: "הבנתי"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "תפריט"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_32_drawer
+- tapOn:
+    text: "עזרה ומדריכים"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_33_tutorials
+- tapOn:
+    text: "הסיור הקצר באפליקציה"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/12_34_tour_again
