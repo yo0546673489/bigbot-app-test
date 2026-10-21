@@ -41,4 +41,7 @@ if [ "$LOC" = "he" ]; then
   sleep 45
 fi
 mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
+# onboard-light: why the app closes - the JS exception / native crash from the simulator log
+xcrun simctl spawn "$DEV" log show --last 40m --style compact --predicate 'eventMessage CONTAINS[c] "exception" OR eventMessage CONTAINS[c] "RCTFatal" OR eventMessage CONTAINS[c] "TypeError" OR eventMessage CONTAINS[c] "ReferenceError" OR eventMessage CONTAINS[c] "Invariant" OR eventMessage CONTAINS[c] "Maximum update"' 2>&1 | grep -v -i "maestro" | tail -300 > shots/applog.txt || true
+cp ~/Library/Logs/DiagnosticReports/*BigBot* shots/ 2>/dev/null || true
 exit 0

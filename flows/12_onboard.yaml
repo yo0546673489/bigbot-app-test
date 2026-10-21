@@ -164,7 +164,9 @@ name: 12 onboard light
 - tapOn:
     text: "הבנתי"
     optional: true
-- waitForAnimationToEnd
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
 - tapOn:
     text: "תפריט"
     optional: true
@@ -183,3 +185,18 @@ name: 12 onboard light
     timeout: 2500
     optional: true
 - takeScreenshot: shots/12_34_tour_again
+- tapOn:
+    text: "נתחיל"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_35_steps_avail
+- tapOn:
+    text: "הבא"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_36_steps_ride
+- tapOn:
+    text: "הבא"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/12_37_steps_btn1
