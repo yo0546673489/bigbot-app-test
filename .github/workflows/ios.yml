@@ -80,6 +80,7 @@ jobs:
           - { name: deep, app: main, flows: flows/config-deep.yaml, login: '1' }
           - { name: newfeat, app: main, flows: flows/config-newfeat.yaml, login: '1' }
           - { name: solo, app: solofake, flows: flows/config-solo.yaml, login: '0' }
+          - { name: onboard, app: main, flows: flows/config-onboard.yaml, login: '1' }
     steps:
       - uses: actions/checkout@v4
       - id: want
