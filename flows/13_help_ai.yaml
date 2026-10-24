@@ -27,6 +27,21 @@ name: 13 help ai chat
     text: "לא עכשיו"
     optional: true
 - waitForAnimationToEnd
+# the demo account may have a ride in progress: the app then opens on that ride's chat, so step back home
+- runFlow:
+    when:
+      visible: "אני בדרך"
+    commands:
+      - tapOn:
+          point: "94%,9%"
+      - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "אני בדרך"
+    commands:
+      - tapOn:
+          point: "94%,9%"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/13_00_home
 - tapOn:
     id: "הסבר"
