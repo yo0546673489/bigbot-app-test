@@ -1,0 +1,6 @@
+flows:
+  - "13_help_ai.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 13 help ai chat

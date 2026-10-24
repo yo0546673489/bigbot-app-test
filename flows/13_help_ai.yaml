@@ -1,0 +1,89 @@
+appId: com.bigbotdrivers.app
+name: 13 help ai chat
+---
+# FEAT-HELP-AI (24/10/2026) — the guide's "שאל אותי" chat answered by the server's AI: a starter
+# question, the "looking" bubble, the answer with its video cover, the video playing in the app,
+# and "הסבר מלא". Uses the real server with the demo account.
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+# the first-run question comes after half a minute: answer "not now" so it does not cover the chat
+- extendedWaitUntil:
+    visible: "רוצה סיור באפליקציה?"
+    timeout: 70000
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_00_home
+- tapOn:
+    id: "הסבר"
+    optional: true
+- tapOn:
+    text: "הסבר"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_01_explain_map
+- tapOn:
+    text: "שאל אותי, למשל: יש רדיוס?"
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_02_chat_open
+- tapOn:
+    text: "יש אפשרות לרדיוס?"
+- takeScreenshot: shots/13_03_looking
+- extendedWaitUntil:
+    visible: "הסבר מלא"
+    timeout: 20000
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_04_answer
+- scroll
+- takeScreenshot: shots/13_05_answer_scrolled
+# the video: a tap on its cover (the length badge, e.g. 0:14) plays it inside the app
+- tapOn:
+    text: "[0-9]+:[0-9]{2}"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 6000
+    optional: true
+- takeScreenshot: shots/13_05b_video_playing
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "הסבר מלא"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_06_full
+# a second question: a fault, with its videos and the support button
+- tapOn:
+    text: "כתוב שאלה"
+    optional: true
+- inputText: "אני לא מקבל נסיעות"
+- pressKey: Enter
+- extendedWaitUntil:
+    visible: "פנייה לשירות לקוחות"
+    timeout: 20000
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/13_07_problem
+- scrollUntilVisible:
+    element:
+      text: "[0-9]+:[0-9]{2}"
+    direction: UP
+    optional: true
+- takeScreenshot: shots/13_08_problem_videos

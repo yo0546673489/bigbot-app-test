@@ -1,1 +1,1 @@
-claude/ios-onboarding-light
+claude/ios-help-ai
