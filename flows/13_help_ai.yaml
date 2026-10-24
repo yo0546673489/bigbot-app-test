@@ -53,16 +53,19 @@ name: 13 help ai chat
 - takeScreenshot: shots/13_05_answer_scrolled
 # the video: a tap on its cover (the length badge, e.g. 0:14) plays it inside the app
 - tapOn:
-    text: "[0-9]+:[0-9]{2}"
-    optional: true
+    point: "77%,60%"
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 6000
+    timeout: 8000
     optional: true
 - takeScreenshot: shots/13_05b_video_playing
-- tapOn:
-    text: "סגירה"
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 5000
     optional: true
+- takeScreenshot: shots/13_05c_video_later
+- tapOn:
+    point: "8%,9%"
 - waitForAnimationToEnd
 - tapOn:
     text: "הסבר מלא"
