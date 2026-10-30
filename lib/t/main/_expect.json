@@ -54,5 +54,7 @@
  "bot_contact": "ביגבוט בוואטסאפ",
  "welcome_trial": "פרימיום|ניסיון",
  "blocked": "נחסמת",
- "subscription_locked": "פרימיום|מנוי"
+ "subscription_locked": "פרימיום|מנוי",
+ "driver_auth_register": "הרשמה למערכת",
+ "driver_auth_login": "התחברות"
 }

@@ -579,6 +579,30 @@
     }
    ],
    "expect": "פרימיום|מנוי"
+  },
+  {
+   "key": "driver_auth_register",
+   "steps": [
+    {
+     "link": "driver-auth"
+    },
+    {
+     "tap": "הרשמה"
+    }
+   ],
+   "expect": "הרשמה למערכת"
+  },
+  {
+   "key": "driver_auth_login",
+   "steps": [
+    {
+     "link": "driver-auth"
+    },
+    {
+     "tap": "התחברות"
+    }
+   ],
+   "expect": "התחברות"
   }
  ],
  "solo": [
