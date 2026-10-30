@@ -56,5 +56,8 @@
  "blocked": "נחסמת",
  "subscription_locked": "פרימיום|מנוי",
  "driver_auth_register": "הרשמה למערכת",
- "driver_auth_login": "התחברות"
+ "driver_auth_login": "התחברות",
+ "chat_menu": "ערכת נושא",
+ "chat_wallpaper": "ערכת נושא",
+ "chat_attach": "."
 }

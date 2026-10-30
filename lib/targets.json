@@ -599,10 +599,61 @@
      "link": "driver-auth"
     },
     {
+     "tap": "לא עכשיו"
+    },
+    {
      "tap": "התחברות"
     }
    ],
    "expect": "התחברות"
+  },
+  {
+   "key": "chat_menu",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "point": "50%,24%"
+    },
+    {
+     "tap": "עוד"
+    }
+   ],
+   "expect": "ערכת נושא"
+  },
+  {
+   "key": "chat_wallpaper",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "point": "50%,24%"
+    },
+    {
+     "tap": "עוד"
+    },
+    {
+     "tap": ".*ערכת נושא.*"
+    }
+   ],
+   "expect": "ערכת נושא"
+  },
+  {
+   "key": "chat_attach",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "point": "50%,24%"
+    },
+    {
+     "tap": "צרף"
+    }
+   ],
+   "expect": "."
   }
  ],
  "solo": [
@@ -998,6 +1049,54 @@
     }
    ],
    "expect": "ניקוי"
+  },
+  {
+   "key": "solo_wa_disconnect",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/wa-numbers"
+    },
+    {
+     "scroll": true
+    },
+    {
+     "tap": ".*נתק את הוואטסאפ הראשי.*"
+    }
+   ],
+   "expect": "לנתק את הוואטסאפ"
+  },
+  {
+   "key": "solo_driver",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/driver?phone=0501112233"
+    }
+   ],
+   "expect": "נסיעות"
+  },
+  {
+   "key": "solo_chat_cancel",
+   "steps": [
+    {
+     "link": "solo/preview?open=home"
+    },
+    {
+     "link": "solo/chats"
+    },
+    {
+     "point": "50%,25%"
+    },
+    {
+     "tap": ".*ביטול נסיעה.*"
+    }
+   ],
+   "expect": "לבטל את הנסיעה"
   }
  ],
  "demo": [
@@ -1603,6 +1702,42 @@
     }
    ],
    "expect": "סוג רכב"
+  },
+  {
+   "key": "chat_attach",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "קבוצות"
+    },
+    {
+     "tap": ".*נסיעות מרכז.*"
+    },
+    {
+     "tap": "צרף"
+    }
+   ],
+   "expect": "."
+  },
+  {
+   "key": "chat_image",
+   "steps": [
+    {
+     "link": "chat"
+    },
+    {
+     "tap": "קבוצות"
+    },
+    {
+     "tap": ".*נסיעות מרכז.*"
+    },
+    {
+     "point": "50%,45%"
+    }
+   ],
+   "expect": "."
   }
  ]
 }

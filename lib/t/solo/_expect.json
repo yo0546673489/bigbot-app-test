@@ -33,5 +33,8 @@
  "solo_categories": "קטגוריות",
  "solo_category_name": "קטגוריה",
  "solo_wa_numbers": "וואטסאפ",
- "solo_cleanup": "ניקוי"
+ "solo_cleanup": "ניקוי",
+ "solo_wa_disconnect": "לנתק את הוואטסאפ",
+ "solo_driver": "נסיעות",
+ "solo_chat_cancel": "לבטל את הנסיעה"
 }

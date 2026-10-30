@@ -26,6 +26,17 @@ name: lib main driver_auth_login
     timeout: 8000
 - scrollUntilVisible:
     element:
+      text: ".*לא עכשיו.*"
+    direction: DOWN
+    timeout: 6000
+    optional: true
+- tapOn:
+    text: ".*לא עכשיו.*"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 6000
+- scrollUntilVisible:
+    element:
       text: ".*התחברות.*"
     direction: DOWN
     timeout: 6000
