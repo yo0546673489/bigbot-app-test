@@ -30,6 +30,17 @@ name: lib solo solo_driver
     optional: true
 - waitForAnimationToEnd:
     timeout: 8000
+- scrollUntilVisible:
+    element:
+      text: ".*פתיחה.*"
+    direction: DOWN
+    timeout: 6000
+    optional: true
+- tapOn:
+    text: ".*פתיחה.*"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 6000
 - extendedWaitUntil:
     visible: "__settle__"
     timeout: 2500
