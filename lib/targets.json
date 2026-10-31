@@ -1672,6 +1672,9 @@
     },
     {
      "tap": "שם מלא"
+    },
+    {
+     "tap": "Continue"
     }
    ],
    "expect": "שם מלא"
@@ -1747,6 +1750,21 @@
     }
    ],
    "expect": "."
+  },
+  {
+   "key": "profile_model",
+   "steps": [
+    {
+     "link": "profile"
+    },
+    {
+     "tap": "דגם.*"
+    },
+    {
+     "tap": "Continue"
+    }
+   ],
+   "expect": "דגם"
   }
  ]
 }
