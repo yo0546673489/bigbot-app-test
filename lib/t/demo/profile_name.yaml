@@ -35,17 +35,6 @@ name: lib demo profile_name
     optional: true
 - waitForAnimationToEnd:
     timeout: 6000
-- scrollUntilVisible:
-    element:
-      text: ".*Continue.*"
-    direction: DOWN
-    timeout: 6000
-    optional: true
-- tapOn:
-    text: ".*Continue.*"
-    optional: true
-- waitForAnimationToEnd:
-    timeout: 6000
 - extendedWaitUntil:
     visible: "__settle__"
     timeout: 2500
