@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p "$EDIT_DEPS/hf" "$EDIT_DEPS/bin" ~/.fonts
           (cd "$EDIT_DEPS/hf" && npm init -y >/dev/null && npm i "hyperframes@$HF_VERSION" --no-audit --no-fund --silent >/dev/null)
-          curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-linux64-gpl-7.1.tar.xz \
+          curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n9.0-latest-linux64-gpl-9.0.tar.xz \
             | tar xJ --strip-components=2 -C "$EDIT_DEPS/bin" --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
           curl -fsSL -o ~/.fonts/NotoColorEmoji.ttf https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
           node "$EDIT_DEPS/hf/node_modules/hyperframes/bin/hyperframes.mjs" browser ensure >/dev/null
