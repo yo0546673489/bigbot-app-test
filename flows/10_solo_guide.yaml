@@ -37,6 +37,19 @@ name: 10 solo guide (fake data)
     visible: "__wait_1s__"
     timeout: 1500
     optional: true
+# HELP-AI-CONSENT: the first question waits for the driver's answer
+- extendedWaitUntil:
+    visible: "לפני שעונים לך"
+    timeout: 8000
+    optional: true
+- takeScreenshot: shots/10_01c_ai_consent
+- tapOn:
+    text: "מסכים, לשלוח"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_8s__"
+    timeout: 8000
+    optional: true
 - takeScreenshot: shots/10_02_short_answer
 - scrollUntilVisible:
     element:
