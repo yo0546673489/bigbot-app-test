@@ -2,6 +2,8 @@ name: emulator build
 run-name: ${{ inputs.label }}
 # Builds the debug app of a branch, with everything that did not change taken from the last build.
 # The APK leaves the job only sealed with EMU_LIVE_KEY: this repo and its artifacts are public.
+# variant=fast is the build for the private link. Its keys get compiled into it, so its build cache
+# is sealed too, and only a build with all the keys and the right signature is named "apk".
 on:
   workflow_dispatch:
     inputs:
@@ -9,12 +11,19 @@ on:
         description: 'App repo branch or commit'
         required: true
       label:
-        description: 'build-<commit>: a finished build of the same commit is used again'
+        description: 'build-<commit> or fast-<commit>: a finished build of the same commit is used again'
         required: true
+      variant:
+        description: 'debug or fast'
+        required: false
+        default: debug
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,8 +42,9 @@ jobs:
           distribution: 'temurin'
       - uses: gradle/actions/setup-gradle@v4
         with:
-          cache-read-only: false
+          cache-read-only: ${{ inputs.variant == 'fast' }}
       - uses: actions/cache@v4
+        if: inputs.variant != 'fast'
         with:
           key: app-build-${{ github.run_id }}
           restore-keys: app-build-
@@ -42,11 +52,39 @@ jobs:
             app/bigbot/android/.gradle
             app/bigbot/android/build
             app/bigbot/android/app/build
+      - uses: actions/cache/restore@v4
+        if: inputs.variant == 'fast'
+        with:
+          key: app-fast-${{ github.run_id }}
+          restore-keys: app-fast-
+          path: fast-cache.bin
+      - name: open the sealed cache and the keys
+        if: inputs.variant == 'fast'
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+          LINK_KEYSTORE_B64: ${{ secrets.LINK_KEYSTORE_B64 }}
+          LINK_TG_API_HASH: ${{ secrets.LINK_TG_API_HASH }}
+          LINK_PRIVATE_BASE: ${{ secrets.LINK_PRIVATE_BASE }}
+        run: |
+          if [ -f fast-cache.bin ]; then
+            node self/live/unseal-file.js fast-cache.bin /tmp/fc.tar
+            tar xf /tmp/fc.tar -C app/bigbot/android
+            rm -f /tmp/fc.tar fast-cache.bin
+          fi
+          if [ -n "$LINK_KEYSTORE_B64" ] && [ -n "$LINK_TG_API_HASH" ] && [ -n "$LINK_PRIVATE_BASE" ]; then
+            mkdir -p ~/.android app/bigbot/android/keystore
+            printf '%s' "$LINK_KEYSTORE_B64" | base64 -d > ~/.android/debug.keystore
+            printf 'TG_API_HASH=%s\n' "$LINK_TG_API_HASH" > app/bigbot/android/keystore/tg.properties
+            printf 'PRIVATE_CHANNEL_BASE=%s\n' "$LINK_PRIVATE_BASE" > app/bigbot/android/keystore/private-channel.properties
+            echo "HAS_KEYS=1" >> "$GITHUB_ENV"
+          fi
       - name: build
         working-directory: app/bigbot/android
+        env:
+          TASK: ${{ inputs.variant == 'fast' && 'assembleFast' || 'assembleDebug' }}
         run: |
           chmod +x gradlew
-          ./gradlew "-Dorg.gradle.jvmargs=-Xmx7g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" "-Pkotlin.daemon.jvmargs=-Xmx6g" -Pkotlin.incremental=true --build-cache --parallel :app:assembleDebug -q > /tmp/build.out 2> /tmp/build.err
+          ./gradlew "-Dorg.gradle.jvmargs=-Xmx7g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" "-Pkotlin.daemon.jvmargs=-Xmx6g" -Pkotlin.incremental=true --build-cache --parallel ":app:$TASK" -q > /tmp/build.out 2> /tmp/build.err
       - name: seal the errors
         if: failure()
         env:
@@ -60,15 +98,41 @@ jobs:
           name: err
           path: err/err.bin
           retention-days: 3
+      - name: check the signature
+        if: inputs.variant == 'fast' && env.HAS_KEYS == '1'
+        run: |
+          TOOL="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner"
+          "$TOOL" verify --print-certs app/bigbot/android/app/build/outputs/apk/fast/app-fast.apk | grep -q 'SHA-256 digest: a0a6472872ee8a3e9b063c562a2451eca74abc16e1d33ea71ff240c558c80138'
       - name: seal
         env:
           EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+          APK: ${{ inputs.variant == 'fast' && 'fast/app-fast.apk' || 'debug/app-debug.apk' }}
         run: |
           mkdir -p out
-          node self/live/seal-file.js app/bigbot/android/app/build/outputs/apk/debug/app-debug.apk out/app.bin
+          node self/live/seal-file.js "app/bigbot/android/app/build/outputs/apk/$APK" out/app.bin
       - uses: actions/upload-artifact@v4
         with:
-          name: apk
+          name: ${{ (inputs.variant != 'fast' || env.HAS_KEYS == '1') && 'apk' || 'apk-without-keys' }}
           path: out/app.bin
           compression-level: 0
           retention-days: 3
+      - name: seal the cache
+        if: inputs.variant == 'fast'
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          tar cf /tmp/fc.tar -C app/bigbot/android --exclude=app/build/outputs .gradle build app/build
+          node self/live/seal-file.js /tmp/fc.tar fast-cache.bin
+          rm -f /tmp/fc.tar
+      - uses: actions/cache/save@v4
+        if: inputs.variant == 'fast'
+        with:
+          key: app-fast-${{ github.run_id }}
+          path: fast-cache.bin
+      - name: keep only the last sealed cache
+        if: inputs.variant == 'fast'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOW: app-fast-${{ github.run_id }}
+        run: |
+          gh cache list --repo "$GITHUB_REPOSITORY" --key app-fast- --limit 20 --json key --jq '.[].key' | grep -vx "$NOW" | while read -r k; do gh cache delete "$k" --repo "$GITHUB_REPOSITORY" || true; done
