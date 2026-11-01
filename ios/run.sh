@@ -37,6 +37,11 @@ mrun() { # retry when the XCTest driver is slow to start or drops mid-run (it ca
 }
 # the login code on the simulator clipboard: the app's "הדבק קוד מוואטסאפ" button pastes it
 printf '%s' "$DEMO_CODE" | xcrun simctl pbcopy "$DEV"
+# The demo code is deleted when used, so two simulators logging in together fail each other: one at a time.
+case "${FLOW_CONFIG:-}" in
+  *settings*) sleep 360 ;;
+  *deep*) sleep 720 ;;
+esac
 # A login that did not finish must not pass silently: every later screen would just show the login form.
 LOGIN_RC=skipped
 if [ "${DO_LOGIN:-1}" = "1" ]; then
