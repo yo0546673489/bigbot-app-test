@@ -134,17 +134,33 @@ async function rawShot() {
   return r.stdout;
 }
 
-const hash = (raw) => crypto.createHash('md5').update(raw.subarray(raw.length - raw.readUInt32LE(0) * (raw.readUInt32LE(4) - 120) * 4)).digest('hex'); // without the status bar and its clock
+// Same picture, ignoring the status bar and its clock, and a blinking cursor: a few pixels are not a screen that is still moving.
+function samePicture(a, b) {
+  if (!a || a.length !== b.length) return false;
+  const w = b.readUInt32LE(0);
+  const h = b.readUInt32LE(4);
+  const offset = b.length - w * h * 4;
+  let differ = 0;
+  let total = 0;
+  for (let y = 120; y < h; y += 4) {
+    let p = offset + y * w * 4;
+    for (let x = 0; x < w; x += 4, p += 16) {
+      total++;
+      if (a[p] !== b[p] || a[p + 1] !== b[p + 1] || a[p + 2] !== b[p + 2]) differ++;
+    }
+  }
+  return differ / total < 0.0005;
+}
 
 // Returns as soon as the picture stopped changing, right here next to the emulator.
-async function settle(quietMs = 1200, timeoutMs = 25000) {
+async function settle(quietMs = 900, timeoutMs = 12000) {
   const until = Date.now() + timeoutMs;
-  let prev = '';
+  let prev = null;
   let since = Date.now();
   for (;;) {
-    const h = hash(await rawShot());
-    if (h !== prev) {
-      prev = h;
+    const raw = await rawShot();
+    if (!samePicture(prev, raw)) {
+      prev = raw;
       since = Date.now();
     } else if (Date.now() - since >= quietMs) {
       return true;
@@ -224,12 +240,14 @@ async function recStart() {
   await adb(['shell', `rm -rf ${REC_DIR}; mkdir -p ${REC_DIR}`], 20, 'utf8');
   Object.assign(rec, { on: true, stopping: false, n: 0, at: Date.now(), done: null });
   nextPiece();
-  for (let i = 0; i < 25; i++) {
-    if (!(await adb(['shell', `test -s ${REC_DIR}/r0.mp4 || pidof screenrecord >/dev/null`], 10, 'utf8')).code) break;
-    await pause(100);
+  // The encoder takes a moment to start: what happens before its first frame would be lost, so only now is it "recording".
+  let wrote = false;
+  for (let i = 0; i < 40 && !wrote; i++) {
+    wrote = !(await adb(['shell', `test -s ${REC_DIR}/r0.mp4`], 10, 'utf8')).code;
+    if (!wrote) await pause(100);
   }
-  await pause(300);
-  return { recording: true };
+  rec.at = Date.now();
+  return { recording: true, ...(wrote ? {} : { late: true }) };
 }
 
 async function recStop(name) {
@@ -272,7 +290,7 @@ async function runSteps(steps) {
     } else if (s.recStart) r = await recStart();
     else if (s.recStop) r = await recStop(s.recStop.name);
     else if (s.wait) await new Promise((res) => setTimeout(res, Math.min(Number(s.wait), 60000)));
-    else if (s.settle) r = { settled: await settle(Number(s.settle.quietMs) || 1200, Number(s.settle.timeoutMs) || 25000) };
+    else if (s.settle) r = { settled: await settle(Number(s.settle.quietMs) || undefined, Number(s.settle.timeoutMs) || undefined) };
     else if (s.shot) {
       const png = toPng(await rawShot(), s.shot.half ? 2 : 1);
       r = { png: png.toString('base64'), name: s.shot.name };
