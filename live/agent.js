@@ -228,6 +228,7 @@ async function findOnScreen(q, timeoutMs) {
 // A piece lasts at most 170 s (Android stops at 180), so a long take is several files.
 function nextPiece() {
   const i = rec.n++;
+  rec.starts[i] = Date.now();
   rec.child = execFile(ADB, ['-s', SERIAL, 'shell', `screenrecord --bit-rate 8000000 --time-limit 170 ${REC_DIR}/r${i}.mp4`], { timeout: 185000 }, () => {
     rec.child = null;
     if (rec.on && !rec.stopping) return nextPiece();
@@ -247,7 +248,7 @@ async function recStart() {
     });
   }
   await adb(['shell', `rm -rf ${REC_DIR}; mkdir -p ${REC_DIR}`], 20, 'utf8');
-  Object.assign(rec, { on: true, stopping: false, n: 0, at: Date.now(), done: null });
+  Object.assign(rec, { on: true, stopping: false, n: 0, at: Date.now(), done: null, starts: [] });
   nextPiece();
   // The encoder takes a moment to start: what happens before its first frame would be lost, so only now is it "recording".
   let wrote = false;
@@ -273,7 +274,8 @@ async function recStop(name) {
   rec.on = false;
   const ls = await adb(['shell', `cd ${REC_DIR} && for f in r*.mp4; do echo "$f $(stat -c %s $f)"; done`], 20, 'utf8');
   const pieces = [...String(ls.stdout).matchAll(/^r(\d+)\.mp4 (\d+)/gm)]
-    .map((m) => ({ i: Number(m[1]), path: `${REC_DIR}/r${m[1]}.mp4`, bytes: Number(m[2]) }))
+    // a piece ends at its last change, not at its last second: only its real start keeps the take on the clock
+    .map((m) => ({ i: Number(m[1]), path: `${REC_DIR}/r${m[1]}.mp4`, bytes: Number(m[2]), start: (rec.starts[Number(m[1])] - rec.starts[0]) / 1000 }))
     .filter((p) => p.bytes > 0)
     .sort((a, b) => a.i - b.i);
   if (!pieces.length) return { code: 1, stderr: 'the recording is empty' };
