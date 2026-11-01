@@ -1,0 +1,120 @@
+name: live emulator
+run-name: ${{ inputs.label }}
+# One emulator for one session, driven from the PC by cloud-emu.js. Nothing is printed: this repo and its logs are public.
+# The address is sealed with EMU_LIVE_KEY before it leaves the job. Stops by itself when not used.
+# For test accounts and fake data only, never a real WhatsApp, password or customer data.
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: 'Unique name, used to find this run'
+        required: true
+      ref:
+        description: 'App repo branch to build and install (empty = the private link build)'
+        required: false
+        default: ''
+      idle:
+        description: 'Stop after this many unused minutes'
+        required: false
+        default: '20'
+      max:
+        description: 'Stop after this many minutes anyway'
+        required: false
+        default: '180'
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      ANDROID_AVD_HOME: /home/runner/.android/avd
+      EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+      IDLE_MIN: ${{ inputs.idle }}
+      MAX_MIN: ${{ inputs.max }}
+      REF: ${{ inputs.ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: open the door
+        run: |
+          echo starting > /tmp/emu-state
+          curl -sL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+          nohup node live/agent.js > /tmp/agent.log 2>&1 &
+          echo $! > /tmp/agent.pid
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8787 > /tmp/cf.log 2>&1 &
+          for i in $(seq 1 60); do
+            U=$(grep -o -m1 'https://[a-z0-9-]*\.trycloudflare\.com' /tmp/cf.log | head -1)
+            [ -n "$U" ] && break
+            sleep 2
+          done
+          [ -n "$U" ] || exit 1
+          mkdir -p conn
+          U="$U" node -e "
+            const c=require('crypto');const k=c.createHash('sha256').update(process.env.EMU_LIVE_KEY).digest();
+            const iv=c.randomBytes(12);const a=c.createCipheriv('aes-256-gcm',k,iv);
+            const ct=Buffer.concat([a.update(process.env.U),a.final()]);
+            require('fs').writeFileSync('conn/conn.txt',[iv,a.getAuthTag(),ct].map(x=>x.toString('base64')).join('.'));"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conn
+          path: conn/conn.txt
+          retention-days: 1
+      - name: enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules >/dev/null
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: actions/checkout@v4
+        if: inputs.ref != ''
+        with:
+          repository: yo0546673489/bigbot
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.APP_REPO_KEY }}
+          path: app
+          fetch-depth: 1
+          sparse-checkout: bigbot/android
+      - uses: actions/setup-java@v4
+        if: inputs.ref != ''
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v4
+        if: inputs.ref != ''
+      - name: build the branch
+        if: inputs.ref != ''
+        working-directory: app/bigbot/android
+        run: |
+          echo building > /tmp/emu-state
+          chmod +x gradlew
+          ./gradlew "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" "-Pkotlin.daemon.jvmargs=-Xmx5g" :app:assembleDebug -q >/dev/null 2>/tmp/build.err || { echo failed > /tmp/emu-state; tail -30 /tmp/build.err; exit 1; }
+          cp app/build/outputs/apk/debug/app-debug.apk /tmp/app.apk
+          ./gradlew --stop >/dev/null
+      - name: start the emulator
+        env:
+          APK_URL: ${{ secrets.PRIVATE_APK_URL }}
+        run: |
+          echo booting > /tmp/emu-state
+          trap '[ -f /tmp/booted ] || echo failed > /tmp/emu-state' EXIT
+          S=$ANDROID_HOME/cmdline-tools/latest/bin
+          yes | $S/sdkmanager --licenses >/dev/null || true
+          $S/sdkmanager --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" >/dev/null
+          export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo no | $S/avdmanager create avd -n e1 -k "system-images;android-34;google_apis;x86_64" -d pixel_6 -p "$ANDROID_AVD_HOME/e1.avd" >/dev/null
+          printf 'hw.ramSize=4096\nvm.heapSize=256\nhw.cpu.ncore=3\ndisk.dataPartition.size=6G\n' >> "$ANDROID_AVD_HOME/e1.avd/config.ini"
+          nohup emulator -avd e1 -port 5554 -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -camera-back none -camera-front none > /tmp/emulator.log 2>&1 &
+          boot() { adb wait-for-device; until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done; }
+          boot
+          adb root >/dev/null; sleep 3
+          adb shell "setprop persist.sys.locale he-IL; setprop ctl.restart zygote"
+          sleep 5; boot; sleep 8
+          adb shell settings put system screen_off_timeout 1800000 >/dev/null
+          [ -f /tmp/app.apk ] || curl -sL "$APK_URL" -o /tmp/app.apk
+          adb install -r -g /tmp/app.apk >/dev/null
+          touch /tmp/booted
+          echo ready > /tmp/emu-state
+          # the emulator and the door must outlive this step
+          echo "EMU_SERIAL=emulator-5554" >> "$GITHUB_ENV"
+      - name: wait until it is not needed
+        run: |
+          while kill -0 "$(cat /tmp/agent.pid)" 2>/dev/null; do sleep 15; done
