@@ -19,13 +19,19 @@ name: 10 solo guide (fake data)
     visible: "__wait_2s__"
     timeout: 2500
     optional: true
+- extendedWaitUntil:
+    visible: "פרסום נסיעה חדשה"
+    timeout: 30000
+    optional: true
 - takeScreenshot: shots/10_00_home_help_button
 # ── the "?" opens the solo dispatcher's guide
 - tapOn:
     text: "הסבר"
     optional: true
-- waitForAnimationToEnd:
-    timeout: 5000
+- extendedWaitUntil:
+    visible: "שאל אותי"
+    timeout: 15000
+    optional: true
 - takeScreenshot: shots/10_01_guide_open
 - scroll
 - takeScreenshot: shots/10_01b_guide_open_scrolled
