@@ -221,8 +221,11 @@ async function signIn() {
     const find = (t) => nodes.find((n) => n.text === t);
     const field = nodes.find((n) => n.edit);
     const form = find('שלחו לי קוד');
-    const codeScreen = find('אמת והמשך') || (sent && !form && nodes.some((n) => /קוד/.test(n.text)));
-    if (find('דלג')) {
+    const codeScreen = find('אמת והמשך') || (sent && !typed && !form && nodes.some((n) => /קוד/.test(n.text)));
+    const home = nodes.some((n) => /פנוי/.test(n.text)); // "signed in" only when the home screen is really there
+    if (find('יש אישור')) {
+      await tap(find('יש אישור')); // Android asking about notifications, after the app's data was cleared
+    } else if (find('דלג')) {
       await tap(find('דלג'));
     } else if (form && !sent) {
       if (!field) return end({ ok: false, reason: 'no phone field' }, nodes);
@@ -242,7 +245,8 @@ async function signIn() {
     } else if (!sent && find('התחברות') && find('הרשמה')) {
       await tap(find('התחברות'));
     } else if (!sent) {
-      if (Date.now() - opened > 25000) return end({ ok: true, already: true }, nodes);
+      if (home) return end({ ok: true, already: true }, nodes);
+      if (Date.now() - opened > 40000) return end({ ok: false, reason: 'unknown screen' }, nodes);
     } else if (!typed) {
       if (codeScreen) {
         await tap(field || { x: 540, y: 864 });
@@ -257,8 +261,8 @@ async function signIn() {
         await tap(find('אמת והמשך'));
       }
       if (Date.now() - typed > 30000) return end({ ok: false, reason: 'code was not accepted' }, nodes);
-    } else if (++doneReads >= 2) {
-      return end({ ok: true }, nodes); // past the code screen, and it stayed that way
+    } else if (home && ++doneReads >= 2) {
+      return end({ ok: true }, nodes);
     }
     await wait(1200);
   }
