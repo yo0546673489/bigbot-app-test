@@ -1,7 +1,7 @@
 name: live emulator
 run-name: ${{ inputs.label }}
-# One emulator for one session, driven from the PC by cloud-emu.js. Nothing is printed: this repo and its logs are public.
-# The address is sealed with EMU_LIVE_KEY before it leaves the job. Stops by itself when not used.
+# One emulator on one machine. It waits ready, a session claims it with cloud-emu.js, and it stops when not used.
+# Nothing is printed: this repo and its logs are public. The address is sealed with EMU_LIVE_KEY before it leaves the job.
 # For test accounts and fake data only, never a real WhatsApp, password or customer data.
 on:
   workflow_dispatch:
@@ -9,28 +9,18 @@ on:
       label:
         description: 'Unique name, used to find this run'
         required: true
-      ref:
-        description: 'App repo branch to build and install (empty = the private link build)'
-        required: false
-        default: ''
-      idle:
-        description: 'Stop after this many unused minutes'
-        required: false
-        default: '20'
-      max:
-        description: 'Stop after this many minutes anyway'
-        required: false
-        default: '180'
+permissions:
+  actions: read
+  contents: read
 jobs:
   live:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 340
     env:
       ANDROID_AVD_HOME: /home/runner/.android/avd
       EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
-      IDLE_MIN: ${{ inputs.idle }}
-      MAX_MIN: ${{ inputs.max }}
-      REF: ${{ inputs.ref }}
+      GH_TOKEN: ${{ github.token }}
+      POOL_TTL_MIN: '40'
     steps:
       - uses: actions/checkout@v4
       - name: open the door
@@ -44,7 +34,7 @@ jobs:
           for i in $(seq 1 60); do
             U=$(grep -o -m1 'https://[a-z0-9-]*\.trycloudflare\.com' /tmp/cf.log | head -1)
             [ -n "$U" ] && break
-            sleep 2
+            sleep 1
           done
           [ -n "$U" ] || exit 1
           mkdir -p conn
@@ -63,58 +53,37 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules >/dev/null
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - uses: actions/checkout@v4
-        if: inputs.ref != ''
+      - uses: actions/cache/restore@v4
+        id: emu-cache
         with:
-          repository: yo0546673489/bigbot
-          ref: ${{ inputs.ref }}
-          ssh-key: ${{ secrets.APP_REPO_KEY }}
-          path: app
-          fetch-depth: 1
-          sparse-checkout: bigbot/android
-      - uses: actions/setup-java@v4
-        if: inputs.ref != ''
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v4
-        if: inputs.ref != ''
-      - name: build the branch
-        if: inputs.ref != ''
-        working-directory: app/bigbot/android
+          key: emu-34-v1
+          path: |
+            /usr/local/lib/android/sdk/emulator
+            /usr/local/lib/android/sdk/platform-tools
+            /usr/local/lib/android/sdk/system-images
+            /home/runner/.android/avd
+            /home/runner/.android/adbkey
+            /home/runner/.android/adbkey.pub
+      - name: prepare
         run: |
-          echo building > /tmp/emu-state
-          chmod +x gradlew
-          ./gradlew "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" "-Pkotlin.daemon.jvmargs=-Xmx5g" :app:assembleDebug -q >/dev/null 2>/tmp/build.err || { echo failed > /tmp/emu-state; tail -30 /tmp/build.err; exit 1; }
-          cp app/build/outputs/apk/debug/app-debug.apk /tmp/app.apk
-          ./gradlew --stop >/dev/null
+          echo preparing > /tmp/emu-state
+          bash live/prepare.sh || { echo failed > /tmp/emu-state; exit 1; }
+      - uses: actions/cache/save@v4
+        if: steps.emu-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          key: emu-34-v1
+          path: |
+            /usr/local/lib/android/sdk/emulator
+            /usr/local/lib/android/sdk/platform-tools
+            /usr/local/lib/android/sdk/system-images
+            /home/runner/.android/avd
+            /home/runner/.android/adbkey
+            /home/runner/.android/adbkey.pub
       - name: start the emulator
         env:
           APK_URL: ${{ secrets.PRIVATE_APK_URL }}
-        run: |
-          echo booting > /tmp/emu-state
-          trap '[ -f /tmp/booted ] || echo failed > /tmp/emu-state' EXIT
-          S=$ANDROID_HOME/cmdline-tools/latest/bin
-          yes | $S/sdkmanager --licenses >/dev/null || true
-          $S/sdkmanager --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" >/dev/null
-          export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
-          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
-          mkdir -p "$ANDROID_AVD_HOME"
-          echo no | $S/avdmanager create avd -n e1 -k "system-images;android-34;google_apis;x86_64" -d pixel_6 -p "$ANDROID_AVD_HOME/e1.avd" >/dev/null
-          printf 'hw.ramSize=4096\nvm.heapSize=256\nhw.cpu.ncore=3\ndisk.dataPartition.size=6G\n' >> "$ANDROID_AVD_HOME/e1.avd/config.ini"
-          nohup emulator -avd e1 -port 5554 -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -camera-back none -camera-front none > /tmp/emulator.log 2>&1 &
-          boot() { adb wait-for-device; until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done; }
-          boot
-          adb root >/dev/null; sleep 3
-          adb shell "setprop persist.sys.timezone Asia/Jerusalem; setprop persist.sys.locale he-IL; setprop ctl.restart zygote"
-          sleep 5; boot; sleep 8
-          adb shell settings put system screen_off_timeout 1800000 >/dev/null
-          [ -f /tmp/app.apk ] || curl -sL "$APK_URL" -o /tmp/app.apk
-          adb install -r -g /tmp/app.apk >/dev/null
-          touch /tmp/booted
-          echo ready > /tmp/emu-state
-          # the emulator and the door must outlive this step
-          echo "EMU_SERIAL=emulator-5554" >> "$GITHUB_ENV"
+        run: bash live/boot.sh
       - name: wait until it is not needed
         run: |
-          while kill -0 "$(cat /tmp/agent.pid)" 2>/dev/null; do sleep 15; done
+          while kill -0 "$(cat /tmp/agent.pid)" 2>/dev/null; do sleep 10; done

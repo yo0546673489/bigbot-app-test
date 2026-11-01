@@ -1,0 +1,74 @@
+name: emulator build
+run-name: ${{ inputs.label }}
+# Builds the debug app of a branch, with everything that did not change taken from the last build.
+# The APK leaves the job only sealed with EMU_LIVE_KEY: this repo and its artifacts are public.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'App repo branch or commit'
+        required: true
+      label:
+        description: 'build-<commit>: a finished build of the same commit is used again'
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: self
+      - uses: actions/checkout@v4
+        with:
+          repository: yo0546673489/bigbot
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.APP_REPO_KEY }}
+          path: app
+          fetch-depth: 1
+          sparse-checkout: bigbot/android
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+      - uses: actions/cache@v4
+        with:
+          key: app-build-${{ github.run_id }}
+          restore-keys: app-build-
+          path: |
+            app/bigbot/android/.gradle
+            app/bigbot/android/build
+            app/bigbot/android/app/build
+      - name: build
+        working-directory: app/bigbot/android
+        run: |
+          chmod +x gradlew
+          ./gradlew "-Dorg.gradle.jvmargs=-Xmx7g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" "-Pkotlin.daemon.jvmargs=-Xmx6g" -Pkotlin.incremental=true --build-cache --parallel :app:assembleDebug -q > /tmp/build.out 2> /tmp/build.err
+      - name: seal the errors
+        if: failure()
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          mkdir -p err
+          node self/live/seal-file.js /tmp/build.err err/err.bin
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: err
+          path: err/err.bin
+          retention-days: 3
+      - name: seal
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          mkdir -p out
+          node self/live/seal-file.js app/bigbot/android/app/build/outputs/apk/debug/app-debug.apk out/app.bin
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: out/app.bin
+          compression-level: 0
+          retention-days: 3
