@@ -54,9 +54,8 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - uses: actions/cache/restore@v4
-        id: emu-cache
         with:
-          key: emu-34-v1
+          key: emu-34-v2
           path: |
             /usr/local/lib/android/sdk/emulator
             /usr/local/lib/android/sdk/platform-tools
@@ -65,14 +64,15 @@ jobs:
             /home/runner/.android/adbkey
             /home/runner/.android/adbkey.pub
       - name: prepare
+        id: prep
         run: |
           echo preparing > /tmp/emu-state
           bash live/prepare.sh || { echo failed > /tmp/emu-state; exit 1; }
       - uses: actions/cache/save@v4
-        if: steps.emu-cache.outputs.cache-hit != 'true'
+        if: steps.prep.outputs.new == 'true'
         continue-on-error: true
         with:
-          key: emu-34-v1
+          key: emu-34-v2
           path: |
             /usr/local/lib/android/sdk/emulator
             /usr/local/lib/android/sdk/platform-tools
