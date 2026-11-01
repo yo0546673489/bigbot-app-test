@@ -35,11 +35,12 @@ jobs:
           chmod +x gradlew
           ./gradlew :app:assembleFast -PfastMinify=true -q
           cp app/build/outputs/apk/fast/app-fast.apk "$GITHUB_WORKSPACE/built.apk"
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         if: steps.ref.outputs.ref != ''
         with:
           name: built-apk
           path: built.apk
+          key: ${{ secrets.EMU_LIVE_KEY }}
           retention-days: 3
   android:
     needs: build
@@ -57,10 +58,11 @@ jobs:
           # - { name: deep, flows: flows/config-deep.yaml }
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: ./.github/actions/open-artifact
         continue-on-error: true
         with:
           name: built-apk
+          key: ${{ secrets.EMU_LIVE_KEY }}
       - name: enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -88,8 +90,9 @@ jobs:
           mkdir -p shots
           find ~/.maestro/tests -name "*.png" -path "*takeScreenshot*" -exec cp {} shots/ \; 2>/dev/null
           ls shots | wc -l
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         if: always()
         with:
           name: shots-android-${{ matrix.part.name }}
           path: shots
+          key: ${{ secrets.EMU_LIVE_KEY }}

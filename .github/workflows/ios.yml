@@ -59,10 +59,11 @@ jobs:
           APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1); echo "$APP"
           [ -n "$APP" ] || exit 1
           tar -czf "$GITHUB_WORKSPACE/sim-app.tar.gz" -C "$(dirname "$APP")" "$(basename "$APP")"
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         with:
           name: sim-app-${{ matrix.variant }}
           path: sim-app.tar.gz
+          key: ${{ secrets.EMU_LIVE_KEY }}
           retention-days: 5
   test:
     needs: build
@@ -86,16 +87,12 @@ jobs:
         run: |
           P="${{ inputs.parts }}"
           if [ -z "$P" ] || echo ",$P," | grep -q ",${{ matrix.part.name }},"; then echo "run=1" >> "$GITHUB_OUTPUT"; else echo "run=0" >> "$GITHUB_OUTPUT"; fi
-      - uses: actions/download-artifact@v4
-        if: steps.want.outputs.run == '1' && (github.event_name != 'workflow_dispatch' || inputs.reuse_run_id == '')
+      - uses: ./.github/actions/open-artifact
+        if: steps.want.outputs.run == '1'
         with:
           name: sim-app-${{ matrix.part.app }}
-      - uses: actions/download-artifact@v4
-        if: steps.want.outputs.run == '1' && github.event_name == 'workflow_dispatch' && inputs.reuse_run_id != ''
-        with:
-          name: sim-app-${{ matrix.part.app }}
-          run-id: ${{ inputs.reuse_run_id }}
-          github-token: ${{ github.token }}
+          key: ${{ secrets.EMU_LIVE_KEY }}
+          run-id: ${{ github.event_name == 'workflow_dispatch' && inputs.reuse_run_id || '' }}
       - name: iPhone simulator
         if: steps.want.outputs.run == '1'
         timeout-minutes: 70
@@ -110,8 +107,9 @@ jobs:
       - name: collect screenshots
         if: always() && steps.want.outputs.run == '1'
         run: bash ios/collect.sh
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         if: always() && steps.want.outputs.run == '1'
         with:
           name: shots-ios-${{ matrix.part.name }}
           path: shots
+          key: ${{ secrets.EMU_LIVE_KEY }}

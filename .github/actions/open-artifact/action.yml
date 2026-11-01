@@ -1,0 +1,34 @@
+name: download and open
+description: Puts an artifact made by seal-upload into the workspace. An artifact from before sealing is used as it is.
+inputs:
+  name:
+    description: Artifact name
+    required: true
+  key:
+    description: EMU_LIVE_KEY
+    required: true
+  run-id:
+    description: An earlier run that holds it (empty = this run)
+    required: false
+    default: ''
+runs:
+  using: composite
+  steps:
+    - uses: actions/download-artifact@v4
+      if: inputs.run-id == ''
+      with:
+        name: ${{ inputs.name }}
+    - uses: actions/download-artifact@v4
+      if: inputs.run-id != ''
+      with:
+        name: ${{ inputs.name }}
+        run-id: ${{ inputs.run-id }}
+        github-token: ${{ github.token }}
+    - shell: bash
+      env:
+        EMU_LIVE_KEY: ${{ inputs.key }}
+      run: |
+        [ -f sealed.bin ] || exit 0
+        node "$GITHUB_ACTION_PATH/../../../live/unseal-file.js" sealed.bin sealed.tgz
+        tar -xzf sealed.tgz
+        rm -f sealed.bin sealed.tgz

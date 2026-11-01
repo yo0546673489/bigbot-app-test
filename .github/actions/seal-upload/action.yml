@@ -1,0 +1,37 @@
+name: seal and upload
+description: This repo and its artifacts are public. Anything from a run leaves the job only sealed with EMU_LIVE_KEY.
+inputs:
+  name:
+    description: Artifact name
+    required: true
+  path:
+    description: A file or a folder, relative to the workspace
+    required: true
+  key:
+    description: EMU_LIVE_KEY
+    required: true
+  retention-days:
+    description: Days to keep it (empty = the repo default)
+    required: false
+    default: ''
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        EMU_LIVE_KEY: ${{ inputs.key }}
+        SRC: ${{ inputs.path }}
+      run: |
+        rm -f sealed.bin sealed.tgz
+        if [ -d "$SRC" ]; then tar -czf sealed.tgz -C "$SRC" .
+        elif [ -e "$SRC" ]; then tar -czf sealed.tgz "$SRC"
+        else echo "nothing at $SRC"; exit 0; fi
+        node "$GITHUB_ACTION_PATH/../../../live/seal-file.js" sealed.tgz sealed.bin
+        rm -f sealed.tgz
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.name }}
+        path: sealed.bin
+        compression-level: 0
+        retention-days: ${{ inputs.retention-days }}
+        if-no-files-found: ignore

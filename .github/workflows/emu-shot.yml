@@ -23,6 +23,7 @@ jobs:
       SCREENS: ${{ inputs.screens }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: yo0546673489/bigbot
           ref: ${{ inputs.ref }}
@@ -96,9 +97,10 @@ jobs:
           done
           rm -f out/emulator.log
           ls -la out
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         if: always()
         with:
           name: shots
           path: out
+          key: ${{ secrets.EMU_LIVE_KEY }}
           retention-days: 3

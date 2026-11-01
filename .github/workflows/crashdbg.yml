@@ -10,11 +10,12 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 40
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/open-artifact
         with:
           name: sim-app-main
+          key: ${{ secrets.EMU_LIVE_KEY }}
           run-id: ${{ inputs.run_id }}
-          github-token: ${{ github.token }}
       - name: launch and capture
         run: |
           set -x
@@ -36,10 +37,10 @@ jobs:
           xcrun simctl spawn "$DEV" log show --last 3m --style compact --predicate 'process == "BigBot" OR eventMessage CONTAINS[c] "bigbot"' > out/oslog.txt 2>&1 || true
           ls -la ~/Library/Logs/DiagnosticReports/ > out/reports-list.txt 2>&1 || true
           for f in $(ls -t ~/Library/Logs/DiagnosticReports/*BigBot* 2>/dev/null | head -3); do cp "$f" out/; done
-          tail -50 out/console.txt; tail -150 out/stderr.txt; tail -80 out/stdout.txt; cat out/running.txt; ls out
-          for f in out/*.ips; do [ -f "$f" ] && head -c 6000 "$f"; done
-      - uses: actions/upload-artifact@v4
+          cat out/running.txt; ls out
+      - uses: ./.github/actions/seal-upload
         if: always()
         with:
           name: crashdbg
           path: out
+          key: ${{ secrets.EMU_LIVE_KEY }}

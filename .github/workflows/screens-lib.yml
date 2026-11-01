@@ -37,12 +37,12 @@ jobs:
         run: |
           P="${{ inputs.parts }}"
           if [ -z "$P" ] || echo ",$P," | grep -q ",${{ matrix.part.name }},"; then echo "run=1" >> "$GITHUB_OUTPUT"; else echo "run=0" >> "$GITHUB_OUTPUT"; fi
-      - uses: actions/download-artifact@v4
+      - uses: ./.github/actions/open-artifact
         if: steps.want.outputs.run == '1'
         with:
           name: sim-app-${{ matrix.part.app }}
+          key: ${{ secrets.EMU_LIVE_KEY }}
           run-id: ${{ matrix.part.app == 'demo' && inputs.demo_run_id || inputs.build_run_id }}
-          github-token: ${{ github.token }}
       - name: capture
         if: steps.want.outputs.run == '1'
         timeout-minutes: 320
@@ -52,9 +52,10 @@ jobs:
           PART: ${{ matrix.part.name }}
           ONLY: ${{ inputs.only }}
         run: bash lib/run.sh
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         if: always() && steps.want.outputs.run == '1'
         with:
           name: lib-ios-${{ matrix.part.name }}
           path: out
+          key: ${{ secrets.EMU_LIVE_KEY }}
           retention-days: 14

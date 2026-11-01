@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: yo0546673489/bigbot
           ref: ${{ inputs.ref }}
@@ -40,8 +41,9 @@ jobs:
             -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet 2>&1 | tail -200
           APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1); [ -n "$APP" ] || exit 1
           tar -czf "$GITHUB_WORKSPACE/sim-app.tar.gz" -C "$(dirname "$APP")" "$(basename "$APP")"
-      - uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/seal-upload
         with:
           name: sim-app-demo
           path: sim-app.tar.gz
+          key: ${{ secrets.EMU_LIVE_KEY }}
           retention-days: 7
