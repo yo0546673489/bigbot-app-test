@@ -118,19 +118,24 @@ jobs:
           retention-days: 3
       - name: seal the cache
         if: inputs.variant == 'fast'
+        continue-on-error: true
         env:
           EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
         run: |
-          tar cf /tmp/fc.tar -C app/bigbot/android --exclude=app/build/outputs .gradle build app/build
+          cd app/bigbot/android
+          tar cf /tmp/fc.tar --exclude=app/build/outputs $(ls -d .gradle build app/build 2>/dev/null)
+          cd - > /dev/null
           node self/live/seal-file.js /tmp/fc.tar fast-cache.bin
           rm -f /tmp/fc.tar
       - uses: actions/cache/save@v4
         if: inputs.variant == 'fast'
+        continue-on-error: true
         with:
           key: app-fast-${{ github.run_id }}
           path: fast-cache.bin
       - name: keep only the last sealed cache
         if: inputs.variant == 'fast'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           NOW: app-fast-${{ github.run_id }}
