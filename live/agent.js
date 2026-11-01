@@ -23,6 +23,15 @@ delete process.env.DEMO_CODE;
 const DEMO_PHONE = '0500000000';
 const UI_FILE = '/data/local/tmp/ui.xml';
 const login = { running: false, result: null, sends: 0 };
+const PROTOCOL = 2; // the tool on the PC refuses new step types on a machine older than this
+const REC_DIR = '/data/local/tmp/cloudrec';
+const rec = { on: false, stopping: false, n: 0, at: 0, child: null, done: null };
+// Gboard Hebrew layout, device px. `input text` crashes on anything that is not ASCII.
+const HEB_KEYS = {
+  'ק': [272, 1710], 'ר': [378, 1710], 'א': [485, 1710], 'ט': [591, 1710], 'ו': [698, 1710], 'ן': [804, 1710], 'ם': [911, 1710], 'פ': [1017, 1710],
+  'ש': [59, 1862], 'ד': [165, 1862], 'ג': [272, 1862], 'כ': [378, 1862], 'ע': [485, 1862], 'י': [591, 1862], 'ח': [698, 1862], 'ל': [804, 1862], 'ך': [911, 1862], 'ף': [1017, 1862],
+  'ז': [59, 2010], 'ס': [165, 2010], 'ב': [272, 2010], 'ה': [378, 2010], 'נ': [485, 2010], 'מ': [591, 2010], 'צ': [698, 2010], 'ת': [804, 2010], 'ץ': [911, 2010], ' ': [591, 2160],
+};
 const started = Date.now();
 let readyAt = 0;
 let claimedBy = '';
@@ -153,6 +162,96 @@ async function installApk(file) {
   return adb(['install', '-g', file], 300, 'utf8');
 }
 
+const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+const asciiText = (t) => adb(['shell', `input text '${String(t).replace(/'/g, `'\\''`).replace(/ /g, '%s')}'`], 30, 'utf8');
+
+// ASCII goes through `input text`, Hebrew over the on-screen keyboard once it is up.
+async function typeText(text) {
+  if (/^[\x20-\x7e]*$/.test(String(text))) return asciiText(text);
+  const parts = String(text).match(/[\x21-\x7e]+|[^\x21-\x7e]+/g) || [];
+  for (const part of parts) {
+    if (/^[\x21-\x7e]+$/.test(part)) {
+      const r = await asciiText(part);
+      if (r.code) return r;
+      continue;
+    }
+    const missing = [...part].find((c) => !HEB_KEYS[c]);
+    if (missing) return { code: 1, stderr: `no key for: ${missing}` };
+    let up = false;
+    for (let i = 0; i < 20 && !up; i++) {
+      up = /mInputShown=true/.test((await adb(['shell', 'dumpsys input_method'], 20, 'utf8')).stdout || '');
+      if (!up) await pause(300);
+    }
+    if (!up) return { code: 1, stderr: 'the keyboard did not open: tap the field first' };
+    await pause(500); // still sliding in, taps would land on the screen behind it
+    const r = await adb(['shell', [...part].map((c) => `input tap ${HEB_KEYS[c].join(' ')}`).join(';')], 60, 'utf8');
+    if (r.code) return r;
+  }
+  return {};
+}
+
+const screenText = (n) => (n.text || n.desc).replace(/[\u200e\u200f]/g, '').trim();
+const maskCode = (t) => (DEMO_CODE ? t.split(DEMO_CODE).join('***') : t);
+
+// Reading the screen here means no picture and no round trip to whoever decides where to tap.
+async function findOnScreen(q, timeoutMs) {
+  const until = Date.now() + timeoutMs;
+  for (;;) {
+    const nodes = await readScreen();
+    const hits = nodes.filter((n) => screenText(n) === q);
+    const all = hits.length ? hits : nodes.filter((n) => screenText(n).includes(q));
+    if (all.length) return { node: all[0], matches: all.length };
+    if (Date.now() > until) {
+      const seen = nodes.map((n) => maskCode(screenText(n))).filter(Boolean).slice(0, 30).join(' | ');
+      return { code: 1, stderr: `not on the screen: ${q}\nthe screen shows: ${seen}\n` };
+    }
+    await pause(250);
+  }
+}
+
+// A piece lasts at most 170 s (Android stops at 180), so a long take is several files.
+function nextPiece() {
+  const i = rec.n++;
+  rec.child = execFile(ADB, ['-s', SERIAL, 'shell', `screenrecord --bit-rate 8000000 --time-limit 170 ${REC_DIR}/r${i}.mp4`], { timeout: 185000 }, () => {
+    rec.child = null;
+    if (rec.on && !rec.stopping) return nextPiece();
+    if (rec.done) rec.done();
+  });
+}
+
+async function recStart() {
+  if (rec.on) return { code: 1, stderr: 'already recording' };
+  await adb(['shell', `rm -rf ${REC_DIR}; mkdir -p ${REC_DIR}`], 20, 'utf8');
+  Object.assign(rec, { on: true, stopping: false, n: 0, at: Date.now(), done: null });
+  nextPiece();
+  for (let i = 0; i < 25; i++) {
+    if (!(await adb(['shell', `test -s ${REC_DIR}/r0.mp4 || pidof screenrecord >/dev/null`], 10, 'utf8')).code) break;
+    await pause(100);
+  }
+  await pause(300);
+  return { recording: true };
+}
+
+async function recStop(name) {
+  if (!rec.on) return { code: 1, stderr: 'not recording' };
+  rec.stopping = true;
+  const seconds = (Date.now() - rec.at) / 1000;
+  await adb(['shell', 'pkill -INT screenrecord'], 15, 'utf8');
+  await new Promise((r) => {
+    if (!rec.child) return r();
+    rec.done = r;
+    setTimeout(r, 8000);
+  });
+  rec.on = false;
+  const ls = await adb(['shell', `cd ${REC_DIR} && for f in r*.mp4; do echo "$f $(stat -c %s $f)"; done`], 20, 'utf8');
+  const pieces = [...String(ls.stdout).matchAll(/^r(\d+)\.mp4 (\d+)/gm)]
+    .map((m) => ({ i: Number(m[1]), path: `${REC_DIR}/r${m[1]}.mp4`, bytes: Number(m[2]) }))
+    .filter((p) => p.bytes > 0)
+    .sort((a, b) => a.i - b.i);
+  if (!pieces.length) return { code: 1, stderr: 'the recording is empty' };
+  return { rec: { pieces, seconds, name } };
+}
+
 // Several actions in one request, so one network trip instead of many.
 async function runSteps(steps) {
   const out = [];
@@ -162,8 +261,16 @@ async function runSteps(steps) {
     if (s.sh !== undefined) r = await adb(['shell', s.sh], Math.min(Number(s.timeoutSec) || 60, 600), 'utf8');
     else if (s.tap) r = await adb(['shell', `input tap ${s.tap.map(Number).join(' ')}`], 30, 'utf8');
     else if (s.swipe) r = await adb(['shell', `input swipe ${s.swipe.map(Number).join(' ')}`], 30, 'utf8');
-    else if (s.text !== undefined) r = await adb(['shell', `input text '${String(s.text).replace(/'/g, `'\\''`).replace(/ /g, '%s')}'`], 30, 'utf8');
+    else if (s.text !== undefined) r = await typeText(s.text);
     else if (s.key) r = await adb(['shell', `input keyevent ${String(s.key).replace(/\W/g, '')}`], 30, 'utf8');
+    else if (s.open) r = await adb(['shell', `am start -W -n $(cmd package resolve-activity --brief ${PKG} | tail -1)`], 60, 'utf8');
+    else if (s.ui) r = { ui: (await readScreen()).filter((n) => screenText(n)).map((n) => ({ t: maskCode(screenText(n)), x: n.x, y: n.y, ...(n.edit ? { edit: true } : {}) })) };
+    else if (s.tapText || s.waitText) {
+      const f = await findOnScreen(String(s.tapText || s.waitText), Number(s.timeoutMs) || (s.tapText ? 8000 : 15000));
+      r = f.node ? { x: f.node.x, y: f.node.y, matches: f.matches } : f;
+      if (f.node && s.tapText) await adb(['shell', `input tap ${f.node.x} ${f.node.y}`], 30, 'utf8');
+    } else if (s.recStart) r = await recStart();
+    else if (s.recStop) r = await recStop(s.recStop.name);
     else if (s.wait) await new Promise((res) => setTimeout(res, Math.min(Number(s.wait), 60000)));
     else if (s.settle) r = { settled: await settle(Number(s.settle.quietMs) || 1200, Number(s.settle.timeoutMs) || 25000) };
     else if (s.shot) {
@@ -182,10 +289,11 @@ async function readScreen() {
   await adb(['shell', `rm -f ${UI_FILE}`], 10, 'utf8');
   const nodes = [];
   for (const m of String(r.stdout).matchAll(/<node\b[^>]*>/g)) {
-    const attr = (k) => (m[0].match(new RegExp(`\\b${k}="([^"]*)"`)) || [])[1] || '';
+    const attr = (k) => (m[0].match(new RegExp(`(?:^|\\s)${k}="([^"]*)"`)) || [])[1] || '';
+    const xml = (t) => t.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#10;/g, ' ').replace(/&amp;/g, '&');
     const b = attr('bounds').match(/\d+/g);
     if (!b) continue;
-    nodes.push({ text: attr('text'), edit: /EditText/.test(attr('class')), x: (Number(b[0]) + Number(b[2])) >> 1, y: (Number(b[1]) + Number(b[3])) >> 1 });
+    nodes.push({ text: xml(attr('text')), desc: xml(attr('content-desc')), edit: /EditText/.test(attr('class')), x: (Number(b[0]) + Number(b[2])) >> 1, y: (Number(b[1]) + Number(b[3])) >> 1 });
   }
   return nodes;
 }
@@ -316,6 +424,7 @@ http
       if (state() !== 'ready') return json(res, 409, { error: 'not ready', state: state() });
       // A long request would die in the tunnel, so the PC starts this and then asks how it went.
       if (url.pathname === '/login') {
+        if (rec.on) return json(res, 423, { error: 'recording' }); // a recording would keep the code that is about to be on the screen
         startLogin();
         return json(res, 200, { running: login.running, result: login.result });
       }
@@ -324,7 +433,7 @@ http
       if (login.running) return json(res, 423, { error: 'signing in' });
       if (url.pathname === '/batch') {
         const { steps } = JSON.parse((await body(req)).toString('utf8'));
-        return json(res, 200, { results: await runSteps(steps) });
+        return json(res, 200, { v: PROTOCOL, results: await runSteps(steps) });
       }
       if (url.pathname === '/shell') {
         const { cmd, timeoutSec } = JSON.parse((await body(req)).toString('utf8'));
