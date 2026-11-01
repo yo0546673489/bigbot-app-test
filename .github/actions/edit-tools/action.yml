@@ -1,0 +1,52 @@
+name: edit tools
+description: ffmpeg and node for the edit-chapter jobs, plus the renderer and its Chrome when render is true
+inputs:
+  render:
+    description: 'true on a machine that renders'
+    required: false
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - uses: actions/cache@v4
+      id: ffmpeg
+      with:
+        key: edit-ffmpeg-v1-n9.0
+        path: /home/runner/.edit-deps/bin
+    - name: install ffmpeg
+      if: steps.ffmpeg.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        mkdir -p "$EDIT_DEPS/bin"
+        curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n9.0-latest-linux64-gpl-9.0.tar.xz \
+          | tar xJ --strip-components=2 -C "$EDIT_DEPS/bin" --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
+    - name: ffmpeg on the path
+      shell: bash
+      run: echo "$EDIT_DEPS/bin" >> "$GITHUB_PATH"
+    - uses: actions/cache@v4
+      id: renderer
+      if: inputs.render == 'true'
+      with:
+        key: edit-renderer-v1-0.7.109
+        path: |
+          /home/runner/.edit-deps/hf
+          /home/runner/.cache/hyperframes/chrome
+          /home/runner/.fonts
+    - name: install the renderer
+      if: inputs.render == 'true' && steps.renderer.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        mkdir -p "$EDIT_DEPS/hf" ~/.fonts
+        cd "$EDIT_DEPS/hf"
+        npm init -y >/dev/null
+        npm i @hyperframes/producer@0.7.109 --no-audit --no-fund --silent >/dev/null
+        npx --yes hyperframes@0.7.109 browser ensure >/dev/null
+        sudo apt-get install -y -q --no-install-recommends fonts-noto-color-emoji >/dev/null
+        cp /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf ~/.fonts/
+    - name: fonts
+      if: inputs.render == 'true'
+      shell: bash
+      run: fc-cache -f >/dev/null 2>&1 || true
