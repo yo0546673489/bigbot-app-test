@@ -252,6 +252,7 @@ async function recStart() {
 
 async function recStop(name) {
   if (!rec.on) return { code: 1, stderr: 'not recording' };
+  await pause(3000 - (Date.now() - rec.at)); // stopped sooner, Android has not written its first frame yet and the file is empty
   rec.stopping = true;
   const seconds = (Date.now() - rec.at) / 1000;
   await adb(['shell', 'pkill -INT screenrecord'], 15, 'utf8');
