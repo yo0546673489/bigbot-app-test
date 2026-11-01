@@ -80,8 +80,17 @@ jobs:
             esac
             adb logcat -c
             adb shell am start -S -n "$PKG/$cls" $extra
-            sleep 6
-            adb exec-out screencap -p > "out/$kind-$screen.png"
+            # first the splash, then the screen: photograph only when the picture stopped changing
+            sleep 10
+            prev=""; same=0
+            for i in $(seq 1 25); do
+              adb exec-out screencap -p > "out/$kind-$screen.png"
+              cur=$(md5sum "out/$kind-$screen.png" | cut -d' ' -f1)
+              if [ "$cur" = "$prev" ]; then same=$((same+1)); else same=0; fi
+              prev=$cur
+              [ $same -ge 2 ] && break
+              sleep 3
+            done
             adb logcat -d -b crash > "out/$kind-$screen-crash.txt"
             [ -s "out/$kind-$screen-crash.txt" ] || rm -f "out/$kind-$screen-crash.txt"
           done
