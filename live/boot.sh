@@ -28,6 +28,8 @@ retry $A root >/dev/null
 sleep 1
 wait_boot 60 || fail
 $A shell "cmd alarm set-timezone Asia/Jerusalem" >/dev/null
+# the full screen hint of Android would cover half of every picture
+$A shell "settings put secure immersive_mode_confirmations confirmed" >/dev/null
 $A shell "date -u $(date -u +%m%d%H%M%Y.%S)" >/dev/null
 echo installing > /tmp/emu-state
 curl -sL "$APK_URL" -o /tmp/app.apk
