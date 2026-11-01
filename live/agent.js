@@ -138,6 +138,14 @@ async function settle(quietMs = 1200, timeoutMs = 25000) {
   }
 }
 
+// The emulator holds only test data, so an app that refuses to replace the one there (older version, other key) replaces it anyway.
+async function installApk(file) {
+  const r = await adb(['install', '-r', '-g', file], 300, 'utf8');
+  if (r.code === 0) return r;
+  await adb(['uninstall', PKG], 60, 'utf8');
+  return adb(['install', '-g', file], 300, 'utf8');
+}
+
 // Several actions in one request, so one network trip instead of many.
 async function runSteps(steps) {
   const out = [];
@@ -221,7 +229,7 @@ http
       }
       if (url.pathname === '/install') {
         const name = path.basename(url.searchParams.get('name'));
-        return json(res, 200, await adb(['install', '-r', '-g', path.join(UP, name)], 300, 'utf8'));
+        return json(res, 200, await installApk(path.join(UP, name)));
       }
       if (url.pathname === '/push') {
         const name = path.basename(url.searchParams.get('name'));
@@ -238,7 +246,7 @@ http
         const dec = crypto.createDecipheriv('aes-256-gcm', k, box.subarray(0, 12));
         dec.setAuthTag(box.subarray(12, 28));
         fs.writeFileSync('/tmp/build.apk', Buffer.concat([dec.update(box.subarray(28)), dec.final()]));
-        return json(res, 200, await adb(['install', '-r', '-g', '/tmp/build.apk'], 300, 'utf8'));
+        return json(res, 200, await installApk('/tmp/build.apk'));
       }
       return json(res, 404, { error: 'unknown' });
     } catch (e) {
@@ -258,4 +266,3 @@ setInterval(() => {
   }
   if (Date.now() - claimedAt > max || Date.now() - lastUse > idle) process.exit(0);
 }, 10000);
-void PKG;
