@@ -102,8 +102,13 @@ jobs:
         if: inputs.variant == 'fast' && env.HAS_KEYS == '1'
         run: |
           TOOL="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner"
+          APK=app/bigbot/android/app/build/outputs/apk/fast/app-fast.apk
+          # Gradle can sign with another debug key it finds, so the link key is put on explicitly
+          find ~ -name debug.keystore -not -path '*/caches/*' 2>/dev/null | sed "s#$HOME#~#" || true
+          echo "gradle signed with $("$TOOL" verify --print-certs "$APK" | sed -n -E 's/.*SHA-256 digest: ([0-9a-f]{8}).*/\1/p' | head -1)"
+          "$TOOL" sign --ks ~/.android/debug.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --v4-signing-enabled false "$APK"
           WANT=a0a6472872ee8a3e9b063c562a2451eca74abc16e1d33ea71ff240c558c80138
-          GOT=$("$TOOL" verify --print-certs app/bigbot/android/app/build/outputs/apk/fast/app-fast.apk | sed -n -E 's/.*SHA-256 digest: ([0-9a-f]+).*/\1/p' | head -1)
+          GOT=$("$TOOL" verify --print-certs "$APK" | sed -n -E 's/.*SHA-256 digest: ([0-9a-f]+).*/\1/p' | head -1)
           KEY=$(keytool -list -v -keystore ~/.android/debug.keystore -storepass android 2>/dev/null | sed -n -E 's/.*SHA256: //p' | tr -d ': ' | tr 'A-F' 'a-f' | head -1)
           echo "want ${WANT:0:8} apk ${GOT:0:8} key ${KEY:0:8} keysize $(stat -c %s ~/.android/debug.keystore)"
           [ "$GOT" = "$WANT" ]
