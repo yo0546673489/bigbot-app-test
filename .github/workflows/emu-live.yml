@@ -106,7 +106,7 @@ jobs:
           boot() { adb wait-for-device; until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done; }
           boot
           adb root >/dev/null; sleep 3
-          adb shell "setprop persist.sys.locale he-IL; setprop ctl.restart zygote"
+          adb shell "setprop persist.sys.timezone Asia/Jerusalem; setprop persist.sys.locale he-IL; setprop ctl.restart zygote"
           sleep 5; boot; sleep 8
           adb shell settings put system screen_off_timeout 1800000 >/dev/null
           [ -f /tmp/app.apk ] || curl -sL "$APK_URL" -o /tmp/app.apk
