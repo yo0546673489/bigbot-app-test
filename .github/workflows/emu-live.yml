@@ -24,12 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: open the door
+        env:
+          DEMO_CODE: ${{ secrets.DEMO_CODE }}
         run: |
           echo starting > /tmp/emu-state
           curl -sL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
           chmod +x /tmp/cloudflared
           nohup node live/agent.js > /tmp/agent.log 2>&1 &
           echo $! > /tmp/agent.pid
+          unset DEMO_CODE
           nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8787 > /tmp/cf.log 2>&1 &
           for i in $(seq 1 60); do
             U=$(grep -o -m1 'https://[a-z0-9-]*\.trycloudflare\.com' /tmp/cf.log | head -1)

@@ -16,6 +16,13 @@ const STATE = '/tmp/emu-state';
 const UP = '/tmp/up';
 const PKG = 'com.bigbotdrivers.app';
 const REPO = process.env.GITHUB_REPOSITORY;
+// The demo account the store reviewers also use. The code stays in this process: it is never
+// answered back, printed or written anywhere a caller can read, and nothing started from here inherits it.
+const DEMO_CODE = /^\d{6}$/.test(process.env.DEMO_CODE || '') ? process.env.DEMO_CODE : '';
+delete process.env.DEMO_CODE;
+const DEMO_PHONE = '0500000000';
+const UI_FILE = '/data/local/tmp/ui.xml';
+const login = { running: false, result: null, sends: 0 };
 const started = Date.now();
 let readyAt = 0;
 let claimedBy = '';
@@ -169,6 +176,107 @@ async function runSteps(steps) {
   return out;
 }
 
+async function readScreen() {
+  await adb(['shell', `uiautomator dump ${UI_FILE}`], 30, 'utf8');
+  const r = await adb(['exec-out', 'cat', UI_FILE], 20, 'utf8');
+  await adb(['shell', `rm -f ${UI_FILE}`], 10, 'utf8');
+  const nodes = [];
+  for (const m of String(r.stdout).matchAll(/<node\b[^>]*>/g)) {
+    const attr = (k) => (m[0].match(new RegExp(`\\b${k}="([^"]*)"`)) || [])[1] || '';
+    const b = attr('bounds').match(/\d+/g);
+    if (!b) continue;
+    nodes.push({ text: attr('text'), edit: /EditText/.test(attr('class')), x: (Number(b[0]) + Number(b[2])) >> 1, y: (Number(b[1]) + Number(b[3])) >> 1 });
+  }
+  return nodes;
+}
+
+// What the screen says, for the session to understand a failure. Only digits (a typed code) are left out.
+const labels = (nodes) =>
+  nodes
+    .map((n) => n.text.split(DEMO_CODE || '\0').join('***'))
+    .filter((t) => t && !/^\d{1,6}$/.test(t))
+    .slice(0, 20);
+
+// Follows flows/00_login.yaml. Asks for a code once and types it once, never again by itself:
+// the server allows 8 requests an hour for this account, and the store reviewers need them too.
+async function signIn() {
+  const tap = (n) => adb(['shell', `input tap ${n.x} ${n.y}`], 30, 'utf8');
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  let sent = 0;
+  let typed = 0;
+  let verified = false;
+  let phoneTyped = false;
+  let doneReads = 0;
+  const end = async (o, nodes = []) => {
+    if (!o.ok) await adb(['shell', `am force-stop ${PKG}`], 30, 'utf8'); // a typed code must not stay on the screen
+    await adb(['shell', 'logcat -c'], 20, 'utf8');
+    return { ...o, sent: !!sent, screen: labels(nodes) };
+  };
+  if (!DEMO_CODE) return end({ ok: false, reason: 'no code on this machine' });
+  const opened = Date.now();
+  const until = opened + 170000;
+  await adb(['shell', `am start -W -n $(cmd package resolve-activity --brief ${PKG} | tail -1)`], 60, 'utf8');
+  while (Date.now() < until) {
+    const nodes = await readScreen();
+    const find = (t) => nodes.find((n) => n.text === t);
+    const field = nodes.find((n) => n.edit);
+    const form = find('שלחו לי קוד');
+    const codeScreen = find('אמת והמשך') || (sent && !form && nodes.some((n) => /קוד/.test(n.text)));
+    if (find('דלג')) {
+      await tap(find('דלג'));
+    } else if (form && !sent) {
+      if (!field) return end({ ok: false, reason: 'no phone field' }, nodes);
+      if (field.text !== DEMO_PHONE) {
+        if (phoneTyped) return end({ ok: false, reason: 'phone was not typed' }, nodes);
+        await tap(field);
+        await adb(['shell', `input text ${DEMO_PHONE}`], 30, 'utf8');
+        phoneTyped = true;
+      } else {
+        if (login.sends >= 2) return end({ ok: false, reason: 'this machine already asked twice' }, nodes);
+        login.sends++;
+        sent = Date.now();
+        await tap(form);
+      }
+    } else if (form) {
+      if (Date.now() - sent > 25000) return end({ ok: false, reason: 'server did not move on to the code screen' }, nodes);
+    } else if (!sent && find('התחברות') && find('הרשמה')) {
+      await tap(find('התחברות'));
+    } else if (!sent) {
+      if (Date.now() - opened > 25000) return end({ ok: true, already: true }, nodes);
+    } else if (!typed) {
+      if (codeScreen) {
+        await tap(field || { x: 540, y: 864 });
+        await adb(['shell', `input text ${DEMO_CODE}`], 30, 'utf8');
+        typed = Date.now();
+      } else if (Date.now() - sent > 25000) {
+        return end({ ok: false, reason: 'code screen did not open' }, nodes);
+      }
+    } else if (codeScreen) {
+      if (find('אמת והמשך') && !verified && Date.now() - typed > 1500) {
+        verified = true;
+        await tap(find('אמת והמשך'));
+      }
+      if (Date.now() - typed > 30000) return end({ ok: false, reason: 'code was not accepted' }, nodes);
+    } else if (++doneReads >= 2) {
+      return end({ ok: true }, nodes); // past the code screen, and it stayed that way
+    }
+    await wait(1200);
+  }
+  return end({ ok: false, reason: 'took too long' }, await readScreen());
+}
+
+function startLogin() {
+  if (login.running || (login.result && login.result.ok)) return;
+  login.running = true;
+  login.result = null;
+  signIn()
+    .catch(() => ({ ok: false, reason: 'unexpected failure', sent: login.sends > 0, screen: [] }))
+    .then((r) => {
+      login.result = r;
+      login.running = false;
+    });
+}
+
 http
   .createServer(async (req, res) => {
     try {
@@ -202,6 +310,14 @@ http
         return setTimeout(() => process.exit(0), 300);
       }
       if (state() !== 'ready') return json(res, 409, { error: 'not ready', state: state() });
+      // A long request would die in the tunnel, so the PC starts this and then asks how it went.
+      if (url.pathname === '/login') {
+        startLogin();
+        return json(res, 200, { running: login.running, result: login.result });
+      }
+      if (url.pathname === '/login-state') return json(res, 200, { running: login.running, result: login.result });
+      // Nothing can see the screen while the code is on it.
+      if (login.running) return json(res, 423, { error: 'signing in' });
       if (url.pathname === '/batch') {
         const { steps } = JSON.parse((await body(req)).toString('utf8'));
         return json(res, 200, { results: await runSteps(steps) });
