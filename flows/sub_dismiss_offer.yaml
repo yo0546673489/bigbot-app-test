@@ -1,0 +1,13 @@
+appId: com.bigbotdrivers.app
+name: sub dismiss tour offer
+---
+# Runs right after login, the app is still open. The offer opens 30 seconds after entering, and the answer is remembered.
+- extendedWaitUntil:
+    visible: "רוצה סיור באפליקציה?"
+    timeout: 70000
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/00_08_offer_closed
