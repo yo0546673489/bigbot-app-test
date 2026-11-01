@@ -226,7 +226,7 @@ async function signIn() {
       await tap(find('דלג'));
     } else if (form && !sent) {
       if (!field) return end({ ok: false, reason: 'no phone field' }, nodes);
-      if (field.text !== DEMO_PHONE) {
+      if (field.text.replace(/\D/g, '') !== DEMO_PHONE) { // the app shows it with dashes
         if (phoneTyped) return end({ ok: false, reason: 'phone was not typed' }, nodes);
         await tap(field);
         await adb(['shell', `input text ${DEMO_PHONE}`], 30, 'utf8');
