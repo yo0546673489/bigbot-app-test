@@ -11,6 +11,7 @@ const KEY = process.env.EMU_LIVE_KEY;
 const IDLE = Number(process.env.IDLE_MIN || 20) * 60000;
 const MAX = Number(process.env.MAX_MIN || 180) * 60000;
 const SERIAL = 'emulator-5554';
+const ADB = path.join(process.env.ANDROID_HOME, 'platform-tools', 'adb');
 const STATE = '/tmp/emu-state';
 const UP = '/tmp/up';
 const started = Date.now();
@@ -36,8 +37,8 @@ function okSig(req) {
 
 const adb = (args, timeoutSec, encoding) =>
   new Promise((resolve) => {
-    execFile('adb', ['-s', SERIAL, ...args], { timeout: timeoutSec * 1000, maxBuffer: 64 * 1024 * 1024, encoding }, (err, stdout, stderr) =>
-      resolve({ code: err ? (typeof err.code === 'number' ? err.code : 1) : 0, stdout, stderr }),
+    execFile(ADB, ['-s', SERIAL, ...args], { timeout: timeoutSec * 1000, maxBuffer: 64 * 1024 * 1024, encoding }, (err, stdout, stderr) =>
+      resolve({ code: err ? (typeof err.code === 'number' ? err.code : 1) : 0, stdout, stderr: stderr || (err ? String(err.message) : '') }),
     );
   });
 
