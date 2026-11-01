@@ -41,7 +41,8 @@ jobs:
           (cd "$EDIT_DEPS/hf" && npm init -y >/dev/null && npm i "hyperframes@$HF_VERSION" --no-audit --no-fund --silent >/dev/null)
           curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n9.0-latest-linux64-gpl-9.0.tar.xz \
             | tar xJ --strip-components=2 -C "$EDIT_DEPS/bin" --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
-          curl -fsSL -o ~/.fonts/NotoColorEmoji.ttf https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+          sudo apt-get install -y -q --no-install-recommends fonts-noto-color-emoji >/dev/null
+          cp /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf ~/.fonts/
           node "$EDIT_DEPS/hf/node_modules/hyperframes/bin/hyperframes.mjs" browser ensure >/dev/null
       - name: open the job
         env:
