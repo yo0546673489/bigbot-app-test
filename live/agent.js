@@ -236,7 +236,16 @@ function nextPiece() {
 }
 
 async function recStart() {
-  if (rec.on) return { code: 1, stderr: 'already recording' };
+  if (rec.on) {
+    // left running by a request that failed halfway: that take is thrown away, it must not block the next one
+    rec.stopping = true;
+    await adb(['shell', 'pkill -INT screenrecord'], 15, 'utf8');
+    await new Promise((r) => {
+      if (!rec.child) return r();
+      rec.done = r;
+      setTimeout(r, 8000);
+    });
+  }
   await adb(['shell', `rm -rf ${REC_DIR}; mkdir -p ${REC_DIR}`], 20, 'utf8');
   Object.assign(rec, { on: true, stopping: false, n: 0, at: Date.now(), done: null });
   nextPiece();
