@@ -1,0 +1,88 @@
+name: edit chapter
+run-name: ${{ inputs.label }}
+# Edits one tutorial chapter: cut, render, narration (tools/tutorial-video/guide/cloud-edit.cjs in the app repo).
+# This repo, its logs and its artifacts are public: the job arrives sealed with EMU_LIVE_KEY, leaves sealed,
+# and everything the edit prints goes to a file that is sealed too. The key is only in the steps that seal.
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: 'edit-<random>: names this run and its sealed job in the edit-inbox release'
+        required: true
+permissions:
+  contents: read
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      EDIT_DEPS: /home/runner/.edit-deps
+      EDIT_OUT: /tmp/edit-out
+      HF_VERSION: 0.7.109
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/cache@v4
+        id: deps
+        with:
+          key: edit-deps-v1-hf-0.7.109
+          path: |
+            /home/runner/.edit-deps
+            /home/runner/.cache/hyperframes/chrome
+            /home/runner/.fonts
+      - name: install the tools
+        if: steps.deps.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$EDIT_DEPS/hf" "$EDIT_DEPS/bin" ~/.fonts
+          (cd "$EDIT_DEPS/hf" && npm init -y >/dev/null && npm i "hyperframes@$HF_VERSION" --no-audit --no-fund --silent >/dev/null)
+          curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-linux64-gpl-7.1.tar.xz \
+            | tar xJ --strip-components=2 -C "$EDIT_DEPS/bin" --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
+          curl -fsSL -o ~/.fonts/NotoColorEmoji.ttf https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+          node "$EDIT_DEPS/hf/node_modules/hyperframes/bin/hyperframes.mjs" browser ensure >/dev/null
+      - name: open the job
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+          LABEL: ${{ inputs.label }}
+        run: |
+          fc-cache -f >/dev/null 2>&1 || true
+          curl -fsSL -o /tmp/job.bin "https://github.com/$GITHUB_REPOSITORY/releases/download/edit-inbox/$LABEL.bin"
+          node live/unseal-file.js /tmp/job.bin /tmp/job.tar
+          tar xf /tmp/job.tar -C /tmp
+          rm -f /tmp/job.bin /tmp/job.tar
+      - name: edit
+        run: |
+          mkdir -p "$EDIT_OUT"
+          export PATH="$EDIT_DEPS/bin:$PATH"
+          node /tmp/job/run.cjs > /tmp/edit.log 2>&1
+      - name: seal
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          cp /tmp/edit.log "$EDIT_OUT/edit.log"
+          tar cf /tmp/out.tar -C "$EDIT_OUT" .
+          mkdir -p sealed
+          node live/seal-file.js /tmp/out.tar sealed/out.bin
+      - uses: actions/upload-artifact@v4
+        with:
+          name: out
+          path: sealed/out.bin
+          compression-level: 0
+          retention-days: 1
+      - name: seal the errors
+        if: failure()
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          mkdir -p err
+          [ -f /tmp/edit.log ] || echo 'no edit log' > /tmp/edit.log
+          node live/seal-file.js /tmp/edit.log err/err.bin
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: err
+          path: err/err.bin
+          retention-days: 1
