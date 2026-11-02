@@ -1,7 +1,8 @@
 name: edit chapter
 run-name: ${{ inputs.label }}
 # Edits one tutorial chapter: cut, render, narration (tools/tutorial-video/guide/cloud-edit.cjs in the app repo).
-# prep cuts it and decides how many machines, each part machine renders its share, join stitches and narrates.
+# prep cuts it, decides how many machines and plans the render, each part machine renders its share of that one plan,
+# join stitches and narrates.
 # This repo, its logs and its artifacts are public: the job arrives sealed with EMU_LIVE_KEY, moves between the
 # machines sealed, leaves sealed, and everything the edit prints goes to a file that is sealed too. The key is
 # only in the steps that seal. Runs only when asked, and holds no machine after the edit.
@@ -27,6 +28,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/edit-tools
+        with:
+          render: 'true'
       - name: open the job
         env:
           EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
@@ -44,12 +47,25 @@ jobs:
           EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
         run: |
           tar cf /tmp/job.tar -C /tmp job
-          mkdir -p sealed
+          mkdir -p sealed/plan
           node live/seal-file.js /tmp/job.tar sealed/job.bin
+          rm -f /tmp/job.tar
+          # a seal holds the whole file in memory: a long chapter goes in pieces
+          tar cf - -C /tmp edit-plan | split -b 1500M -d - /tmp/plan.tar.
+          for f in /tmp/plan.tar.*; do
+            node live/seal-file.js "$f" "sealed/plan/$(basename "$f").bin"
+            rm -f "$f"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: job
           path: sealed/job.bin
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan
+          path: sealed/plan
           compression-level: 0
           retention-days: 1
       - name: seal the errors
@@ -84,13 +100,23 @@ jobs:
         with:
           name: job
           path: sealed
-      - name: open the job
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: sealed/plan
+      - name: open the job and the plan
         env:
           EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
         run: |
           node live/unseal-file.js sealed/job.bin /tmp/job.tar
           tar xf /tmp/job.tar -C /tmp
           rm -f sealed/job.bin /tmp/job.tar
+          for f in sealed/plan/*.bin; do
+            node live/unseal-file.js "$f" "/tmp/$(basename "$f" .bin)"
+            rm -f "$f"
+          done
+          cat /tmp/plan.tar.* | tar xf - -C /tmp
+          rm -f /tmp/plan.tar.*
       - name: render
         env:
           N: ${{ strategy.job-total }}
@@ -138,6 +164,11 @@ jobs:
       - uses: ./.github/actions/edit-tools
       - uses: actions/download-artifact@v4
         with:
+          name: job
+          path: sealed/job
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-*
           path: sealed
       - name: open the parts
         env:
