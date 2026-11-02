@@ -1,217 +1,91 @@
 appId: com.bigbotdrivers.app
-name: 00 login
+name: 00 fresh test account (BOT-SAVE-DAY2)
 ---
 - launchApp:
     clearState: true
     permissions:
       all: allow
 - extendedWaitUntil:
-    visible: ".*(התחברות|הרשמה|מי אתה|ברוכים).*"
+    visible: ".*(התחברות|הרשמה|ברוכים).*"
     timeout: 60000
-- takeScreenshot: shots/00_01_first_screen
-# First launch plays the welcome intro video (WELCOME-INTRO) over the welcome
-# screen — skip it, then wait for the real buttons.
 - tapOn:
     text: "דלג"
     optional: true
 - extendedWaitUntil:
-    visible: "התחברות"
+    visible: "הרשמה"
     timeout: 20000
-- takeScreenshot: shots/00_01b_welcome
-- tapOn:
-    text: "התחברות"
-    optional: true
+- tapOn: "הרשמה"
 - waitForAnimationToEnd
-- takeScreenshot: shots/00_02_login_form
 - tapOn:
     below:
       text: "מספר טלפון"
     index: 0
-- inputText: "0500000000"
-# New passwordless login (Android 2.11.26x): phone -> "שלחו לי קוד" -> the code.
-- runFlow:
-    when:
-      visible: "שלחו לי קוד"
-    commands:
-      - takeScreenshot: shots/00_03_login_filled
-      - tapOn: "שלחו לי קוד"
-      - waitForAnimationToEnd:
-          timeout: 10000
-      - takeScreenshot: shots/00_04_code_screen
-      - tapOn:
-          point: "50%,36%"
-      - inputText: ${DEMO_CODE}
-      - takeScreenshot: shots/00_05_code_typed
-      - tapOn:
-          text: "אמת והמשך"
-          optional: true
-# Password login (iPhone build and older Android)
-- runFlow:
-    when:
-      visible: "סיסמה"
-    commands:
-      - tapOn:
-          text: "טוב לראות אותך שוב"
-      - tapOn:
-          point: "50%,42%"
-      - inputText: ${DEMO_PASSWORD}
-      - tapOn:
-          text: "טוב לראות אותך שוב"
-      - takeScreenshot: shots/00_03_login_filled
-      - runFlow:
-          when:
-            platform: Android
-          commands:
-            - hideKeyboard
-      - tapOn: "התחבר"
-- waitForAnimationToEnd:
-    timeout: 15000
-# Retry once when the password did not get typed (still on the form).
-- runFlow:
-    when:
-      visible: "טוב לראות אותך שוב"
-      platform: iOS
-    commands:
-      - tapOn:
-          point: "50%,42%"
-      - eraseText: 30
-      - inputText: ${DEMO_PASSWORD}
-      - tapOn:
-          text: "טוב לראות אותך שוב"
-      - tapOn: "התחבר"
-      - waitForAnimationToEnd:
-          timeout: 15000
-# iOS "Save Password?" system sheet — invisible to Maestro, tap "Not Now" by position.
-- runFlow:
-    when:
-      platform: iOS
-      notVisible: "טוב לראות אותך שוב"
-    commands:
-      - extendedWaitUntil:
-          visible: "__wait_4s__"
-          timeout: 4000
-          optional: true
-      - tapOn:
-          text: "Not Now"
-          optional: true
-      - tapOn:
-          point: "33%,61%"
-- waitForAnimationToEnd
-- takeScreenshot: shots/00_04_code_screen
-# iPhone: paste the code from the clipboard (like a driver copying it from WhatsApp).
-- runFlow:
-    when:
-      platform: iOS
-    commands:
-      - tapOn:
-          text: "Not Now"
-          optional: true
-      - tapOn:
-          text: ".*הדבק קוד.*"
-          optional: true
-      - tapOn:
-          text: "(Allow Paste|אפשר הדבקה|הדבק)"
-          optional: true
-      - waitForAnimationToEnd
-      - takeScreenshot: shots/00_05_code_pasted
-      - tapOn:
-          text: "אמת והמשך"
-          optional: true
-      - waitForAnimationToEnd:
-          timeout: 10000
-# Android: the hidden code field takes typed digits.
-- runFlow:
-    when:
-      platform: Android
-      visible: "אמת והמשך"
-    commands:
-      - tapOn:
-          point: "50%,36%"
-      - inputText: ${DEMO_CODE}
-      - takeScreenshot: shots/00_05_code_typed
-      - tapOn: "אמת והמשך"
-      - waitForAnimationToEnd:
-          timeout: 10000
-# Still on the code screen (iOS always): the server watcher trusts this device,
-# go back and log in with the password again — it goes straight in.
-- runFlow:
-    when:
-      visible: "אמת והמשך"
-    commands:
-      - extendedWaitUntil:
-          visible: "__wait_12s__"
-          timeout: 12000
-          optional: true
-      - runFlow:
-          when:
-            platform: Android
-          commands:
-            - back
-      - runFlow:
-          when:
-            platform: iOS
-          commands:
-            - tapOn:
-                point: "91%,9%"
-      - waitForAnimationToEnd
-      - takeScreenshot: shots/00_06_back_to_login
-      - tapOn:
-          point: "50%,42%"
-      - eraseText: 40
-      - inputText: ${DEMO_PASSWORD}
-      - tapOn:
-          text: "טוב לראות אותך שוב"
-      - runFlow:
-          when:
-            platform: Android
-          commands:
-            - hideKeyboard
-      - tapOn: "התחבר"
-      - runFlow:
-          when:
-            platform: iOS
-          commands:
-            - extendedWaitUntil:
-                visible: "__wait_5s__"
-                timeout: 5000
-                optional: true
-            - tapOn:
-                text: "Not Now"
-                optional: true
-            - runFlow:
-                when:
-                  notVisible: ".*(בית|ראשי|פנוי).*"
-                commands:
-                  - tapOn:
-                      point: "33%,61%"
-# BOT-CONTACT-EXPIRY: the one-time "ביגבוט בוואטסאפ" screen of a first login. Photograph it, then "המשך".
+- inputText: "0500000462"
+- takeScreenshot: shots/r01_phone
+- tapOn: "שלחו לי קוד"
 - extendedWaitUntil:
-    visible: ".*(בית|ראשי|פנוי|ביגבוט בוואטסאפ).*"
-    timeout: 45000
+    visible: "אמת והמשך"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "NEVER-THERE-WAIT-FOR-THE-CODE"
+    timeout: 6000
     optional: true
-- runFlow:
-    when:
-      visible: "ביגבוט בוואטסאפ"
-    commands:
-      - takeScreenshot: shots/00_06_bot_contact
-      - tapOn: "המשך"
-      - waitForAnimationToEnd:
-          timeout: 8000
+- tapOn:
+    point: "50%,36%"
+- inputText: "482913"
+- takeScreenshot: shots/r02_code
+- tapOn:
+    text: "אמת והמשך"
+    optional: true
 - extendedWaitUntil:
-    visible: ".*(בית|ראשי|פנוי).*"
-    timeout: 45000
-- waitForAnimationToEnd:
+    visible: "איך קוראים לך?"
+    timeout: 30000
+- inputText: "Bot Save Test"
+- takeScreenshot: shots/r03_name
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "מתי נולדת?"
     timeout: 10000
 - tapOn:
-    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
+    text: "17/04/2000"
     optional: true
+- inputText: "17/04/1990"
+- takeScreenshot: shots/r04_dob
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "איזה סוג רכב יש לך?"
+    timeout: 10000
+- tapOn: "סטיישן"
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "איזה רכב יש לך בפועל?"
+    timeout: 10000
 - tapOn:
-    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
-    optional: true
+    below:
+      text: "דגם"
+    index: 0
+- inputText: "Test"
 - tapOn:
-    text: "(Allow|Allow While Using App|Allow Once|אישור|אפשר|מותר|While using the app).*"
-    optional: true
+    text: "לדוגמה: 2026"
+- inputText: "2020"
+- takeScreenshot: shots/r05_car
+- tapOn: "המשך"
+- extendedWaitUntil:
+    visible: "נהג או נהגת?"
+    timeout: 10000
+- tapOn: "נהג"
+- tapOn: "המשך"
+- waitForAnimationToEnd
+- takeScreenshot: shots/r06_phone_step
 - tapOn:
-    text: "אחר כך"
+    text: "סיים והיכנס"
     optional: true
-- takeScreenshot: shots/00_07_after_login
+- waitForAnimationToEnd
+- tapOn:
+    text: "דלג"
+    optional: true
+- extendedWaitUntil:
+    visible: "NEVER-THERE-LET-HOME-SETTLE"
+    timeout: 20000
+    optional: true
+- takeScreenshot: shots/r07_after_register
