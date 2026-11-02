@@ -1,1 +1,1 @@
-claude/ios-pay-wa-only
+claude/ios-chat-quote
