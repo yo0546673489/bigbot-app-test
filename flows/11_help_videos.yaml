@@ -1,0 +1,66 @@
+appId: com.bigbotdrivers.app
+name: 11 help videos in the app
+---
+# FIX-HELP-VIDEO-INAPP: every help clip plays inside the app, no browser; close returns to the list.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://tutorials"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: shots/11_00_help_list
+- tapOn:
+    text: "כניסה ראשונה לאפליקציה"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_8s__"
+    timeout: 8000
+    optional: true
+- takeScreenshot: shots/11_01_feat_login_playing
+- tapOn:
+    text: "1×"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_2s__"
+    timeout: 2000
+    optional: true
+- takeScreenshot: shots/11_02_speed_1_5
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 4000
+- takeScreenshot: shots/11_03_back_on_list
+- tapOn:
+    text: "המדריך המלא לאפליקציה"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_8s__"
+    timeout: 8000
+    optional: true
+- takeScreenshot: shots/11_04_full_guide_playing
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 4000
+- tapOn:
+    text: "מתחילים"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait_8s__"
+    timeout: 8000
+    optional: true
+- takeScreenshot: shots/11_05_topic_all_playing
+- tapOn:
+    text: "סגירה"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 4000
+- takeScreenshot: shots/11_06_back_on_list_again

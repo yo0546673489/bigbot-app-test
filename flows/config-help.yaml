@@ -1,0 +1,6 @@
+flows:
+  - "11_help_videos.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 11 help videos in the app

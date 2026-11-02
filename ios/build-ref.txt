@@ -1,1 +1,1 @@
-claude/ios-chat-quote
+claude/ios-help-video-inapp
