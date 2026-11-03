@@ -7,21 +7,33 @@ name: 12 parity review
 - tapOn:
     text: "דלג"
     optional: true
-- openLink: "bigbot://design-review?n=1"
+- openLink: "bigbot://design-review?n=28"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
-- openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
+- assertVisible: "הפרופיל שלי"
 - takeScreenshot: shots/i28
 - openLink: "bigbot://design-review?n=950"
 - extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
+- assertVisible: "נסיעות ירושלים"
 - takeScreenshot: shots/i950
 - longPressOn:
     point: "76%,68%"
@@ -30,9 +42,8 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i950_menu
-- tapOn:
-    text: "⭐ שמור למדבקות שלי"
-    optional: true
+- assertVisible: "⭐ שמור למדבקות שלי"
+- tapOn: "⭐ שמור למדבקות שלי"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1200
@@ -40,13 +51,18 @@ name: 12 parity review
 - takeScreenshot: shots/i950_saved
 - openLink: "bigbot://design-review?n=951"
 - extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
 - takeScreenshot: shots/i951
-- tapOn:
-    text: "מדבקות"
-    optional: true
+- tapOn: "מדבקות"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
@@ -54,11 +70,25 @@ name: 12 parity review
 - takeScreenshot: shots/i951_tab
 - openLink: "bigbot://design-review?n=952"
 - extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
 - takeScreenshot: shots/i952
 - openLink: "bigbot://design-review?n=953"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
