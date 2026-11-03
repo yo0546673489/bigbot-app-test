@@ -1,0 +1,6 @@
+flows:
+  - "12_parity.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 12 parity review

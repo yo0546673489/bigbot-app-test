@@ -1,1 +1,1 @@
-claude/ios-release-candidate
+claude/ios-parity-482-review
