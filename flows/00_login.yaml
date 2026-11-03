@@ -41,6 +41,9 @@ name: 00 fresh test account (BOT-SAVE-DAY2)
     visible: "איך קוראים לך?"
     timeout: 30000
 - inputText: "Bot Save Test"
+- tapOn:
+    point: "50%,58%"
+- waitForAnimationToEnd
 - takeScreenshot: shots/r03_name
 - tapOn: "המשך"
 - extendedWaitUntil:
@@ -50,6 +53,9 @@ name: 00 fresh test account (BOT-SAVE-DAY2)
     text: "17/04/2000"
     optional: true
 - inputText: "17/04/1990"
+- tapOn:
+    point: "50%,58%"
+- waitForAnimationToEnd
 - takeScreenshot: shots/r04_dob
 - tapOn: "המשך"
 - extendedWaitUntil:
@@ -68,6 +74,9 @@ name: 00 fresh test account (BOT-SAVE-DAY2)
 - tapOn:
     text: "לדוגמה: 2026"
 - inputText: "2020"
+- tapOn:
+    point: "50%,58%"
+- waitForAnimationToEnd
 - takeScreenshot: shots/r05_car
 - tapOn: "המשך"
 - extendedWaitUntil:
