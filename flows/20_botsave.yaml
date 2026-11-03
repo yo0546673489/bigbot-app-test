@@ -20,7 +20,7 @@ name: 20 the save-the-bot screen only from day two
 - takeScreenshot: shots/d1_first_day_reopened
 - assertNotVisible: "ביגבוט בוואטסאפ"
 # Tells the helper on the server (it reads the access log) to move this account's first-use date 25 hours back.
-- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-d1-r6')}
+- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-d1-r7')}
 - extendedWaitUntil:
     visible: "NEVER-THERE-WAIT-FOR-THE-DATE"
     timeout: 15000
@@ -47,7 +47,7 @@ name: 20 the save-the-bot screen only from day two
 - takeScreenshot: shots/d2_left_without_answer
 - assertNotVisible: "ביגבוט בוואטסאפ"
 # Second round, for the green המשך: the helper clears the answer on the account and the phone logs in again.
-- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-again-r6')}
+- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-again-r7')}
 - extendedWaitUntil:
     visible: "NEVER-THERE-WAIT-FOR-THE-RESET"
     timeout: 8000
