@@ -5,6 +5,15 @@ name: 07 new features
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
+# The tour offer pops up about a minute after home opens and covers every later screen until answered.
+- extendedWaitUntil:
+    visible: "לא עכשיו"
+    timeout: 75000
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
 - runFlow:
     when:
       visible: "ביגבוט בוואטסאפ"
