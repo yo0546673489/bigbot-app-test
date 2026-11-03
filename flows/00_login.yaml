@@ -110,12 +110,10 @@ name: 00 fresh test account (BOT-SAVE-DAY2)
       text: "רקע האפליקציה"
     direction: DOWN
     optional: true
-- tapOn:
-    text: "רקע האפליקציה"
-    optional: true
-- waitForAnimationToEnd
-- tapOn:
-    text: "לבן"
-    optional: true
+- tapOn: "שנה"
+- extendedWaitUntil:
+    visible: "לבן"
+    timeout: 8000
+- tapOn: "לבן"
 - waitForAnimationToEnd
 - takeScreenshot: shots/r08_white
