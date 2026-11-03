@@ -1,1 +1,1 @@
-claude/nudge-funnel-ios
+claude/ios-release-candidate
