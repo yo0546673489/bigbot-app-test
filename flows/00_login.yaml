@@ -98,22 +98,3 @@ name: 00 fresh test account (BOT-SAVE-DAY2)
     timeout: 20000
     optional: true
 - takeScreenshot: shots/r07_after_register
-# white background for the screenshots (standing order)
-- tapOn: "הגדרות"
-- waitForAnimationToEnd
-- tapOn:
-    text: ".*התראות ותצוגה.*"
-    optional: true
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element:
-      text: "רקע האפליקציה"
-    direction: DOWN
-    optional: true
-- tapOn: "שנה"
-- extendedWaitUntil:
-    visible: "לבן"
-    timeout: 8000
-- tapOn: "לבן"
-- waitForAnimationToEnd
-- takeScreenshot: shots/r08_white

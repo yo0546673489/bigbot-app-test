@@ -20,7 +20,7 @@ name: 20 the save-the-bot screen only from day two
 - takeScreenshot: shots/d1_first_day_reopened
 - assertNotVisible: "ביגבוט בוואטסאפ"
 # Tells the helper on the server (it reads the access log) to move this account's first-use date 25 hours back.
-- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-d1-r5')}
+- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-d1-r6')}
 - extendedWaitUntil:
     visible: "NEVER-THERE-WAIT-FOR-THE-DATE"
     timeout: 15000
@@ -32,12 +32,73 @@ name: 20 the save-the-bot screen only from day two
     visible: "ביגבוט בוואטסאפ"
     timeout: 45000
 - takeScreenshot: shots/d2_prompt
-- tapOn: "המשך"
+# BOT-SAVE-ONCE: the driver leaves without tapping המשך (the bug: it asked again on every opening).
+- extendedWaitUntil:
+    visible: "NEVER-THERE-LET-THE-ANSWER-REACH-THE-SERVER"
+    timeout: 5000
+    optional: true
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "NEVER-THERE-LET-HOME-SETTLE"
+    timeout: 25000
+    optional: true
+- takeScreenshot: shots/d2_left_without_answer
+- assertNotVisible: "ביגבוט בוואטסאפ"
+# Second round, for the green המשך: the helper clears the answer on the account and the phone logs in again.
+- evalScript: ${http.get('https://api.bigbotdrivers.com/botsave-signal-again-r6')}
+- extendedWaitUntil:
+    visible: "NEVER-THERE-WAIT-FOR-THE-RESET"
+    timeout: 8000
+    optional: true
+- launchApp:
+    clearState: true
+    permissions:
+      all: allow
+- extendedWaitUntil:
+    visible: "התחברות"
+    timeout: 60000
+- tapOn:
+    text: "דלג"
+    optional: true
+- tapOn: "התחברות"
+- waitForAnimationToEnd
+- tapOn:
+    below:
+      text: "מספר טלפון"
+    index: 0
+- inputText: "0500000462"
+- tapOn:
+    point: "50%,58%"
+- waitForAnimationToEnd
+- tapOn: "שלחו לי קוד"
+- extendedWaitUntil:
+    visible: "אמת והמשך"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "NEVER-THERE-WAIT-FOR-THE-CODE"
+    timeout: 6000
+    optional: true
+- tapOn:
+    point: "50%,36%"
+- inputText: "482913"
+- takeScreenshot: shots/d3_code
+- tapOn:
+    text: "אמת והמשך"
+    optional: true
+- extendedWaitUntil:
+    visible: "ביגבוט בוואטסאפ"
+    timeout: 60000
+- takeScreenshot: shots/d3_prompt_green
+- tapOn:
+    text: "המשך"
+    index: 0
 - extendedWaitUntil:
     visible: "NEVER-THERE-LET-HOME-SETTLE"
     timeout: 15000
     optional: true
-- takeScreenshot: shots/d2_after_answer
+- takeScreenshot: shots/d3_after_answer
 - assertNotVisible: "ביגבוט בוואטסאפ"
 - stopApp
 - launchApp:
@@ -46,5 +107,5 @@ name: 20 the save-the-bot screen only from day two
     visible: "NEVER-THERE-LET-HOME-SETTLE"
     timeout: 25000
     optional: true
-- takeScreenshot: shots/d2_not_asked_again
+- takeScreenshot: shots/d3_not_asked_again
 - assertNotVisible: "ביגבוט בוואטסאפ"
