@@ -214,4 +214,13 @@ name: 00 login
 - tapOn:
     text: "אחר כך"
     optional: true
+# The tour offer on first home (TourOfferDialog) covers every later screen until it is answered.
+- extendedWaitUntil:
+    visible: "לא עכשיו"
+    timeout: 15000
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
 - takeScreenshot: shots/00_07_after_login
