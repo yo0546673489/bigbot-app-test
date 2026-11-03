@@ -9,6 +9,12 @@ name: 06 dialogs close and take typing
     visible: "לא עכשיו"
     timeout: 75000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לא עכשיו"
     optional: true
@@ -20,6 +26,12 @@ name: 06 dialogs close and take typing
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
@@ -31,36 +43,126 @@ name: 06 dialogs close and take typing
 - extendedWaitUntil:
     visible: "צ'אט"
     timeout: 30000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: "צ'אט"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*שיחה חדשה.*"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_01_newchat_open
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(050-000-0000|0500000000)"
     optional: true
 - inputText: "0501234567"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_02_newchat_TYPED
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: "ביטול"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_03_newchat_after_cancel
 - assertNotVisible: "פתח צ'אט"
 # Min-price dialog: type, then ביטול must close it.
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: "הגדרות"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: ".*נסיעות וסינון.*"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: ".*מחיר מינימלי.*"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_04_minprice_open
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "סכום ב-₪"
     optional: true
 - inputText: "40"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_05_minprice_TYPED
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: "ביטול"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_06_minprice_after_cancel
 - assertNotVisible: "מחיר מינימלי לנסיעה"
 # Delete account (Apple requires it): the confirm dialog must open, ביטול must close it.
@@ -76,6 +178,12 @@ name: 06 dialogs close and take typing
 - extendedWaitUntil:
     visible: "הגדרות"
     timeout: 30000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
 - waitForAnimationToEnd
@@ -84,13 +192,43 @@ name: 06 dialogs close and take typing
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: ".*חשבון ותמיכה.*"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: ".*מחק חשבון.*"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_07_delete_OPEN
 - assertVisible: ".*מחיקת חשבון.*"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn: "ביטול"
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/06_08_delete_after_cancel
 - assertNotVisible: ".*מחיקת חשבון.*"

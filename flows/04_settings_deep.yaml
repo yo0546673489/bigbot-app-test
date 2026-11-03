@@ -9,6 +9,12 @@ name: 04 settings deep pages
     visible: "לא עכשיו"
     timeout: 75000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לא עכשיו"
     optional: true
@@ -20,6 +26,12 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
@@ -34,10 +46,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -47,6 +71,12 @@ name: 04 settings deep pages
       text: ".*התראות ותצוגה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*התראות ותצוגה.*"
     optional: true
@@ -56,6 +86,12 @@ name: 04 settings deep pages
       text: "עיצוב כרטיסיות"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "עיצוב כרטיסיות"
     optional: true
@@ -64,8 +100,20 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_1_card
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_1_card_b
 - launchApp:
     stopApp: true
@@ -78,10 +126,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -91,6 +151,12 @@ name: 04 settings deep pages
       text: ".*התראות ותצוגה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*התראות ותצוגה.*"
     optional: true
@@ -100,6 +166,12 @@ name: 04 settings deep pages
       text: "רקע האפליקציה"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "רקע האפליקציה"
     optional: true
@@ -108,8 +180,20 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_2_background
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_2_background_b
 - launchApp:
     stopApp: true
@@ -122,10 +206,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -135,6 +231,12 @@ name: 04 settings deep pages
       text: ".*נסיעות וסינון.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*נסיעות וסינון.*"
     optional: true
@@ -144,6 +246,12 @@ name: 04 settings deep pages
       text: ".*סינון קבוצות.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*סינון קבוצות.*"
     optional: true
@@ -152,8 +260,20 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_3_groups
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_3_groups_b
 - launchApp:
     stopApp: true
@@ -166,10 +286,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -179,6 +311,12 @@ name: 04 settings deep pages
       text: ".*נסיעות וסינון.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*נסיעות וסינון.*"
     optional: true
@@ -188,6 +326,12 @@ name: 04 settings deep pages
       text: ".*מחיר מינימלי.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*מחיר מינימלי.*"
     optional: true
@@ -196,6 +340,12 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_4_minprice
 - launchApp:
     stopApp: true
@@ -208,10 +358,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -221,6 +383,12 @@ name: 04 settings deep pages
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חשבון ותמיכה.*"
     optional: true
@@ -230,6 +398,12 @@ name: 04 settings deep pages
       text: ".*המנוי שלי.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*המנוי שלי.*"
     optional: true
@@ -238,8 +412,20 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_5_billing
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_5_billing_b
 - launchApp:
     stopApp: true
@@ -252,10 +438,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -265,6 +463,12 @@ name: 04 settings deep pages
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חשבון ותמיכה.*"
     optional: true
@@ -274,6 +478,12 @@ name: 04 settings deep pages
       text: ".*צ'אט שירות לקוחות.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*צ'אט שירות לקוחות.*"
     optional: true
@@ -282,8 +492,20 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_6_support
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_6_support_b
 - launchApp:
     stopApp: true
@@ -296,10 +518,22 @@ name: 04 settings deep pages
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -309,6 +543,12 @@ name: 04 settings deep pages
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חשבון ותמיכה.*"
     optional: true
@@ -318,6 +558,12 @@ name: 04 settings deep pages
       text: ".*מחק חשבון.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*מחק חשבון.*"
     optional: true
@@ -326,4 +572,10 @@ name: 04 settings deep pages
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/04_7_delete_dialog_only

@@ -9,6 +9,12 @@ name: 05 chat and search
     visible: "לא עכשיו"
     timeout: 75000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לא עכשיו"
     optional: true
@@ -20,9 +26,21 @@ name: 05 chat and search
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "צ'אט"
     optional: true
@@ -31,17 +49,47 @@ name: 05 chat and search
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_01_chat_list
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "שיחה חדשה"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "050-000-0000"
     optional: true
 - waitForAnimationToEnd
 - inputText: "0501234567"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_02_new_chat_KEYBOARD
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "פתח צ'אט"
     optional: true
@@ -50,19 +98,55 @@ name: 05 chat and search
     visible: "__w__"
     timeout: 3000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_03_conversation
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*הקלד.*|.*הודעה.*"
     optional: true
 - waitForAnimationToEnd
 - inputText: "בדיקה"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_04_composer_KEYBOARD
 - eraseText: 10
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "עוד"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_05_more_menu
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "ערכת נושא לצ'אט"
     optional: true
@@ -71,6 +155,12 @@ name: 05 chat and search
     visible: "__w__"
     timeout: 2000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_06_theme
 - runFlow:
     when:
@@ -111,6 +201,12 @@ name: 05 chat and search
     commands:
       - back
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חיפוש"
     optional: true
@@ -119,16 +215,40 @@ name: 05 chat and search
     visible: "__w__"
     timeout: 2500
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_10_search
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הוסף מסלול חדש"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*אזור יציאה.*"
     optional: true
 - waitForAnimationToEnd
 - inputText: "תא"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_11_search_add_KEYBOARD
 - runFlow:
     when:
@@ -144,7 +264,19 @@ name: 05 chat and search
       - back
 - waitForAnimationToEnd
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_12_search_scrolled
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -154,6 +286,12 @@ name: 05 chat and search
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חשבון ותמיכה.*"
     optional: true
@@ -163,6 +301,12 @@ name: 05 chat and search
       text: "החלף תפקיד"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "החלף תפקיד"
     optional: true
@@ -171,4 +315,10 @@ name: 05 chat and search
     visible: "__w__"
     timeout: 3000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/05_20_role_chooser

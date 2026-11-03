@@ -10,6 +10,12 @@ name: 07 new features
     visible: "לא עכשיו"
     timeout: 75000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לא עכשיו"
     optional: true
@@ -21,19 +27,43 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_01a_settings_main
 - scrollUntilVisible:
     element:
       text: ".*תגובות וצ'אט.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*תגובות וצ'אט.*"
     optional: true
@@ -43,11 +73,29 @@ name: 07 new features
       text: "לשוניות למעלה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_01b_chat_page_tabs_row
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לשוניות למעלה.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_01c_tabs_toggled
 - stopApp
 - launchApp
@@ -60,13 +108,31 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "צ'אט"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_01d_chat_list_header
 - stopApp
 - launchApp
@@ -79,9 +145,21 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -91,16 +169,46 @@ name: 07 new features
       text: "חיבור טלגרם"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_02a_tg_card
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חבר טלגרם"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_02b_tg_phone_step
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חיבור טלגרם"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_02c_tg_page_alt
 - stopApp
 - launchApp
@@ -113,42 +221,126 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "בית"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_03a_drawer
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הפרופיל שלי"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_03b_profile
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "שם מלא"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_03c_name_dialog
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "טלפון"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_03d_phone_note
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "תאריך לידה"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_03e_dob_dialog
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
@@ -164,13 +356,31 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "בית"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
@@ -180,11 +390,29 @@ name: 07 new features
       text: "החלפת משתמש"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_04a_drawer_bottom
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חיובי תחנות"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_04b_station_pay
 - stopApp
 - launchApp
@@ -197,9 +425,21 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -209,16 +449,46 @@ name: 07 new features
       text: "מכשירים"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "מכשירים"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_05a_devices
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*קישור מכשיר.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_05b_link_device
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
@@ -234,9 +504,21 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -246,22 +528,46 @@ name: 07 new features
       text: ".*התראות ותצוגה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*התראות ותצוגה.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_06a_display
 - scrollUntilVisible:
     element:
       text: "עוד הגדרות"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_06b_more_settings
 - scrollUntilVisible:
     element:
       text: "עיצוב כרטיסיות"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "עיצוב כרטיסיות"
     optional: true
@@ -271,6 +577,12 @@ name: 07 new features
       text: "איפוס רוחב הכרטיסיות"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_06c_card_reset_rows
 - stopApp
 - launchApp
@@ -283,9 +595,21 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -295,16 +619,46 @@ name: 07 new features
       text: "חשבון ותמיכה"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חשבון ותמיכה"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_07a_account
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "החלף תפקיד"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_07b_role_sheet
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
@@ -320,21 +674,51 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "בית"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "תפריט"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "התראות"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_08a_notifications
 - stopApp
 - launchApp
@@ -347,21 +731,63 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חיפוש"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_08b_search
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הוסף מסלול חדש"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_08c_search_add_dialog
 - inputText: "בב_ים"
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_08d_search_add_typed
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
@@ -377,18 +803,48 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "בית"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*(מיקום כבוי|מיקום פעיל).*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_09a_location_chip
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(Allow While Using App|Allow Once|Allow|אישור|מותר).*"
     optional: true
@@ -397,17 +853,47 @@ name: 07 new features
     visible: "__wait_6s__"
     timeout: 6000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_09b_location_on
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*(מיקום כבוי|מיקום פעיל).*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_09c_location_off
 - longPressOn:
     text: "ת"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_09d_longpress_time_sheet
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "(ביטול|סגור|סגירה)"
     optional: true
@@ -423,27 +909,63 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*וואטסאפ.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_10a_wa_page
 - scrollUntilVisible:
     element:
       text: "שני וואטסאפים"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "שני וואטסאפים"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_10b_wa2
 - stopApp
 - launchApp
@@ -456,9 +978,21 @@ name: 07 new features
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
@@ -468,6 +1002,12 @@ name: 07 new features
       text: "חשבון ותמיכה"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "חשבון ותמיכה"
     optional: true
@@ -477,8 +1017,20 @@ name: 07 new features
       text: ".*צ'אט שירות לקוחות.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*צ'אט שירות לקוחות.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/07_11a_support

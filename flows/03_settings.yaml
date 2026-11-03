@@ -9,6 +9,12 @@ name: 03 settings
     visible: "לא עכשיו"
     timeout: 75000
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "לא עכשיו"
     optional: true
@@ -20,33 +26,93 @@ name: 03 settings
       - tapOn: "המשך"
       - waitForAnimationToEnd:
           timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "אחר כך"
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: "הגדרות"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_00_settings
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_00_settings_b
 - scrollUntilVisible:
     element:
       text: ".*נסיעות וסינון.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*נסיעות וסינון.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_1a_rides
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_1b_rides
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_1c_rides
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_1d_rides
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_1e_rides
 - runFlow:
     when:
@@ -80,18 +146,54 @@ name: 03 settings
       text: ".*תגובות וצ'אט.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*תגובות וצ'אט.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_2a_chat
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_2b_chat
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_2c_chat
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_2d_chat
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_2e_chat
 - runFlow:
     when:
@@ -125,18 +227,54 @@ name: 03 settings
       text: ".*אוטומציה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*אוטומציה.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_3a_auto
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_3b_auto
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_3c_auto
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_3d_auto
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_3e_auto
 - runFlow:
     when:
@@ -170,18 +308,54 @@ name: 03 settings
       text: ".*התראות ותצוגה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*התראות ותצוגה.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_4a_display
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_4b_display
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_4c_display
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_4d_display
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_4e_display
 - runFlow:
     when:
@@ -215,18 +389,54 @@ name: 03 settings
       text: ".*שיתוף נסיעות.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*שיתוף נסיעות.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_5a_share
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_5b_share
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_5c_share
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_5d_share
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_5e_share
 - runFlow:
     when:
@@ -260,18 +470,54 @@ name: 03 settings
       text: ".*מכשירים.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*מכשירים.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_6a_devices
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_6b_devices
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_6c_devices
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_6d_devices
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_6e_devices
 - runFlow:
     when:
@@ -305,18 +551,54 @@ name: 03 settings
       text: ".*חשבון ותמיכה.*"
     direction: DOWN
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חשבון ותמיכה.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_7a_account
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_7b_account
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_7c_account
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_7d_account
 - scroll
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_7e_account
 - runFlow:
     when:
@@ -350,10 +632,22 @@ name: 03 settings
       text: ".*וואטסאפ.*"
     direction: UP
     optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - tapOn:
     text: ".*חיבור וואטסאפ.*|.*וואטסאפ מחובר.*"
     optional: true
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
 - takeScreenshot: shots/03_8_whatsapp
 - runFlow:
     when:
