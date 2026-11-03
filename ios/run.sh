@@ -25,7 +25,7 @@ export PATH="$PATH:$HOME/.maestro/bin"
 export MAESTRO_DRIVER_STARTUP_TIMEOUT=300000
 mkdir -p shots video
 mrun() { # retry once when the XCTest driver is slow to start
-  for try in 1 2; do
+  for try in 1 2 3; do
     maestro --device "$DEV" test "$@" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" 2>&1 | tee maestro-out.txt
     grep -q -E "driver not ready|became unreachable" maestro-out.txt || break
     sleep 15
