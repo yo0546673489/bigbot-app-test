@@ -14,6 +14,8 @@ export PATH="$PATH:$HOME/.maestro/bin"
 mkdir -p shots
 maestro test flows/00_login.yaml -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE"
 maestro test flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" --format junit --output shots/report.xml
+MRC=$?
 adb logcat -d -b crash > shots/crash-log.txt 2>/dev/null
 adb logcat -d | grep -E "AndroidRuntime|FATAL|ANR in" | tail -200 > shots/errors-log.txt
-exit 0
+# red when the test failed; the next steps still collect and keep the screenshots (if: always)
+exit "$MRC"

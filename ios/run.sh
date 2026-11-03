@@ -27,6 +27,7 @@ mkdir -p shots video
 mrun() { # retry once when the XCTest driver is slow to start
   for try in 1 2; do
     maestro --device "$DEV" test "$@" -e DEMO_PASSWORD="$DEMO_PASSWORD" -e DEMO_CODE="$DEMO_CODE" 2>&1 | tee maestro-out.txt
+    MRC=${PIPESTATUS[0]}
     grep -q -E "driver not ready|became unreachable" maestro-out.txt || break
     sleep 15
   done
@@ -41,4 +42,5 @@ if [ "$LOC" = "he" ]; then
   sleep 45
 fi
 mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
-exit 0
+# red when the test failed; the next steps still collect and keep the screenshots (if: always)
+exit "$MRC"
