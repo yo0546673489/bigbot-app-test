@@ -11,272 +11,42 @@ name: 12 parity review
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
-- openLink: "bigbot://design-review?n=1"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i1
-- openLink: "bigbot://design-review?n=2"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i2
-- openLink: "bigbot://design-review?n=3"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i3
-- openLink: "bigbot://design-review?n=4"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i4
-- openLink: "bigbot://design-review?n=5"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i5
-- openLink: "bigbot://design-review?n=6"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i6
-- openLink: "bigbot://design-review?n=7"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i7
-- openLink: "bigbot://design-review?n=8"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i8
-- openLink: "bigbot://design-review?n=9"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i9
-- openLink: "bigbot://design-review?n=10"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i10
-- openLink: "bigbot://design-review?n=11"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i11
-- openLink: "bigbot://design-review?n=12"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i12
-- openLink: "bigbot://design-review?n=13"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i13
-- openLink: "bigbot://design-review?n=14"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i14
-- openLink: "bigbot://design-review?n=15"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i15
-- openLink: "bigbot://design-review?n=16"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i16
-- openLink: "bigbot://design-review?n=17"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i17
-- openLink: "bigbot://design-review?n=18"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i18
-- openLink: "bigbot://design-review?n=19"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i19
-- openLink: "bigbot://design-review?n=20"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i20
-- openLink: "bigbot://design-review?n=21"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i21
-- openLink: "bigbot://design-review?n=22"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i22
-- openLink: "bigbot://design-review?n=23"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i23
-- openLink: "bigbot://design-review?n=24"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i24
-- openLink: "bigbot://design-review?n=25"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i25
-- openLink: "bigbot://design-review?n=26"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i26
-- openLink: "bigbot://design-review?n=27"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i27
 - openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
 - takeScreenshot: shots/i28
-- openLink: "bigbot://design-review?n=29"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i29
-- openLink: "bigbot://design-review?n=30"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i30
-- openLink: "bigbot://design-review?n=31"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i31
-- openLink: "bigbot://design-review?n=32"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i32
-- openLink: "bigbot://design-review?n=33"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i33
-- openLink: "bigbot://design-review?n=34"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i34
-- openLink: "bigbot://design-review?n=35"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i35
-- openLink: "bigbot://design-review?n=36"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i36
-- openLink: "bigbot://design-review?n=37"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i37
-- openLink: "bigbot://design-review?n=38"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i38
-- openLink: "bigbot://design-review?n=39"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i39
-- openLink: "bigbot://design-review?n=40"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i40
-- openLink: "bigbot://design-review?n=816"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i816
 - openLink: "bigbot://design-review?n=950"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
 - takeScreenshot: shots/i950
-- longPressOn: ".*משה כהן.*"
+- longPressOn:
+    point: "76%,68%"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i950_menu
-- tapOn: "⭐ שמור למדבקות שלי"
+- tapOn:
+    text: "⭐ שמור למדבקות שלי"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1200
+    optional: true
+- takeScreenshot: shots/i950_saved
 - openLink: "bigbot://design-review?n=951"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
     optional: true
 - takeScreenshot: shots/i951
-- tapOn: "מדבקות"
+- tapOn:
+    text: "מדבקות"
+    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
