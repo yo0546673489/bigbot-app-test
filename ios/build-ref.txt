@@ -1,1 +1,1 @@
-claude/ios-help-video-inapp
+claude/ios-ota-help-video
