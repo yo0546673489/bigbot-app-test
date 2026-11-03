@@ -1,1 +1,1 @@
-claude/ios-ota-help-video
+claude/ios-release-candidate
