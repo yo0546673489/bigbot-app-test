@@ -21,6 +21,7 @@ runs:
       env:
         EMU_LIVE_KEY: ${{ inputs.key }}
         SRC: ${{ inputs.path }}
+        COPYFILE_DISABLE: "1" # no ._ side files from macOS tar
       run: |
         rm -f sealed.bin sealed.tgz
         if [ -d "$SRC" ]; then tar -czf sealed.tgz -C "$SRC" .
