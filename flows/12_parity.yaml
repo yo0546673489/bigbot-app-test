@@ -7,62 +7,6 @@ name: 12 parity review
 - tapOn:
     text: "דלג"
     optional: true
-- openLink: "bigbot://design-review?n=1"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- assertVisible: "הדרך המהירה לתפוס נסיעה"
-- takeScreenshot: shots/i1
-- openLink: "bigbot://design-review?n=16"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- assertVisible: ".*נסיעות חדשות.*"
-- takeScreenshot: shots/i16
-- openLink: "bigbot://design-review?n=17"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- assertVisible: "הנסיעות שלי"
-- takeScreenshot: shots/i17
-- openLink: "bigbot://design-review?n=816"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- assertVisible: ".*ספיישל.*"
-- takeScreenshot: shots/i816
 - openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
@@ -75,5 +19,58 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- assertVisible: "הפרופיל שלי"
 - takeScreenshot: shots/i28
+- assertVisible: "הפרופיל שלי"
+- openLink: "bigbot://design-review?n=17"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i17
+- assertVisible: "הנסיעות שלי"
+- openLink: "bigbot://design-review?n=16"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i16
+- openLink: "bigbot://design-review?n=816"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i816
+- openLink: "bigbot://design-review?n=1"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i1
