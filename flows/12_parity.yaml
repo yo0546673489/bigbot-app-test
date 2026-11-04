@@ -19,7 +19,7 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 4000
     optional: true
-- openLink: "bigbot://design-review?n=28"
+- openLink: "bigbot://design-review?n=3"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -31,8 +31,8 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i28
-- openLink: "bigbot://design-review?n=16"
+- takeScreenshot: shots/i3
+- openLink: "bigbot://design-review?n=4"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -44,8 +44,8 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i16
-- openLink: "bigbot://design-review?n=17"
+- takeScreenshot: shots/i4
+- openLink: "bigbot://design-review?n=5"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -57,8 +57,8 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i17
-- openLink: "bigbot://design-review?n=816"
+- takeScreenshot: shots/i5
+- openLink: "bigbot://design-review?n=6"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -70,8 +70,8 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i816
-- openLink: "bigbot://design-review?n=1"
+- takeScreenshot: shots/i6
+- openLink: "bigbot://design-review?n=7"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -83,8 +83,8 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i1
-- openLink: "bigbot://design-review?n=31"
+- takeScreenshot: shots/i7
+- openLink: "bigbot://design-review?n=8"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -96,7 +96,124 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i31
+- takeScreenshot: shots/i8
+- openLink: "bigbot://design-review?n=9"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i9
+- openLink: "bigbot://design-review?n=10"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i10
+- openLink: "bigbot://design-review?n=11"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i11
+- openLink: "bigbot://design-review?n=14"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i14
+- openLink: "bigbot://design-review?n=18"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i18
+- openLink: "bigbot://design-review?n=21"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i21
+- openLink: "bigbot://design-review?n=22"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i22
+- openLink: "bigbot://design-review?n=30"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i30
+- openLink: "bigbot://design-review?n=33"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 3000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 2500
+    optional: true
+- takeScreenshot: shots/i33
 - openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
