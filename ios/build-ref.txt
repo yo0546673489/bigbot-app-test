@@ -1,1 +1,1 @@
-claude/ios-popup-html-review
+claude/ios-pair-messages
