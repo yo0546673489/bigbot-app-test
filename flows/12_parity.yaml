@@ -4,7 +4,7 @@ name: 12 parity review
 - launchApp:
     clearState: true
     permissions:
-      all: unset
+      all: allow
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 8000
@@ -13,15 +13,7 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 1500
     optional: true
-- takeScreenshot: shots/iperm_ask
-- tapOn:
-    text: "(אפשר|Allow)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/iperm_after
+- takeScreenshot: shots/ipush_app
 - pressKey: Home
 - extendedWaitUntil:
     visible: ".*לא סיימתם.*"
@@ -29,7 +21,7 @@ name: 12 parity review
     optional: true
 - takeScreenshot: shots/ipush_banner
 - longPressOn:
-    point: "50%,8%"
+    text: ".*לא סיימתם.*"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
@@ -41,7 +33,7 @@ name: 12 parity review
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 4000
+    timeout: 5000
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
@@ -101,35 +93,13 @@ name: 12 parity review
 - tapOn:
     text: "לא עכשיו"
     optional: true
-- tapOn:
+- longPressOn:
     point: "61%,51%"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i18
-- openLink: "bigbot://design-review?n=22"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 4000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "לא עכשיו"
-    optional: true
-- tapOn:
-    point: "37%,30%"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/i22
 - openLink: "bigbot://design-review?n=14"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
@@ -147,34 +117,6 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i14
-- openLink: "bigbot://design-review?n=3"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 4000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "הרשמה"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/i3
-- tapOn:
-    text: ".*התחבר כאן.*"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/i5
 - openLink: "bigbot://design-review?n=6"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
@@ -198,35 +140,30 @@ name: 12 parity review
 - tapOn:
     text: ".*המשך.*"
     optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/i7
 - tapOn:
     point: "50%,22%"
 - inputText: "17041990"
 - tapOn:
     point: "50%,62%"
-- tapOn:
-    text: ".*המשך.*"
-    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
-- takeScreenshot: shots/i8
+- takeScreenshot: shots/i7b
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
 - tapOn:
     text: "סטיישן"
     optional: true
-- tapOn:
-    text: ".*המשך.*"
-    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
-- takeScreenshot: shots/i9
+- takeScreenshot: shots/i8b
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
 - tapOn:
     point: "50%,27%"
 - inputText: "Tesla"
@@ -237,25 +174,22 @@ name: 12 parity review
 - inputText: "2026"
 - tapOn:
     point: "50%,62%"
-- tapOn:
-    text: ".*המשך.*"
-    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
-- takeScreenshot: shots/i10
+- takeScreenshot: shots/i9b
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
 - tapOn:
     text: "נהג"
     optional: true
-- tapOn:
-    text: ".*המשך.*"
-    optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
-- takeScreenshot: shots/i11
+- takeScreenshot: shots/i10b
 - openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
