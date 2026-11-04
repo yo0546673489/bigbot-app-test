@@ -17,138 +17,12 @@ name: 12 parity review
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
+    timeout: 2500
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
     timeout: 4000
     optional: true
-- openLink: "bigbot://design-review?n=3"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i3
-- openLink: "bigbot://design-review?n=4"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i4
-- openLink: "bigbot://design-review?n=5"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i5
-- openLink: "bigbot://design-review?n=6"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i6
-- openLink: "bigbot://design-review?n=7"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i7
-- openLink: "bigbot://design-review?n=8"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i8
-- openLink: "bigbot://design-review?n=9"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i9
-- openLink: "bigbot://design-review?n=10"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i10
-- openLink: "bigbot://design-review?n=11"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i11
-- openLink: "bigbot://design-review?n=14"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- takeScreenshot: shots/i14
 - openLink: "bigbot://design-review?n=18"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
@@ -160,6 +34,15 @@ name: 12 parity review
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 2500
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- tapOn:
+    point: "61%,51%"
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
     optional: true
 - takeScreenshot: shots/i18
 - openLink: "bigbot://design-review?n=21"
@@ -174,6 +57,15 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- tapOn:
+    point: "24%,26%"
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
 - takeScreenshot: shots/i21
 - openLink: "bigbot://design-review?n=22"
 - extendedWaitUntil:
@@ -187,8 +79,17 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- tapOn:
+    point: "24%,26%"
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
 - takeScreenshot: shots/i22
-- openLink: "bigbot://design-review?n=30"
+- openLink: "bigbot://design-review?n=3"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -200,8 +101,15 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i30
-- openLink: "bigbot://design-review?n=33"
+- tapOn:
+    text: "הרשמה"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i3
+- openLink: "bigbot://design-review?n=5"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -213,8 +121,15 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i33
-- openLink: "bigbot://design-review?n=28"
+- tapOn:
+    text: "התחברות"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i5
+- openLink: "bigbot://design-review?n=6"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
     timeout: 3000
@@ -226,5 +141,60 @@ name: 12 parity review
     visible: "__wait__"
     timeout: 2500
     optional: true
-- takeScreenshot: shots/i28
-- assertVisible: "הפרופיל שלי"
+- tapOn:
+    text: "Continue"
+    optional: true
+- inputText: "Yosef Cohen"
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i7
+- inputText: "17041990"
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i8
+- tapOn:
+    text: "סטיישן"
+    optional: true
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i9
+- tapOn:
+    point: "50%,27%"
+- inputText: "Tesla"
+- tapOn:
+    point: "50%,38%"
+- inputText: "2026"
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i10
+- tapOn:
+    text: "נהג"
+    optional: true
+- tapOn:
+    text: ".*המשך.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i11
