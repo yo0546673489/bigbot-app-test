@@ -1,0 +1,1 @@
+{"Simulator Target Bundle":"com.bigbotdrivers.app","aps":{"alert":{"title":"🚖 לא סיימתם את ההרשמה","body":"כדי לקבל נסיעות ולשלוח ת מהאפליקציה צריך לחבר את הוואטסאפ. לחצו כאן לחיבור"},"sound":"default","category":"wa_connect_actions"},"kind":"wa_connect","type":"wa_nudge","openWaConnect":"true"}

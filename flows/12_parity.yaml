@@ -2,6 +2,53 @@ appId: com.bigbotdrivers.app
 name: 12 parity review
 ---
 - launchApp:
+    clearState: true
+    permissions:
+      all: unset
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 8000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/iperm_ask
+- tapOn:
+    text: "(אפשר|Allow)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/iperm_after
+- pressKey: Home
+- extendedWaitUntil:
+    visible: ".*לא סיימתם.*"
+    timeout: 240000
+    optional: true
+- takeScreenshot: shots/ipush_banner
+- longPressOn:
+    point: "50%,8%"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/ipush_menu
+- tapOn:
+    text: ".*מעבר לחיבור וואטסאפ.*"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 4000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/ipush_tap
+- launchApp:
     permissions:
       all: allow
 - tapOn:
@@ -10,30 +57,46 @@ name: 12 parity review
 - openLink: "bigbot://design-review?n=28"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
-    timeout: 3000
+    timeout: 4000
     optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 2500
+    timeout: 3000
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 4000
     optional: true
-- openLink: "bigbot://design-review?n=18"
+- openLink: "bigbot://design-review?n=21"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
-    timeout: 3000
+    timeout: 4000
     optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 2500
+    timeout: 3000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- openLink: "bigbot://design-review?n=18"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 4000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
     optional: true
 - tapOn:
     text: "לא עכשיו"
@@ -45,61 +108,56 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i18
-- openLink: "bigbot://design-review?n=21"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
-- tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- tapOn:
-    text: "לא עכשיו"
-    optional: true
-- tapOn:
-    point: "24%,26%"
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 1500
-    optional: true
-- takeScreenshot: shots/i21
 - openLink: "bigbot://design-review?n=22"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
-    timeout: 3000
+    timeout: 4000
     optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 2500
+    timeout: 3000
     optional: true
 - tapOn:
     text: "לא עכשיו"
     optional: true
 - tapOn:
-    point: "24%,26%"
+    point: "37%,30%"
 - extendedWaitUntil:
     visible: "__wait__"
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i22
-- openLink: "bigbot://design-review?n=3"
+- openLink: "bigbot://design-review?n=14"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
-    timeout: 3000
+    timeout: 4000
     optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 2500
+    timeout: 3000
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 1500
+    optional: true
+- takeScreenshot: shots/i14
+- openLink: "bigbot://design-review?n=3"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 4000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
     optional: true
 - tapOn:
     text: "הרשמה"
@@ -109,20 +167,8 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i3
-- openLink: "bigbot://design-review?n=5"
-- extendedWaitUntil:
-    visible: "(פתיחה|Open)"
-    timeout: 3000
-    optional: true
 - tapOn:
-    text: "(פתיחה|Open)"
-    optional: true
-- extendedWaitUntil:
-    visible: "__wait__"
-    timeout: 2500
-    optional: true
-- tapOn:
-    text: "התחברות"
+    text: ".*התחבר כאן.*"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
@@ -132,19 +178,23 @@ name: 12 parity review
 - openLink: "bigbot://design-review?n=6"
 - extendedWaitUntil:
     visible: "(פתיחה|Open)"
-    timeout: 3000
+    timeout: 4000
     optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
     visible: "__wait__"
-    timeout: 2500
+    timeout: 3000
     optional: true
 - tapOn:
     text: "Continue"
     optional: true
+- tapOn:
+    point: "50%,22%"
 - inputText: "Yosef Cohen"
+- tapOn:
+    point: "50%,62%"
 - tapOn:
     text: ".*המשך.*"
     optional: true
@@ -153,7 +203,11 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i7
+- tapOn:
+    point: "50%,22%"
 - inputText: "17041990"
+- tapOn:
+    point: "50%,62%"
 - tapOn:
     text: ".*המשך.*"
     optional: true
@@ -177,8 +231,12 @@ name: 12 parity review
     point: "50%,27%"
 - inputText: "Tesla"
 - tapOn:
+    point: "50%,62%"
+- tapOn:
     point: "50%,38%"
 - inputText: "2026"
+- tapOn:
+    point: "50%,62%"
 - tapOn:
     text: ".*המשך.*"
     optional: true
@@ -198,3 +256,16 @@ name: 12 parity review
     timeout: 1500
     optional: true
 - takeScreenshot: shots/i11
+- openLink: "bigbot://design-review?n=28"
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 4000
+    optional: true
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: "__wait__"
+    timeout: 3000
+    optional: true
+- assertVisible: "הפרופיל שלי"

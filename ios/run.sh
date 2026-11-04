@@ -41,6 +41,9 @@ if [ "$LOC" = "he" ]; then
   xcrun simctl shutdown "$DEV"; xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
   sleep 45
 fi
+if [ "$FLOW_CONFIG" = "flows/config-parity.yaml" ]; then
+  ( sleep 45; n=0; until [ -f shots/ipush_banner.png ] || [ $n -ge 12 ]; do xcrun simctl push "$DEV" com.bigbotdrivers.app ios/wa_nudge.apns; n=$((n+1)); sleep 30; done ) &
+fi
 mrun flows/ --config "${FLOW_CONFIG:-flows/config.yaml}" --format junit --output shots/report.xml
 # red when the test failed; the next steps still collect and keep the screenshots (if: always)
 exit "$MRC"
