@@ -1,0 +1,38 @@
+appId: com.bigbotdrivers.app
+name: 13 popup html
+---
+# FEAT-POPUP-HTML. Every main step is required on purpose: green must mean the page really opened,
+# was not closed by its own first load, and that both ways out work.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://design-review?n=246"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*עיצוב מהשרת.*"
+    timeout: 45000
+- takeScreenshot: shots/13_popup_full
+- assertVisible: "✕"
+- tapOn: "סגור מהדף"
+- extendedWaitUntil:
+    visible: "נסגר"
+    timeout: 15000
+- takeScreenshot: shots/13_popup_full_closed
+- openLink: "bigbot://design-review?n=247"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*עיצוב מהשרת.*"
+    timeout: 30000
+- takeScreenshot: shots/13_popup_dialog
+- tapOn: "✕"
+- extendedWaitUntil:
+    visible: "נסגר"
+    timeout: 15000
+- takeScreenshot: shots/13_popup_dialog_closed
