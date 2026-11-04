@@ -1,0 +1,69 @@
+appId: com.bigbotdrivers.app
+name: 12 pair messages
+---
+# FIX-PAIR-MESSAGES. Every main tap is required on purpose: a green run must mean the row was really on screen.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "לא עכשיו"
+    timeout: 75000
+    optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- tapOn: "הגדרות"
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*נסיעות וסינון.*"
+    direction: DOWN
+- tapOn: ".*נסיעות וסינון.*"
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: ".*רק נסיעות עתידיות.*"
+    direction: DOWN
+- assertVisible: ".*נסיעות מיידיות לא יגיעו.*"
+- takeScreenshot: shots/12_future_switch

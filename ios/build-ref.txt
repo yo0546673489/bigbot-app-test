@@ -1,1 +1,1 @@
-claude/ios-release-candidate
+claude/ios-pair-messages
