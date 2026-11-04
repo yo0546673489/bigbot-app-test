@@ -1,0 +1,58 @@
+appId: com.bigbotdrivers.app
+name: 01t reply tap
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- extendedWaitUntil:
+    visible: "לא עכשיו"
+    timeout: 75000
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "בית"
+    optional: true
+- takeScreenshot: shots/t01_home
+# the availability SWITCH
+- tapOn:
+    point: "12%,17%"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*סדרן.*"
+    timeout: 60000
+- takeScreenshot: shots/t02_before_tap
+# mandatory on purpose: a miss must fail this flow, not pass silently
+- tapOn:
+    text: "ת"
+    index: 0
+- takeScreenshot: shots/t03_right_after_tap
+- extendedWaitUntil:
+    visible: "__wait_3s__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/t04_after_3s
+- extendedWaitUntil:
+    visible: "__wait_12s__"
+    timeout: 12000
+    optional: true
+- takeScreenshot: shots/t05_after_15s
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+      - waitForAnimationToEnd
+- takeScreenshot: shots/t06_after_dialog
