@@ -1,1 +1,1 @@
-claude/ios-ride-catchup
+claude/ios-pair-messages
