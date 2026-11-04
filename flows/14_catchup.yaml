@@ -35,16 +35,31 @@ name: 14 ride catchup
 - launchApp:
     stopApp: false
 - extendedWaitUntil:
-    visible: ".*צפת.*"
-    timeout: 45000
+    visible: "NEVER-ON-SCREEN"
+    timeout: 12000
+    optional: true
+- takeScreenshot: shots/14_03a_after_return_top
+- swipe:
+    direction: UP
+    duration: 400
+- takeScreenshot: shots/14_03b_after_return_scrolled
+- swipe:
+    direction: DOWN
+    duration: 400
+- swipe:
+    direction: DOWN
+    duration: 400
+- extendedWaitUntil:
+    visible: ".*(צפת|777).*"
+    timeout: 30000
 - takeScreenshot: shots/14_03_ride_arrived_after_return
-- assertNotVisible: ".*אילת.*"
+- assertNotVisible: ".*(אילת|888).*"
 # full stop and start: the same ride must not show twice, and the list keeps it
 - stopApp
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
 - extendedWaitUntil:
-    visible: ".*צפת.*"
+    visible: ".*(צפת|777).*"
     timeout: 45000
 - takeScreenshot: shots/14_04_after_restart_no_duplicate
