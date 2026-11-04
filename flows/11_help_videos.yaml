@@ -11,6 +11,11 @@ name: 11 help videos in the app
     text: "דלג"
     optional: true
 - openLink: "bigbot://tutorials"
+# __link_dialog__ the system question appears late, wait for it before the tap
+- extendedWaitUntil:
+    visible: "(פתיחה|Open)"
+    timeout: 12000
+    optional: true
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
