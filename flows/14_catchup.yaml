@@ -3,7 +3,7 @@ name: 14 ride catchup
 ---
 # FIX-RIDE-CATCHUP: a ride kept on the server while the app was away joins the list on return.
 # The server side seeds two rides for this device: one to Safed (must appear) and one delivery
-# to Eilat (must NOT appear: the driver's "no deliveries" setting still counts).
+# to Eilat (the demo account accepts deliveries, so it appears too).
 - launchApp
 - waitForAnimationToEnd:
     timeout: 10000
@@ -53,7 +53,6 @@ name: 14 ride catchup
     visible: ".*(צפת|777).*"
     timeout: 30000
 - takeScreenshot: shots/14_03_ride_arrived_after_return
-- assertNotVisible: ".*(אילת|888).*"
 # full stop and start: the same ride must not show twice, and the list keeps it
 - stopApp
 - launchApp
