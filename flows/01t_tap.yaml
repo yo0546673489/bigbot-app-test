@@ -22,20 +22,60 @@ name: 01t reply tap
     text: "לא עכשיו"
     optional: true
 - waitForAnimationToEnd
-- takeScreenshot: shots/n01_home
-# the menu button, top right
 - tapOn:
-    point: "91%,9%"
-- waitForAnimationToEnd
-- takeScreenshot: shots/n02_drawer
-# the notifications row, by position: it carries a count badge, so its text is not a plain match
+    text: "בית"
+    optional: true
+- takeScreenshot: shots/t01_home
+# the availability SWITCH
 - tapOn:
-    point: "75%,48%"
+    point: "12%,17%"
 - waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*סדרן.*"
+    timeout: 60000
+- takeScreenshot: shots/t02_before_tap
+# mandatory on purpose: a miss must fail this flow, not pass silently
+- tapOn:
+    text: "ת"
+    index: 0
+- takeScreenshot: shots/t03_right_after_tap
+- extendedWaitUntil:
+    visible: "__wait_3s__"
+    timeout: 3000
+    optional: true
+- takeScreenshot: shots/t04_after_3s
+- extendedWaitUntil:
+    visible: "__wait_12s__"
+    timeout: 12000
+    optional: true
+- takeScreenshot: shots/t05_after_15s
 - runFlow:
     when:
       visible: "הבנתי"
     commands:
       - tapOn: "הבנתי"
       - waitForAnimationToEnd
-- takeScreenshot: shots/n03_notifications
+- takeScreenshot: shots/t06_after_dialog
+# FIX-RIDE-CATCHUP path on the release build: away and back keeps the list, no crash, no double cards
+- pressKey: home
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 25000
+    optional: true
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 10000
+    optional: true
+- takeScreenshot: shots/t07_after_return
+- assertVisible:
+    text: ".*סדרן.*"
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- extendedWaitUntil:
+    visible: ".*סדרן.*"
+    timeout: 45000
+- takeScreenshot: shots/t08_after_restart
