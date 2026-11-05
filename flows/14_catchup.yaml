@@ -1,0 +1,64 @@
+appId: com.bigbotdrivers.app
+name: 14 ride catchup
+---
+# FIX-RIDE-CATCHUP: a ride kept on the server while the app was away joins the list on return.
+# The server side seeds two rides for this device: one to Safed (must appear) and one delivery
+# to Eilat (the demo account accepts deliveries, so it appears too).
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "בית"
+    optional: true
+- takeScreenshot: shots/14_01_home
+- tapOn:
+    point: "12%,17%"
+- waitForAnimationToEnd
+- takeScreenshot: shots/14_02_available
+# to the background, the way a driver leaves the app; the socket goes away
+- pressKey: home
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 40000
+    optional: true
+# back to the front
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 12000
+    optional: true
+- takeScreenshot: shots/14_03a_after_return_top
+- swipe:
+    direction: UP
+    duration: 400
+- takeScreenshot: shots/14_03b_after_return_scrolled
+- swipe:
+    direction: DOWN
+    duration: 400
+- swipe:
+    direction: DOWN
+    duration: 400
+- extendedWaitUntil:
+    visible: ".*(צפת|777).*"
+    timeout: 30000
+- takeScreenshot: shots/14_03_ride_arrived_after_return
+# full stop and start: the same ride must not show twice, and the list keeps it
+- stopApp
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- extendedWaitUntil:
+    visible: ".*(צפת|777).*"
+    timeout: 45000
+- takeScreenshot: shots/14_04_after_restart_no_duplicate
