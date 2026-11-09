@@ -1,1 +1,1 @@
-claude/ios-pair-messages
+claude/ios-first-demo
