@@ -1,0 +1,6 @@
+flows:
+  - "17_open.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 17 open for live

@@ -1,0 +1,81 @@
+name: live iPhone
+run-name: ${{ inputs.label }}
+# One iPhone simulator with the BigBot app, driven by hand through a page (ios/live-agent.js).
+# Nothing is printed: this repo and its logs are public. The page address carries a random token
+# and is sealed with EMU_LIVE_KEY before it leaves the job. Whatever is typed on the page goes only
+# to the simulator and is never logged. The machine is thrown away at the end.
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: 'Unique name, used to find this run'
+        required: true
+      app_run_id:
+        description: 'Run id of ios.yml that holds sim-app-main'
+        required: true
+      minutes:
+        description: 'How long it stays up'
+        required: false
+        default: '90'
+permissions:
+  actions: read
+  contents: read
+jobs:
+  live:
+    runs-on: macos-15
+    timeout-minutes: 130
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/open-artifact
+        with:
+          name: sim-app-main
+          key: ${{ secrets.EMU_LIVE_KEY }}
+          run-id: ${{ inputs.app_run_id }}
+      - name: iPhone simulator, demo login
+        timeout-minutes: 40
+        env:
+          DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+          DEMO_CODE: ${{ secrets.DEMO_CODE }}
+          SIM_LOCALE: he
+          APP_URL_FILE: built
+          FLOW_CONFIG: flows/config-open.yaml
+          DO_LOGIN: '1'
+        run: bash ios/run.sh > /tmp/run.log 2>&1 || true
+      - name: open the page
+        env:
+          EMU_LIVE_KEY: ${{ secrets.EMU_LIVE_KEY }}
+        run: |
+          brew tap facebook/fb >/dev/null 2>&1 && brew install idb-companion >/dev/null 2>&1 || true
+          pip3 install --break-system-packages fb-idb >/dev/null 2>&1 || pip3 install fb-idb >/dev/null 2>&1 || true
+          export PATH="$PATH:$HOME/.maestro/bin:$(python3 -m site --user-base)/bin"
+          UDID=$(xcrun simctl list devices booted -j | python3 -c "import json,sys;d=json.load(sys.stdin)['devices'];print([x['udid'] for v in d.values() for x in v][0])")
+          idb connect "$UDID" >/dev/null 2>&1 || true
+          TOKEN=$(openssl rand -hex 24)
+          LIVE_TOKEN="$TOKEN" SIM_UDID="$UDID" LIVE_MAX_MIN="${{ inputs.minutes }}" nohup node ios/live-agent.js > /tmp/agent.log 2>&1 &
+          curl -sL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-arm64.tgz -o /tmp/cf.tgz
+          tar -xzf /tmp/cf.tgz -C /tmp
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8788 > /tmp/cf.log 2>&1 &
+          for i in $(seq 1 60); do
+            U=$(grep -o -m1 'https://[a-z0-9-]*\.trycloudflare\.com' /tmp/cf.log | head -1)
+            [ -n "$U" ] && break
+            sleep 1
+          done
+          [ -n "$U" ] || exit 1
+          mkdir -p conn
+          U="$U/?t=$TOKEN" node -e "
+            const c=require('crypto');const k=c.createHash('sha256').update(process.env.EMU_LIVE_KEY).digest();
+            const iv=c.randomBytes(12);const a=c.createCipheriv('aes-256-gcm',k,iv);
+            const ct=Buffer.concat([a.update(process.env.U),a.final()]);
+            require('fs').writeFileSync('conn/conn.txt',[iv,a.getAuthTag(),ct].map(x=>x.toString('base64')).join('.'));"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conn
+          path: conn/conn.txt
+          retention-days: 1
+      - name: stay up
+        timeout-minutes: 125
+        run: |
+          END=$(( $(date +%s) + ${{ inputs.minutes }} * 60 ))
+          while [ ! -f /tmp/live-stop ] && [ $(date +%s) -lt $END ]; do sleep 15; done
+          xcrun simctl shutdown all || true
+          xcrun simctl erase all || true

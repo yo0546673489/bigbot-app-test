@@ -1,0 +1,18 @@
+appId: com.bigbotdrivers.app
+name: 17 open for live
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- tapOn:
+    text: "לא עכשיו"
+    optional: true
+- takeScreenshot: shots/17_open
