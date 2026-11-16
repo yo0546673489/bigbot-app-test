@@ -27,8 +27,17 @@ name: 15 live rides and return
     text: "בית"
     optional: true
 - takeScreenshot: shots/15_01_home
+# the app tour offer covers the availability switch
 - tapOn:
-    point: "12%,17%"
+    text: "לא עכשיו"
+    optional: true
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      visible: "לא פנוי"
+    commands:
+      - tapOn:
+          point: "12%,17%"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: ".*(בני ברק|ירושלים|פתח תקווה).*"
