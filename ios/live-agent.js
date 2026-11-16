@@ -31,7 +31,7 @@ async function points() {
 async function maestro(yaml) {
   const f = `/tmp/live-step-${Date.now()}.yaml`;
   fs.writeFileSync(f, `appId: com.bigbotdrivers.app\n---\n${yaml}\n`);
-  const r = await run('maestro', ['--device', UDID, 'test', f], 60000);
+  const r = await run('maestro', ['--device', UDID, 'test', f], 180000);
   fs.unlinkSync(f);
   return r.ok;
 }
@@ -120,6 +120,11 @@ http.createServer(async (req, res) => {
       await run('xcrun', ['simctl', 'io', UDID, 'screenshot', '--type=jpeg', f]);
       res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'no-store' });
       return res.end(fs.readFileSync(f));
+    }
+    if (u.pathname === '/diag') {
+      const w = async (c) => (await run('/bin/sh', ['-c', `command -v ${c} || echo missing`])).out.trim();
+      res.writeHead(200, { 'content-type': 'application/json' });
+      return res.end(JSON.stringify({ idb: await w('idb'), companion: await w('idb_companion'), maestro: await w('maestro'), describe: (await run('idb', ['describe', '--udid', UDID, '--json'])).err.slice(0, 300) }));
     }
     if (u.pathname === '/info') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify({ pts: await points(), useIdb, upMin: Math.round((Date.now() - started) / 60000) })); }
     if (req.method !== 'POST') { res.writeHead(405); return res.end(); }
