@@ -15,7 +15,12 @@ name: 16 number in a group message
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
-    visible: ".*052-3152941.*"
+    visible: "NEVER-ON-SCREEN"
+    timeout: 12000
+    optional: true
+- takeScreenshot: shots/16_00_opened
+- extendedWaitUntil:
+    visible: ".*3152941.*"
     timeout: 45000
 - takeScreenshot: shots/16_01_message
 # tap → the menu with the three choices
