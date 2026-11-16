@@ -10,13 +10,23 @@ name: 16 number in a group message
 - tapOn:
     text: "דלג"
     optional: true
+# the link is lost if it arrives before the app finished starting: wait for the first screen, and
+# send it a second time if the review screen did not open
+- extendedWaitUntil:
+    visible: "(התחברות|הרשמה|לא פנוי|פנוי)"
+    timeout: 45000
+    optional: true
 - openLink: "bigbot://design-review?n=950"
 - tapOn:
     text: "(פתיחה|Open)"
     optional: true
 - extendedWaitUntil:
-    visible: "NEVER-ON-SCREEN"
-    timeout: 12000
+    visible: ".*3152941.*"
+    timeout: 15000
+    optional: true
+- openLink: "bigbot://design-review?n=950"
+- tapOn:
+    text: "(פתיחה|Open)"
     optional: true
 - takeScreenshot: shots/16_00_opened
 - extendedWaitUntil:
