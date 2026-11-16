@@ -1,0 +1,102 @@
+appId: com.bigbotdrivers.app
+name: 15 live rides and return
+---
+# 16/11/2026 — iPhone support complaints: rides that arrive live must be in the list,
+# the list must refresh after the app was in the background, each ride once, the card shows
+# the "לבקש ב" number, and the Telegram card opens. Server side: FIX-APNS-AFTER-ACK +
+# FIX-PRICE-FIRST-LINE (production ca037ce92). App: claude/ios-card-request-phone.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 10000
+- runFlow:
+    when:
+      visible: "ביגבוט בוואטסאפ"
+    commands:
+      - tapOn: "המשך"
+      - waitForAnimationToEnd:
+          timeout: 8000
+- tapOn:
+    text: "אחר כך"
+    optional: true
+- runFlow:
+    when:
+      visible: "הבנתי"
+    commands:
+      - tapOn: "הבנתי"
+- tapOn:
+    text: "בית"
+    optional: true
+- takeScreenshot: shots/15_01_home
+- tapOn:
+    point: "12%,17%"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*(בני ברק|ירושלים|פתח תקווה).*"
+    timeout: 60000
+    optional: true
+- takeScreenshot: shots/15_02_rides_live
+# live traffic for two minutes, the way a driver leaves the app open
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 120000
+    optional: true
+- takeScreenshot: shots/15_03_rides_after_2min
+- swipe:
+    direction: UP
+    duration: 400
+- takeScreenshot: shots/15_04_rides_scrolled
+- swipe:
+    direction: DOWN
+    duration: 400
+- swipe:
+    direction: DOWN
+    duration: 400
+# to the background for 3 minutes, then back: the list must catch up by itself
+- pressKey: home
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 180000
+    optional: true
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 15000
+    optional: true
+- takeScreenshot: shots/15_05_after_return
+- swipe:
+    direction: UP
+    duration: 400
+- takeScreenshot: shots/15_06_after_return_scrolled
+- swipe:
+    direction: DOWN
+    duration: 400
+- swipe:
+    direction: DOWN
+    duration: 400
+# the first card opened: the "לבקש ב" number and the buttons
+- tapOn:
+    point: "50%,45%"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/15_07_card_open
+- pressKey: back
+- tapOn:
+    text: "סגור"
+    optional: true
+# Telegram card in the settings
+- tapOn:
+    text: "הגדרות"
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "חיבור טלגרם"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/15_08_tg_card
+- tapOn:
+    text: "חבר טלגרם"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/15_09_tg_open

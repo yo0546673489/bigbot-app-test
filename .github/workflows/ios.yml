@@ -84,6 +84,7 @@ jobs:
           - { name: help, app: solofake, flows: flows/config-help.yaml, login: '0' }
           - { name: popup, app: solofake, flows: flows/config-popup.yaml, login: '0' }
           - { name: catchup, app: main, flows: flows/config-catchup.yaml, login: '1' }
+          - { name: live, app: main, flows: flows/config-live.yaml, login: '1' }
     steps:
       - uses: actions/checkout@v4
       - id: want
