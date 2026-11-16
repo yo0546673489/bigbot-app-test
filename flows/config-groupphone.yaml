@@ -1,0 +1,6 @@
+flows:
+  - "16_group_phone.yaml"
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - 16 number in a group message

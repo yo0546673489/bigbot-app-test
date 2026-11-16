@@ -1,0 +1,64 @@
+appId: com.bigbotdrivers.app
+name: 16 number in a group message
+---
+# FIX-GROUP-PHONE-MENU (16/11/2026): a number inside a group message used to dial only, and a long
+# press did nothing. Now a tap offers message / call / copy and a long press copies. Every main
+# step is required: green means the menu really opened and each action did its job.
+- launchApp:
+    permissions:
+      all: allow
+- tapOn:
+    text: "דלג"
+    optional: true
+- openLink: "bigbot://design-review?n=950"
+- tapOn:
+    text: "(פתיחה|Open)"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*052-3152941.*"
+    timeout: 45000
+- takeScreenshot: shots/16_01_message
+# tap → the menu with the three choices
+- tapOn: "052-3152941"
+- extendedWaitUntil:
+    visible: "העתקת המספר"
+    timeout: 10000
+- assertVisible: "שליחת הודעה"
+- assertVisible: "חיוג"
+- takeScreenshot: shots/16_02_menu
+- tapOn: "העתקת המספר"
+- extendedWaitUntil:
+    visible: "המספר הועתק"
+    timeout: 8000
+- takeScreenshot: shots/16_03_copied
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 4000
+    optional: true
+# "שליחת הודעה" opens the in-app chat with the number in 972 form
+- tapOn: "052-3152941"
+- extendedWaitUntil:
+    visible: "שליחת הודעה"
+    timeout: 10000
+- tapOn: "שליחת הודעה"
+- extendedWaitUntil:
+    visible: ".*972523152941.*"
+    timeout: 8000
+- takeScreenshot: shots/16_04_message_opens_chat
+- extendedWaitUntil:
+    visible: "NEVER-ON-SCREEN"
+    timeout: 4000
+    optional: true
+# cancel closes the menu without doing anything
+- tapOn: "052-3152941"
+- extendedWaitUntil:
+    visible: "ביטול"
+    timeout: 10000
+- tapOn: "ביטול"
+- assertNotVisible: "העתקת המספר"
+# long press copies straight away
+- longPressOn: "052-3152941"
+- extendedWaitUntil:
+    visible: "המספר הועתק"
+    timeout: 8000
+- takeScreenshot: shots/16_05_long_press_copied
