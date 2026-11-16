@@ -57,12 +57,18 @@ async function swipe(dir) {
   return maestro(`- swipe:\n    direction: ${dir === 'up' ? 'UP' : 'DOWN'}`);
 }
 
-async function type(text) {
-  if (useIdb) {
+// Every Maestro run is a new session and the keyboard closes between runs, so tapping the field,
+// clearing it and typing happen in ONE run (at the last point tapped on the page).
+async function type(text, at, clear) {
+  if (useIdb && !at) {
     const r = await run('idb', ['ui', 'text', '--udid', UDID, text]);
     if (r.ok) return true;
   }
-  return maestro(`- inputText: ${JSON.stringify(text)}`);
+  const steps = [];
+  if (at) steps.push(`- tapOn:\n    point: "${Math.round(at.fx * 100)}%,${Math.round(at.fy * 100)}%"`);
+  if (clear) steps.push('- eraseText: 40');
+  if (text) steps.push(`- inputText: ${JSON.stringify(text)}`);
+  return maestro(steps.join('\n'));
 }
 
 async function key(name) {
@@ -83,20 +89,21 @@ button.g{background:#e3ebe6;color:#1f2a22}
 input{font-size:18px;padding:10px;border-radius:12px;border:1px solid #9bb;width:220px;direction:ltr}
 #m{font-size:14px;min-height:18px}
 </style></head><body>
-<div>לחיצה על התמונה = לחיצה על המסך. לחיצה ארוכה: החזק את העכבר שנייה.</div>
+<div>לחיצה על התמונה = לחיצה על המסך (כל פעולה לוקחת בערך דקה). להקלדה: לוחצים קודם על השדה בתמונה, ואז כותבים למטה ולוחצים "הקלד".</div>
 <img id="s" alt="מסך האייפון">
 <div class="row"><input id="t" type="password" autocomplete="off" placeholder="מה להקליד"><button id="send">הקלד</button><button class="g" id="show">הצג/הסתר</button></div>
+<div class="row"><label><input type="checkbox" id="clr" style="width:auto"> למחוק קודם את מה שכתוב בשדה</label></div>
 <div class="row"><button class="g" data-k="enter">אנטר</button><button class="g" data-k="delete">מחק תו</button><button class="g" data-sw="up">גלול למטה</button><button class="g" data-sw="down">גלול למעלה</button><button class="g" data-k="home">מסך הבית</button></div>
 <div id="m"></div>
 <script>
 const T=new URLSearchParams(location.search).get('t');const img=document.getElementById('s');const m=document.getElementById('m');
 let busy=false;function load(){if(busy)return;busy=true;const n=new Image();n.onload=()=>{img.src=n.src;busy=false};n.onerror=()=>{busy=false};n.src='shot?t='+T+'&_='+Date.now()}
 setInterval(load,900);load();
-let down=0;img.addEventListener('mousedown',()=>down=Date.now());
-img.addEventListener('click',e=>{const r=img.getBoundingClientRect();const fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;const long=Date.now()-down>700;
-m.textContent=long?'לחיצה ארוכה...':'לוחץ...';fetch('tap?t='+T,{method:'POST',body:JSON.stringify({fx,fy,long})}).then(r=>m.textContent=r.ok?'':'הלחיצה לא עברה')});
-document.getElementById('send').onclick=()=>{const i=document.getElementById('t');const v=i.value;if(!v)return;m.textContent='מקליד...';
-fetch('type?t='+T,{method:'POST',body:JSON.stringify({text:v})}).then(r=>{m.textContent=r.ok?'הוקלד':'לא הוקלד';i.value=''})};
+let down=0,last=null;img.addEventListener('mousedown',()=>down=Date.now());
+img.addEventListener('click',e=>{const r=img.getBoundingClientRect();const fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;const long=Date.now()-down>700;last={fx,fy};
+m.textContent=long?'לחיצה ארוכה... (בערך דקה)':'לוחץ... (בערך דקה)';fetch('tap?t='+T,{method:'POST',body:JSON.stringify({fx,fy,long})}).then(r=>m.textContent=r.ok?'':'הלחיצה לא עברה')});
+document.getElementById('send').onclick=()=>{const i=document.getElementById('t');const v=i.value;if(!v)return;m.textContent='מקליד... (בערך דקה)';
+fetch('type?t='+T,{method:'POST',body:JSON.stringify(Object.assign({text:v,clear:document.getElementById('clr').checked},last||{}))}).then(r=>{m.textContent=r.ok?'הוקלד':'לא הוקלד';i.value=''})};
 document.getElementById('show').onclick=()=>{const i=document.getElementById('t');i.type=i.type==='password'?'text':'password'};
 document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>fetch('key?t='+T,{method:'POST',body:JSON.stringify({k:b.dataset.k})}));
 document.querySelectorAll('[data-sw]').forEach(b=>b.onclick=()=>fetch('swipe?t='+T,{method:'POST',body:JSON.stringify({d:b.dataset.sw})}));
@@ -124,14 +131,17 @@ http.createServer(async (req, res) => {
     if (u.pathname === '/diag') {
       const w = async (c) => (await run('/bin/sh', ['-c', `command -v ${c} || echo missing`])).out.trim();
       res.writeHead(200, { 'content-type': 'application/json' });
-      return res.end(JSON.stringify({ idb: await w('idb'), companion: await w('idb_companion'), maestro: await w('maestro'), describe: (await run('idb', ['describe', '--udid', UDID, '--json'])).err.slice(0, 300) }));
+      return res.end(JSON.stringify({ idb: await w('idb'), companion: await w('idb_companion'), maestro: await w('maestro'), describe: (await run('idb', ['describe', '--udid', UDID, '--json'])).err.slice(-300), brew: (await run('/usr/bin/tail', ['-c', '600', '/tmp/idb-brew.log'])).out }));
     }
     if (u.pathname === '/info') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify({ pts: await points(), useIdb, upMin: Math.round((Date.now() - started) / 60000) })); }
     if (req.method !== 'POST') { res.writeHead(405); return res.end(); }
     const b = await body(req);
     let ok = false;
     if (u.pathname === '/tap') ok = await tap(Math.min(1, Math.max(0, +b.fx)), Math.min(1, Math.max(0, +b.fy)), !!b.long);
-    else if (u.pathname === '/type' && typeof b.text === 'string') ok = await type(b.text.slice(0, 200));
+    else if (u.pathname === '/type' && typeof b.text === 'string') {
+      const at = b.fx != null && b.fy != null ? { fx: Math.min(1, Math.max(0, +b.fx)), fy: Math.min(1, Math.max(0, +b.fy)) } : null;
+      ok = await type(b.text.slice(0, 200), at, !!b.clear);
+    }
     else if (u.pathname === '/key') ok = await key(String(b.k));
     else if (u.pathname === '/swipe') ok = await swipe(b.d === 'up' ? 'up' : 'down');
     else if (u.pathname === '/stop') { fs.writeFileSync('/tmp/live-stop', '1'); ok = true; }
